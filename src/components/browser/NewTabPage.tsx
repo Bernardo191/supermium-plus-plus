@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import { Bookmark, HistoryItem, faviconFor, hostnameOf } from "@/lib/browser-store";
 import { useI18n } from "@/lib/i18n";
 import { useState } from "react";
+import aetherLogo from "@/assets/aether-logo.png.asset.json";
 
 type Props = {
   bookmarks: Bookmark[];
@@ -29,9 +30,7 @@ export const NewTabPage = ({ bookmarks, history, onNavigate, wallpaper }: Props)
     >
       <div className="mx-auto flex min-h-full max-w-3xl flex-col items-center px-6 pt-24 pb-16">
         <div className="mb-8 flex items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/60 text-primary-foreground text-2xl font-bold shadow-lg shadow-primary/30">
-            A
-          </div>
+          <img src={aetherLogo.url} alt="Aether logo" className="h-14 w-14 drop-shadow-lg" />
           <h1 className="text-4xl font-light tracking-tight">{t("app_name")}</h1>
         </div>
 
