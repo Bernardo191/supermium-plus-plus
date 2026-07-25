@@ -54,7 +54,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
       aria-label="Search tabs"
       style={{ borderRadius: "8px" }}
       className={cn(
-        "relative z-30 flex h-[30px] w-[30px] shrink-0 items-center justify-center transition-colors",
+        "relative z-30 flex h-[31px] w-[31px] shrink-0 items-center justify-center transition-colors",
         isModern
           ? "bg-chrome-toolbar text-foreground/70 hover:bg-foreground/10"
           : is2021
