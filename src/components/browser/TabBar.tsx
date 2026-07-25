@@ -123,7 +123,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
   return (
     <div className={cn("flex items-end gap-1 px-2 bg-chrome-bar select-none", flushTop ? "pt-0" : "pt-2")}>
       {macControls}
-      {pos === "left" && <div className="mr-1 mb-1 flex items-center">{searchBtn}</div>}
+      {pos === "left" && <div className="mr-0.5 mb-1 flex items-center">{searchBtn}</div>}
 
       <div className="flex flex-1 items-end gap-0.5 min-w-0">
         {tabs.map((t) => {
