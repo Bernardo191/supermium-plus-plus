@@ -43,7 +43,7 @@ All colors MUST be HSL.
     --chrome-bar: 220 18% 92%;
     --chrome-toolbar: 0 0% 100%;
     --tab-active: 0 0% 100%;
-    --tab-inactive: 220 16% 88%;
+    --tab-inactive: 220 18% 92%;
     --omnibox: 220 14% 94%;
 
     --sidebar-background: 0 0% 98%;
@@ -95,7 +95,7 @@ All colors MUST be HSL.
     --chrome-bar: 220 13% 14%;
     --chrome-toolbar: 220 13% 17%;
     --tab-active: 220 13% 17%;
-    --tab-inactive: 220 13% 12%;
+    --tab-inactive: 220 13% 14%;
     --omnibox: 220 13% 22%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -182,7 +182,7 @@ All colors MUST be HSL.
   --chrome-bar: 212 60% 38%;
   --chrome-toolbar: 210 30% 92%;
   --tab-active: 210 30% 95%;
-  --tab-inactive: 212 45% 55%;
+  --tab-inactive: 212 60% 38%;
   --omnibox: 0 0% 100%;
   --border: 212 40% 30%;
   --radius: 0.25rem;
@@ -201,7 +201,7 @@ All colors MUST be HSL.
   --chrome-bar: 0 0% 85%;
   --chrome-toolbar: 0 0% 96%;
   --tab-active: 0 0% 96%;
-  --tab-inactive: 0 0% 78%;
+  --tab-inactive: 0 0% 85%;
   --omnibox: 0 0% 100%;
   --border: 0 0% 70%;
   --radius: 0.125rem;
