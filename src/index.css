@@ -1,0 +1,304 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Chromium-inspired chrome (light) */
+    --background: 220 20% 96%;
+    --foreground: 220 13% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 13%;
+
+    --primary: 217 89% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 90%;
+    --secondary-foreground: 220 13% 13%;
+
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 9% 40%;
+
+    --accent: 217 89% 96%;
+    --accent-foreground: 217 89% 30%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 86%;
+    --input: 220 14% 92%;
+    --ring: 217 89% 51%;
+
+    --radius: 0.75rem;
+
+    /* Browser chrome */
+    --chrome-bar: 220 18% 92%;
+    --chrome-toolbar: 0 0% 100%;
+    --tab-active: 0 0% 100%;
+    --tab-inactive: 220 16% 88%;
+    --omnibox: 220 14% 94%;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 13% 10%;
+    --foreground: 220 14% 92%;
+
+    --card: 220 13% 13%;
+    --card-foreground: 220 14% 92%;
+
+    --popover: 220 13% 13%;
+    --popover-foreground: 220 14% 92%;
+
+    --primary: 217 89% 61%;
+    --primary-foreground: 220 13% 10%;
+
+    --secondary: 220 13% 18%;
+    --secondary-foreground: 220 14% 92%;
+
+    --muted: 220 13% 16%;
+    --muted-foreground: 220 9% 60%;
+
+    --accent: 217 50% 22%;
+    --accent-foreground: 217 89% 80%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 22%;
+    --input: 220 13% 18%;
+    --ring: 217 89% 61%;
+
+    --chrome-bar: 220 13% 14%;
+    --chrome-toolbar: 220 13% 17%;
+    --tab-active: 220 13% 17%;
+    --tab-inactive: 220 13% 12%;
+    --omnibox: 220 13% 22%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Chrome-style tab with curved bottom corners flaring outward (active tab only) */
+@layer components {
+  .tab-shape {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    position: relative;
+  }
+  .tab-shape::before,
+  .tab-shape::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    background: inherit;
+    pointer-events: none;
+  }
+  .tab-shape::before {
+    left: -12px;
+    -webkit-mask: radial-gradient(circle 12px at 0 0, transparent 12px, #000 12.5px);
+            mask: radial-gradient(circle 12px at 0 0, transparent 12px, #000 12.5px);
+  }
+  .tab-shape::after {
+    right: -12px;
+    -webkit-mask: radial-gradient(circle 12px at 100% 0, transparent 12px, #000 12.5px);
+            mask: radial-gradient(circle 12px at 100% 0, transparent 12px, #000 12.5px);
+  }
+
+  /* Curved bottom flares on the toolbar, like Chrome */
+  .toolbar-shape {
+    position: relative;
+  }
+  .toolbar-shape::before,
+  .toolbar-shape::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background-color: hsl(var(--chrome-bar));
+    pointer-events: none;
+    z-index: 5;
+  }
+  .toolbar-shape::before {
+    left: 0;
+    -webkit-mask: radial-gradient(circle 12px at 100% 100%, transparent 12px, #000 12.5px);
+            mask: radial-gradient(circle 12px at 100% 100%, transparent 12px, #000 12.5px);
+  }
+  .toolbar-shape::after {
+    right: 0;
+    -webkit-mask: radial-gradient(circle 12px at 0 100%, transparent 12px, #000 12.5px);
+            mask: radial-gradient(circle 12px at 0 100%, transparent 12px, #000 12.5px);
+  }
+}
+
+/* =========================================================
+   Legacy Chrome themes (selectable in Settings → Appearance)
+   ========================================================= */
+
+/* ---- Chrome 1–20 (2008–2012): blue glossy gradient frame ---- */
+.theme-legacy-2010 {
+  --chrome-bar: 212 60% 38%;
+  --chrome-toolbar: 210 30% 92%;
+  --tab-active: 210 30% 95%;
+  --tab-inactive: 212 45% 55%;
+  --omnibox: 0 0% 100%;
+  --border: 212 40% 30%;
+  --radius: 0.25rem;
+}
+.theme-legacy-2010 .tab-shape { border-top-left-radius: 6px; border-top-right-radius: 6px; }
+.theme-legacy-2010 .tab-shape::before,
+.theme-legacy-2010 .tab-shape::after { display: none; }
+.theme-legacy-2010 [class*="bg-chrome-bar"] {
+  background-image: linear-gradient(180deg, hsl(212 70% 55%) 0%, hsl(212 60% 38%) 100%);
+}
+.theme-legacy-2010 .toolbar-shape::before,
+.theme-legacy-2010 .toolbar-shape::after { display: none; }
+
+/* ---- Chrome ~40–60 (2015–2017): flat grey, sharp tabs ---- */
+.theme-legacy-2016 {
+  --chrome-bar: 0 0% 85%;
+  --chrome-toolbar: 0 0% 96%;
+  --tab-active: 0 0% 96%;
+  --tab-inactive: 0 0% 78%;
+  --omnibox: 0 0% 100%;
+  --border: 0 0% 70%;
+  --radius: 0.125rem;
+}
+.theme-legacy-2016 .tab-shape {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+}
+.theme-legacy-2016 .tab-shape::before,
+.theme-legacy-2016 .tab-shape::after { display: none; }
+.theme-legacy-2016 .toolbar-shape::before,
+.theme-legacy-2016 .toolbar-shape::after { display: none; }
+
+/* ---- Chrome ~70 (2018): rounded-tab debut, lighter UI ---- */
+.theme-legacy-2018 {
+  --chrome-bar: 0 0% 87%;
+  --chrome-toolbar: 0 0% 100%;
+  --tab-active: 0 0% 100%;
+  --tab-inactive: 0 0% 87%;
+  --omnibox: 0 0% 94%;
+  --border: 0 0% 80%;
+  --radius: 0.5rem;
+}
+.theme-legacy-2018 .tab-shape {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+/* Smaller v69-style curved feet (6px instead of 12px) */
+.theme-legacy-2018 .tab-shape::before,
+.theme-legacy-2018 .tab-shape::after {
+  width: 6px;
+  height: 6px;
+}
+.theme-legacy-2018 .tab-shape::before {
+  left: -6px;
+  -webkit-mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+          mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+}
+.theme-legacy-2018 .tab-shape::after {
+  right: -6px;
+  -webkit-mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+          mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+}
+/* Disable curved toolbar flares */
+.theme-legacy-2018 .toolbar-shape::before,
+.theme-legacy-2018 .toolbar-shape::after { display: none; }
+
+/* ---- Chrome 88 (2021): refreshed UI, slightly squarer tabs, lighter chrome ---- */
+.theme-legacy-2021 {
+  --chrome-bar: 220 13% 93%;
+  --chrome-toolbar: 0 0% 100%;
+  --tab-active: 0 0% 100%;
+  --tab-inactive: 220 13% 93%;
+  --omnibox: 220 14% 96%;
+  --border: 220 13% 84%;
+  --radius: 0.5rem;
+}
+.theme-legacy-2021 .tab-shape {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.theme-legacy-2021 .tab-shape::before,
+.theme-legacy-2021 .tab-shape::after {
+  width: 6px;
+  height: 6px;
+}
+.theme-legacy-2021 .tab-shape::before {
+  left: -6px;
+  -webkit-mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+          mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+}
+.theme-legacy-2021 .tab-shape::after {
+  right: -6px;
+  -webkit-mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+          mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+}
+.theme-legacy-2021 .toolbar-shape::before,
+.theme-legacy-2021 .toolbar-shape::after { display: none; }
+
+/* Chrome 73 (macOS) / Chrome 74 (Windows/Linux) dark mode for the 2021 refresh */
+.dark.theme-legacy-2021,
+.dark .theme-legacy-2021 {
+  --background: 220 8% 12%;
+  --foreground: 0 0% 96%;
+  --chrome-bar: 220 8% 16%;
+  --chrome-toolbar: 220 8% 20%;
+  --tab-active: 220 8% 20%;
+  --tab-inactive: 220 8% 16%;
+  --omnibox: 220 8% 26%;
+  --muted: 220 8% 24%;
+  --muted-foreground: 0 0% 75%;
+  --border: 220 8% 30%;
+  --secondary: 220 8% 24%;
+  --secondary-foreground: 0 0% 96%;
+}
+
+
+
+
