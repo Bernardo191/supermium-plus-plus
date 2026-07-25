@@ -135,25 +135,30 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
               onAuxClick={(e) => { if (e.button === 1) onClose(t.id); }}
               title={t.title}
               className={cn(
-                "tab-shape group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center gap-2 px-3 text-xs transition-colors",
+                "tab-shape group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center text-xs transition-colors",
                 flushTop ? "h-10" : "h-9",
                 "max-w-[240px]",
                 active
                   ? "bg-tab-active text-foreground z-10"
-                  : "bg-tab-inactive text-muted-foreground hover:bg-tab-active/70"
+                  : "bg-transparent text-muted-foreground"
               )}
             >
-              {t.url !== "aether://newtab" && (
-                <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
+              {!active && (
+                <span className="pointer-events-none absolute inset-x-1 inset-y-1 rounded-lg bg-foreground/0 transition-colors group-hover:bg-foreground/10 group-active:bg-foreground/[0.18]" />
               )}
-              <span className="flex-1 truncate min-w-0">{t.title}</span>
-              <button
-                onClick={(e) => { e.stopPropagation(); onClose(t.id); }}
-                className="rounded-full p-0.5 opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0"
-                aria-label="Close tab"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
+              <div className="relative z-[1] flex min-w-0 flex-1 items-center gap-2 px-3">
+                {t.url !== "aether://newtab" && (
+                  <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
+                )}
+                <span className="flex-1 truncate min-w-0">{t.title}</span>
+                <button
+                  onClick={(e) => { e.stopPropagation(); onClose(t.id); }}
+                  className="rounded-full p-0.5 opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0"
+                  aria-label="Close tab"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
             </div>
           );
         })}
