@@ -296,6 +296,18 @@ const Index = () => {
         <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", width: `${100 / zoom}%`, height: `${100 / zoom}%` }} className="h-full w-full">
         {active.url === NEW_TAB ? (
           <NewTabPage bookmarks={bookmarks} history={history} onNavigate={navigate} wallpaper={settings.wallpaper} />
+        ) : active.url === "aether://settings" ? (
+          <div className="h-full w-full overflow-auto"><SettingsPage /></div>
+        ) : active.url === "aether://flags" ? (
+          <div className="h-full w-full overflow-auto"><FlagsPage /></div>
+        ) : active.url === "aether://about" ? (
+          <div className="h-full w-full overflow-auto"><AboutPage /></div>
+        ) : active.url === "aether://downloads" ? (
+          <div className="h-full w-full overflow-auto"><DownloadsPage /></div>
+        ) : active.url === "aether://passwords" ? (
+          <div className="h-full w-full overflow-auto"><PasswordsPage /></div>
+        ) : active.url === "aether://extensions" ? (
+          <div className="h-full w-full overflow-auto"><ExtensionsPage /></div>
         ) : (
           <WebView
             key={active.id + active.url}
