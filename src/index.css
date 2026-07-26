@@ -188,11 +188,12 @@ All colors MUST be HSL.
   --chrome-toolbar: 210 30% 92%;
   --tab-active: 210 30% 95%;
   --tab-inactive: 212 60% 38%;
+  --tab-radius: 6px;
   --omnibox: 0 0% 100%;
   --border: 212 40% 30%;
   --radius: 0.25rem;
 }
-.theme-legacy-2010 .tab-shape { border-top-left-radius: 6px; border-top-right-radius: 6px; }
+.theme-legacy-2010 .tab-shape { border-top-left-radius: var(--tab-radius); border-top-right-radius: var(--tab-radius); }
 .theme-legacy-2010 .tab-shape::before,
 .theme-legacy-2010 .tab-shape::after { display: none; }
 .theme-legacy-2010 [class*="bg-chrome-bar"] {
