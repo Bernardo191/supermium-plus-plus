@@ -264,13 +264,14 @@ All colors MUST be HSL.
   --chrome-toolbar: 0 0% 100%;
   --tab-active: 0 0% 100%;
   --tab-inactive: 220 13% 93%;
+  --tab-radius: 8px;
   --omnibox: 220 14% 96%;
   --border: 220 13% 84%;
   --radius: 0.5rem;
 }
 .theme-legacy-2021 .tab-shape {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: var(--tab-radius);
+  border-top-right-radius: var(--tab-radius);
 }
 .theme-legacy-2021 .tab-shape::before,
 .theme-legacy-2021 .tab-shape::after {
