@@ -73,22 +73,31 @@ const Index = () => {
   const updateTab = (id: string, patch: Partial<Tab>) =>
     setTabs((ts) => ts.map((t) => (t.id === id ? { ...t, ...patch } : t)));
 
+  const internalTitle = (url: string): string | null => {
+    switch (url) {
+      case "aether://settings": return "Settings";
+      case "aether://flags": return "Experiments";
+      case "aether://about": return "About Aether";
+      case "aether://downloads": return "Downloads";
+      case "aether://passwords": return "Passwords";
+      case "aether://extensions": return "Extensions";
+      default: return null;
+    }
+  };
+
   const navigate = (raw: string) => {
     const url = normalizeUrl(raw);
     if (!active) return;
-    if (url === "aether://settings") { routerNav("/settings"); return; }
-    if (url === "aether://flags") { routerNav("/flags"); return; }
-    if (url === "aether://about") { routerNav("/about"); return; }
-    if (url === "aether://downloads") { routerNav("/downloads"); return; }
 
     const newHist = [...active.history.slice(0, active.historyIndex + 1), url];
+    const internal = internalTitle(url);
     updateTab(active.id, {
       url,
       history: newHist,
       historyIndex: newHist.length - 1,
-      title: url === NEW_TAB ? "New Tab" : hostnameOf(url),
+      title: url === NEW_TAB ? "New Tab" : internal ?? hostnameOf(url),
     });
-    if (url !== NEW_TAB) {
+    if (url !== NEW_TAB && !internal) {
       setHistory((h) => [{ id: crypto.randomUUID(), title: hostnameOf(url), url, visitedAt: Date.now() }, ...h]);
     }
   };
