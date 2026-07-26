@@ -300,6 +300,7 @@ All colors MUST be HSL.
   --chrome-toolbar: 220 8% 20%;
   --tab-active: 220 8% 20%;
   --tab-inactive: 220 8% 16%;
+  --tab-radius: 8px;
   --omnibox: 220 8% 26%;
   --muted: 220 8% 24%;
   --muted-foreground: 0 0% 75%;
