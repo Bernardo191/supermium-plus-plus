@@ -240,21 +240,21 @@ const Index = () => {
         onClose={() => setShowMenu(false)}
         onNewTab={() => { setShowMenu(false); openNewTab(); }}
         onShowHistory={() => { setShowMenu(false); setShowHistory(true); }}
-        onOpenDownloads={() => { setShowMenu(false); routerNav("/downloads"); }}
+        onOpenDownloads={() => { setShowMenu(false); openNewTab("aether://downloads"); }}
 
         onShowBookmarks={() => { setShowMenu(false); setShowBookmarks((s) => !s); }}
         onAddBookmark={() => { setShowMenu(false); toggleBookmark(); }}
         onClearHistory={() => { setHistory([]); setShowMenu(false); toast.success("Browsing history cleared"); }}
-        onOpenPasswords={() => { setShowMenu(false); routerNav("/passwords"); }}
+        onOpenPasswords={() => { setShowMenu(false); openNewTab("aether://passwords"); }}
         onOpenIncognito={() => { setShowMenu(false); window.open("/incognito", "_blank", "width=1200,height=800,noopener"); }}
-        onOpenExtensions={() => { setShowMenu(false); routerNav("/extensions"); }}
+        onOpenExtensions={() => { setShowMenu(false); openNewTab("aether://extensions"); }}
         onZoomIn={() => setZoom((z) => Math.min(2, +(z + 0.1).toFixed(2)))}
         onZoomOut={() => setZoom((z) => Math.max(0.5, +(z - 0.1).toFixed(2)))}
         onResetZoom={() => setZoom(1)}
         onPrint={() => { setShowMenu(false); window.print(); }}
-        onAbout={() => { setShowMenu(false); routerNav("/about"); }}
-        onOpenSettings={() => { setShowMenu(false); routerNav("/settings"); }}
-        onOpenFlags={() => { setShowMenu(false); routerNav("/flags"); }}
+        onAbout={() => { setShowMenu(false); openNewTab("aether://about"); }}
+        onOpenSettings={() => { setShowMenu(false); openNewTab("aether://settings"); }}
+        onOpenFlags={() => { setShowMenu(false); openNewTab("aether://flags"); }}
         onReopenClosed={() => { setShowMenu(false); reopenLastClosed(); }}
         onFindInPage={() => { setShowMenu(false); toast.info("Find in page", { description: "Use your browser's native Ctrl+F inside the page frame." }); }}
         onShowShortcuts={() => {
