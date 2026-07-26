@@ -123,9 +123,12 @@ All colors MUST be HSL.
 /* Chrome-style tab with curved bottom corners flaring outward (active tab only) */
 @layer components {
   .tab-shape {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: var(--tab-radius);
+    border-top-right-radius: var(--tab-radius);
     position: relative;
+  }
+  .tab-pill {
+    border-radius: var(--tab-radius);
   }
   .tab-shape::before,
   .tab-shape::after {
