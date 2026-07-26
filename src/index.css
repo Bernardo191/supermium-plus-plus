@@ -44,6 +44,7 @@ All colors MUST be HSL.
     --chrome-toolbar: 0 0% 100%;
     --tab-active: 0 0% 100%;
     --tab-inactive: 220 18% 92%;
+    --tab-radius: 12px;
     --omnibox: 220 14% 94%;
 
     --sidebar-background: 0 0% 98%;
@@ -96,6 +97,7 @@ All colors MUST be HSL.
     --chrome-toolbar: 220 13% 17%;
     --tab-active: 220 13% 17%;
     --tab-inactive: 220 13% 14%;
+    --tab-radius: 12px;
     --omnibox: 220 13% 22%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
