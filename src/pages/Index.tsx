@@ -4,6 +4,12 @@ import { Toolbar } from "@/components/browser/Toolbar";
 import { BookmarksBar } from "@/components/browser/BookmarksBar";
 import { NewTabPage } from "@/components/browser/NewTabPage";
 import { WebView } from "@/components/browser/WebView";
+import SettingsPage from "@/pages/Settings";
+import FlagsPage from "@/pages/Flags";
+import AboutPage from "@/pages/About";
+import DownloadsPage from "@/pages/Downloads";
+import PasswordsPage from "@/pages/Passwords";
+import ExtensionsPage from "@/pages/Extensions";
 import { HistoryPanel } from "@/components/browser/HistoryPanel";
 import { TabSearch } from "@/components/browser/TabSearch";
 import type { ClosedTab } from "@/components/browser/TabSearch";
@@ -67,31 +73,42 @@ const Index = () => {
   const updateTab = (id: string, patch: Partial<Tab>) =>
     setTabs((ts) => ts.map((t) => (t.id === id ? { ...t, ...patch } : t)));
 
+  const internalTitle = (url: string): string | null => {
+    switch (url) {
+      case "aether://settings": return "Settings";
+      case "aether://flags": return "Experiments";
+      case "aether://about": return "About Aether";
+      case "aether://downloads": return "Downloads";
+      case "aether://passwords": return "Passwords";
+      case "aether://extensions": return "Extensions";
+      default: return null;
+    }
+  };
+
   const navigate = (raw: string) => {
     const url = normalizeUrl(raw);
     if (!active) return;
-    if (url === "aether://settings") { routerNav("/settings"); return; }
-    if (url === "aether://flags") { routerNav("/flags"); return; }
-    if (url === "aether://about") { routerNav("/about"); return; }
-    if (url === "aether://downloads") { routerNav("/downloads"); return; }
 
     const newHist = [...active.history.slice(0, active.historyIndex + 1), url];
+    const internal = internalTitle(url);
     updateTab(active.id, {
       url,
       history: newHist,
       historyIndex: newHist.length - 1,
-      title: url === NEW_TAB ? "New Tab" : hostnameOf(url),
+      title: url === NEW_TAB ? "New Tab" : internal ?? hostnameOf(url),
     });
-    if (url !== NEW_TAB) {
+    if (url !== NEW_TAB && !internal) {
       setHistory((h) => [{ id: crypto.randomUUID(), title: hostnameOf(url), url, visitedAt: Date.now() }, ...h]);
     }
   };
 
   const openNewTab = (url: string = NEW_TAB) => {
     const t = newTab(url);
+    const internal = internalTitle(url);
+    if (internal) t.title = internal;
     setTabs((ts) => [...ts, t]);
     setActiveId(t.id);
-    if (url !== NEW_TAB) {
+    if (url !== NEW_TAB && !internal) {
       setHistory((h) => [{ id: crypto.randomUUID(), title: hostnameOf(url), url, visitedAt: Date.now() }, ...h]);
     }
   };
@@ -164,7 +181,7 @@ const Index = () => {
         if (active) closeTab(active.id);
       } else if (mod && !e.shiftKey && e.key.toLowerCase() === "j") {
         e.preventDefault();
-        routerNav("/downloads");
+        openNewTab("aether://downloads");
       } else if (mod && e.shiftKey && e.key.toLowerCase() === "n") {
         e.preventDefault();
         window.open("/incognito", "_blank", "width=1200,height=800,noopener");
@@ -223,21 +240,21 @@ const Index = () => {
         onClose={() => setShowMenu(false)}
         onNewTab={() => { setShowMenu(false); openNewTab(); }}
         onShowHistory={() => { setShowMenu(false); setShowHistory(true); }}
-        onOpenDownloads={() => { setShowMenu(false); routerNav("/downloads"); }}
+        onOpenDownloads={() => { setShowMenu(false); openNewTab("aether://downloads"); }}
 
         onShowBookmarks={() => { setShowMenu(false); setShowBookmarks((s) => !s); }}
         onAddBookmark={() => { setShowMenu(false); toggleBookmark(); }}
         onClearHistory={() => { setHistory([]); setShowMenu(false); toast.success("Browsing history cleared"); }}
-        onOpenPasswords={() => { setShowMenu(false); routerNav("/passwords"); }}
+        onOpenPasswords={() => { setShowMenu(false); openNewTab("aether://passwords"); }}
         onOpenIncognito={() => { setShowMenu(false); window.open("/incognito", "_blank", "width=1200,height=800,noopener"); }}
-        onOpenExtensions={() => { setShowMenu(false); routerNav("/extensions"); }}
+        onOpenExtensions={() => { setShowMenu(false); openNewTab("aether://extensions"); }}
         onZoomIn={() => setZoom((z) => Math.min(2, +(z + 0.1).toFixed(2)))}
         onZoomOut={() => setZoom((z) => Math.max(0.5, +(z - 0.1).toFixed(2)))}
         onResetZoom={() => setZoom(1)}
         onPrint={() => { setShowMenu(false); window.print(); }}
-        onAbout={() => { setShowMenu(false); routerNav("/about"); }}
-        onOpenSettings={() => { setShowMenu(false); routerNav("/settings"); }}
-        onOpenFlags={() => { setShowMenu(false); routerNav("/flags"); }}
+        onAbout={() => { setShowMenu(false); openNewTab("aether://about"); }}
+        onOpenSettings={() => { setShowMenu(false); openNewTab("aether://settings"); }}
+        onOpenFlags={() => { setShowMenu(false); openNewTab("aether://flags"); }}
         onReopenClosed={() => { setShowMenu(false); reopenLastClosed(); }}
         onFindInPage={() => { setShowMenu(false); toast.info("Find in page", { description: "Use your browser's native Ctrl+F inside the page frame." }); }}
         onShowShortcuts={() => {
@@ -279,6 +296,18 @@ const Index = () => {
         <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", width: `${100 / zoom}%`, height: `${100 / zoom}%` }} className="h-full w-full">
         {active.url === NEW_TAB ? (
           <NewTabPage bookmarks={bookmarks} history={history} onNavigate={navigate} wallpaper={settings.wallpaper} />
+        ) : active.url === "aether://settings" ? (
+          <div className="h-full w-full overflow-auto"><SettingsPage /></div>
+        ) : active.url === "aether://flags" ? (
+          <div className="h-full w-full overflow-auto"><FlagsPage /></div>
+        ) : active.url === "aether://about" ? (
+          <div className="h-full w-full overflow-auto"><AboutPage /></div>
+        ) : active.url === "aether://downloads" ? (
+          <div className="h-full w-full overflow-auto"><DownloadsPage /></div>
+        ) : active.url === "aether://passwords" ? (
+          <div className="h-full w-full overflow-auto"><PasswordsPage /></div>
+        ) : active.url === "aether://extensions" ? (
+          <div className="h-full w-full overflow-auto"><ExtensionsPage /></div>
         ) : (
           <WebView
             key={active.id + active.url}
