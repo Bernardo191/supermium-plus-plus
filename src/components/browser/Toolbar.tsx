@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight, RotateCw, Home, Star, StarOff, Shield, MoreVerti
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
+import { ExtensionsMenu } from "./ExtensionsMenu";
 
 type Props = {
   url: string;
@@ -17,6 +18,7 @@ type Props = {
   onToggleBookmark: () => void;
   onToggleMenu: () => void;
   onToggleDark: () => void;
+  onOpenExtensions: () => void;
 };
 
 export const Toolbar = (p: Props) => {
@@ -51,6 +53,7 @@ export const Toolbar = (p: Props) => {
         </button>
       </form>
 
+      <ExtensionsMenu onManage={p.onOpenExtensions} />
       <IconBtn onClick={p.onToggleMenu} label="Customize and control"><MoreVertical className="h-4 w-4" /></IconBtn>
     </div>
   );
