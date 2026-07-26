@@ -144,7 +144,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
               )}
             >
               {!active && (
-                <span className="pointer-events-none absolute inset-x-1 inset-y-1 rounded-lg bg-foreground/0 transition-colors group-hover:bg-foreground/10 group-active:bg-foreground/[0.18]" />
+                <span className="tab-pill pointer-events-none absolute inset-x-1 inset-y-1 bg-foreground/0 transition-colors group-hover:bg-foreground/10 group-active:bg-foreground/[0.18]" />
               )}
               <div className="relative z-[1] flex min-w-0 flex-1 items-center gap-2 px-3">
                 {t.url !== "aether://newtab" && (
