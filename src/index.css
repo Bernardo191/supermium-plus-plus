@@ -208,13 +208,14 @@ All colors MUST be HSL.
   --chrome-toolbar: 0 0% 96%;
   --tab-active: 0 0% 96%;
   --tab-inactive: 0 0% 85%;
+  --tab-radius: 2px;
   --omnibox: 0 0% 100%;
   --border: 0 0% 70%;
   --radius: 0.125rem;
 }
 .theme-legacy-2016 .tab-shape {
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
+  border-top-left-radius: var(--tab-radius);
+  border-top-right-radius: var(--tab-radius);
   clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
 }
 .theme-legacy-2016 .tab-shape::before,
