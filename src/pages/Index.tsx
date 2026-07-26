@@ -181,7 +181,7 @@ const Index = () => {
         if (active) closeTab(active.id);
       } else if (mod && !e.shiftKey && e.key.toLowerCase() === "j") {
         e.preventDefault();
-        routerNav("/downloads");
+        openNewTab("aether://downloads");
       } else if (mod && e.shiftKey && e.key.toLowerCase() === "n") {
         e.preventDefault();
         window.open("/incognito", "_blank", "width=1200,height=800,noopener");
