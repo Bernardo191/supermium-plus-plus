@@ -232,6 +232,7 @@ const Index = () => {
         onToggleBookmark={toggleBookmark}
         onToggleMenu={() => setShowMenu((s) => !s)}
         onToggleDark={() => setDark((d) => !d)}
+        onOpenExtensions={() => openNewTab("aether://extensions")}
       />
       <MainMenu
         open={showMenu}
