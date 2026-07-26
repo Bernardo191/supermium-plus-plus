@@ -104,9 +104,11 @@ const Index = () => {
 
   const openNewTab = (url: string = NEW_TAB) => {
     const t = newTab(url);
+    const internal = internalTitle(url);
+    if (internal) t.title = internal;
     setTabs((ts) => [...ts, t]);
     setActiveId(t.id);
-    if (url !== NEW_TAB) {
+    if (url !== NEW_TAB && !internal) {
       setHistory((h) => [{ id: crypto.randomUUID(), title: hostnameOf(url), url, visitedAt: Date.now() }, ...h]);
     }
   };
