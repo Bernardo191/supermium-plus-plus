@@ -30,6 +30,25 @@ export const NewTabPage = ({ bookmarks, history, onNavigate, wallpaper }: Props)
       style={wallpaperStyle}
     >
       <div className="mx-auto flex min-h-full max-w-3xl flex-col items-center px-6 pt-24 pb-16">
+        {showWarning && (
+          <div className="mb-6 w-full max-w-xl rounded-xl border border-destructive/30 bg-destructive/15 p-4 text-sm text-destructive shadow-sm">
+            <div className="flex items-start gap-3">
+              <div className="flex-1">
+                <p className="font-semibold">Goodbye — this project is being deleted</p>
+                <p className="mt-1 opacity-90">
+                  Aether will be removed at midnight due to free credit abuse. Thanks for trying it out.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowWarning(false)}
+                className="rounded-md p-1 hover:bg-destructive/20 transition"
+                aria-label="Dismiss warning"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        )}
         <div className="mb-8 flex items-center gap-3">
           <img src={aetherLogo.url} alt="Aether logo" className="h-14 w-14 drop-shadow-lg" />
           <h1 className="text-4xl font-light tracking-tight">{t("app_name")}</h1>
