@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Bookmark, HistoryItem, faviconFor, hostnameOf } from "@/lib/browser-store";
 import { useI18n } from "@/lib/i18n";
 import { useState } from "react";
