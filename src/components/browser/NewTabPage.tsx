@@ -14,6 +14,7 @@ type Props = {
 export const NewTabPage = ({ bookmarks, history, onNavigate, wallpaper }: Props) => {
   const { t } = useI18n();
   const [q, setQ] = useState("");
+  const [showWarning, setShowWarning] = useState(true);
   const recent = Array.from(new Map(history.map(h => [h.url, h])).values()).slice(0, 8);
 
   const isImage = wallpaper && /^(https?:\/\/|\/|data:)/i.test(wallpaper);
