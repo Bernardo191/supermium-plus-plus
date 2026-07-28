@@ -312,3 +312,15 @@ All colors MUST be HSL.
 
 
 
+
+@keyframes aether-dust {
+  0% { opacity: 1; filter: blur(0px); transform: translateY(0) scale(1); }
+  40% { opacity: 0.9; filter: blur(1px); transform: translateY(-4px) scale(1.02); }
+  100% { opacity: 0; filter: blur(14px); transform: translateY(-40px) scale(1.15); }
+}
+.aether-dust {
+  animation: aether-dust 2.4s ease-out forwards;
+}
+.aether-dust-delayed {
+  animation: aether-dust 2.4s ease-out 0.4s forwards;
+}
