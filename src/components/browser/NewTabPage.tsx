@@ -1,8 +1,11 @@
-import { Search, X } from "lucide-react";
+import { Search, X, GitFork } from "lucide-react";
 import { Bookmark, HistoryItem, faviconFor, hostnameOf } from "@/lib/browser-store";
 import { useI18n } from "@/lib/i18n";
 import { useState } from "react";
 import aetherLogo from "@/assets/aether-logo.png.asset.json";
+
+const REMIX_URL = "https://lovable.dev/projects/0853b2c8-cb51-4581-a994-e14b3451d385/remix";
+
 
 type Props = {
   bookmarks: Bookmark[];
