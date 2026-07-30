@@ -1,8 +1,11 @@
-import { Search, X } from "lucide-react";
+import { Search, X, GitFork } from "lucide-react";
 import { Bookmark, HistoryItem, faviconFor, hostnameOf } from "@/lib/browser-store";
 import { useI18n } from "@/lib/i18n";
 import { useState } from "react";
 import aetherLogo from "@/assets/aether-logo.png.asset.json";
+
+const REMIX_URL = "https://lovable.dev/projects/0853b2c8-cb51-4581-a994-e14b3451d385/remix";
+
 
 type Props = {
   bookmarks: Bookmark[];
@@ -57,6 +60,16 @@ export const NewTabPage = ({ bookmarks, history, onNavigate, wallpaper }: Props)
             />
           </div>
         </form>
+        <a
+          href={REMIX_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-md hover:opacity-90 transition"
+        >
+          <GitFork className="h-4 w-4" />
+          Remix this project
+        </a>
+
 
         {bookmarks.length > 0 && (
           <section className="mt-12 w-full">
