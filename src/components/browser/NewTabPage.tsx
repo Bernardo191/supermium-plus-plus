@@ -45,30 +45,34 @@ export const NewTabPage = ({ bookmarks, history, onNavigate, wallpaper }: Props)
           </h1>
         </div>
 
-        <form
-          onSubmit={(e) => { e.preventDefault(); if (q.trim()) onNavigate(q); }}
-          className="w-full max-w-xl"
-        >
-          <div className="flex items-center gap-3 rounded-full bg-card px-5 py-3.5 shadow-md ring-1 ring-border focus-within:ring-2 focus-within:ring-primary transition">
-            <Search className="h-5 w-5 text-muted-foreground" />
-            <input
-              autoFocus
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder={t("search_the_web")}
-              className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
-            />
-          </div>
-        </form>
-        <a
-          href={REMIX_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-md hover:opacity-90 transition"
-        >
-          <GitFork className="h-4 w-4" />
-          Remix this project
-        </a>
+        <div className="flex w-full max-w-2xl items-center gap-3">
+          <form
+            onSubmit={(e) => { e.preventDefault(); if (q.trim()) onNavigate(q); }}
+            className="flex-1"
+          >
+            <div className="flex items-center gap-3 rounded-full bg-card px-5 py-3.5 shadow-md ring-1 ring-border focus-within:ring-2 focus-within:ring-primary transition">
+              <Search className="h-5 w-5 text-muted-foreground" />
+              <input
+                autoFocus
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder={t("search_the_web")}
+                className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
+              />
+            </div>
+          </form>
+          <a
+            href={REMIX_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-medium text-primary-foreground shadow-md hover:opacity-90 transition"
+          >
+            <GitFork className="h-4 w-4" />
+            Remix
+          </a>
+        </div>
+
+
 
 
         {bookmarks.length > 0 && (
