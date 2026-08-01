@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Tab, faviconFor } from "@/lib/browser-store";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/lib/settings-store";
+import { WorkspacesMenu } from "./WorkspacesMenu";
+import type { Workspace } from "@/lib/workspaces-store";
 
 type Props = {
   tabs: Tab[];
@@ -11,9 +13,14 @@ type Props = {
   onClose: (id: string) => void;
   onNew: () => void;
   onOpenSearch: () => void;
+  workspaces: Workspace[];
+  activeWorkspaceId: string;
+  onSwitchWorkspace: (id: string) => void;
+  onCreateWorkspace: (name: string, color: string) => void;
+  onDeleteWorkspace: (id: string) => void;
 };
 
-export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch }: Props) => {
+export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch, workspaces, activeWorkspaceId, onSwitchWorkspace, onCreateWorkspace, onDeleteWorkspace }: Props) => {
   const [settings] = useSettings();
   const legacy = settings.theme !== "modern";
   const flushTop = settings.theme === "legacy-2018" || settings.theme === "legacy-2021";
@@ -67,6 +74,19 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
   ) : null;
 
 
+
+  const workspacesBtn = (
+    <div className="mr-1 mb-1 flex items-center">
+      <WorkspacesMenu
+        workspaces={workspaces}
+        activeId={activeWorkspaceId}
+        onSwitch={onSwitchWorkspace}
+        onCreate={onCreateWorkspace}
+        onDelete={onDeleteWorkspace}
+        compact={legacy}
+      />
+    </div>
+  );
 
   const macControls = settings.windowControls && settings.windowControlsStyle === "macos" ? (
     <div className={cn("flex items-center gap-2 px-3 shrink-0", flushTop ? "h-10" : "h-9")}>
@@ -124,6 +144,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
     <div className={cn("flex items-end gap-1 px-2 bg-chrome-bar select-none", flushTop ? "pt-0" : "pt-2")}>
       {macControls}
       {pos === "left" && <div className="mr-0.5 mb-1 flex items-center">{searchBtn}</div>}
+      {workspacesBtn}
 
       <div className="flex flex-1 items-end gap-0.5 min-w-0">
         {tabs.flatMap((t, i) => {
