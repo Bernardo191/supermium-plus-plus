@@ -21,6 +21,10 @@ import {
   loadBookmarks, loadHistory, newTab, normalizeUrl, saveBookmarks, saveHistory,
 } from "@/lib/browser-store";
 import { useSettings, type ChromeTheme } from "@/lib/settings-store";
+import {
+  loadWorkspaces, saveWorkspaces, loadActiveWorkspaceId, saveActiveWorkspaceId,
+  loadWorkspaceTabs, saveWorkspaceTabs, clearWorkspaceTabs, WORKSPACE_COLORS, type Workspace,
+} from "@/lib/workspaces-store";
 
 
 const Index = () => {
@@ -37,10 +41,18 @@ const Index = () => {
   const [zoom, setZoom] = useState(1);
   const [showBookmarks, setShowBookmarks] = useState(true);
   const [closedTabs, setClosedTabs] = useState<ClosedTab[]>([]);
+  const [workspaces, setWorkspaces] = useState<Workspace[]>(() => loadWorkspaces());
+  const [activeWorkspaceId, setActiveWorkspaceId] = useState<string>(() => loadActiveWorkspaceId());
 
   // init
   useEffect(() => {
-    setActiveId(tabs[0].id);
+    const stored = loadWorkspaceTabs(loadActiveWorkspaceId());
+    if (stored) {
+      setTabs(stored.tabs);
+      setActiveId(stored.tabs.find((t) => t.id === stored.activeId) ? stored.activeId : stored.tabs[0].id);
+    } else {
+      setActiveId(tabs[0].id);
+    }
     const bm = loadBookmarks();
     setBookmarks(bm.length ? bm : defaultBookmarks);
     setHistory(loadHistory());
@@ -52,6 +64,54 @@ const Index = () => {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
+
+  // Persist tabs of the current workspace
+  useEffect(() => {
+    if (!activeId || !tabs.length) return;
+    saveWorkspaceTabs(activeWorkspaceId, tabs, activeId);
+  }, [tabs, activeId, activeWorkspaceId]);
+
+  const switchWorkspace = (id: string) => {
+    if (id === activeWorkspaceId) return;
+    saveWorkspaceTabs(activeWorkspaceId, tabs, activeId);
+    const stored = loadWorkspaceTabs(id);
+    const nextTabs = stored?.tabs?.length ? stored.tabs : [newTab()];
+    setTabs(nextTabs);
+    setActiveId(stored?.tabs?.find((t) => t.id === stored.activeId) ? stored.activeId : nextTabs[0].id);
+    setActiveWorkspaceId(id);
+    saveActiveWorkspaceId(id);
+  };
+
+  const createWorkspace = (name: string, color: string) => {
+    const ws: Workspace = { id: crypto.randomUUID(), name, color: color || WORKSPACE_COLORS[0] };
+    const list = [...workspaces, ws];
+    setWorkspaces(list);
+    saveWorkspaces(list);
+    saveWorkspaceTabs(activeWorkspaceId, tabs, activeId);
+    const fresh = newTab();
+    setTabs([fresh]);
+    setActiveId(fresh.id);
+    setActiveWorkspaceId(ws.id);
+    saveActiveWorkspaceId(ws.id);
+    toast.success(`Workspace "${name}" created`);
+  };
+
+  const deleteWorkspace = (id: string) => {
+    if (workspaces.length <= 1) return;
+    const list = workspaces.filter((w) => w.id !== id);
+    setWorkspaces(list);
+    saveWorkspaces(list);
+    clearWorkspaceTabs(id);
+    if (id === activeWorkspaceId) {
+      const target = list[0];
+      const stored = loadWorkspaceTabs(target.id);
+      const nextTabs = stored?.tabs?.length ? stored.tabs : [newTab()];
+      setTabs(nextTabs);
+      setActiveId(nextTabs[0].id);
+      setActiveWorkspaceId(target.id);
+      saveActiveWorkspaceId(target.id);
+    }
+  };
 
   // Apply legacy chrome theme classes to the root element
   useEffect(() => {
@@ -207,6 +267,11 @@ const Index = () => {
         onClose={closeTab}
         onNew={() => openNewTab()}
         onOpenSearch={() => setShowTabSearch((s) => !s)}
+        workspaces={workspaces}
+        activeWorkspaceId={activeWorkspaceId}
+        onSwitchWorkspace={switchWorkspace}
+        onCreateWorkspace={createWorkspace}
+        onDeleteWorkspace={deleteWorkspace}
       />
       <TabSearch
         open={showTabSearch}
