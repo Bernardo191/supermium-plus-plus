@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
 import { ExtensionsMenu } from "./ExtensionsMenu";
+import { useSettings } from "@/lib/settings-store";
 
 type Props = {
   url: string;
@@ -23,6 +24,7 @@ type Props = {
 
 export const Toolbar = (p: Props) => {
   const { t } = useI18n();
+  const [settings] = useSettings();
   const [value, setValue] = useState(p.url === "aether://newtab" ? "" : p.url);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,9 +33,13 @@ export const Toolbar = (p: Props) => {
   return (
     <div className="toolbar-shape flex items-center gap-1 bg-chrome-toolbar px-3 py-2 border-b border-border">
       <IconBtn onClick={p.onBack} disabled={!p.canBack} label="Back"><ArrowLeft className="h-4 w-4" /></IconBtn>
-      <IconBtn onClick={p.onForward} disabled={!p.canForward} label="Forward"><ArrowRight className="h-4 w-4" /></IconBtn>
+      {(!settings.autoHideForward || p.canForward) && (
+        <IconBtn onClick={p.onForward} disabled={!p.canForward} label="Forward"><ArrowRight className="h-4 w-4" /></IconBtn>
+      )}
       <IconBtn onClick={p.onReload} label="Reload"><RotateCw className="h-4 w-4" /></IconBtn>
-      <IconBtn onClick={p.onHome} label="Home"><Home className="h-4 w-4" /></IconBtn>
+      {settings.showHomeButton && (
+        <IconBtn onClick={p.onHome} label="Home"><Home className="h-4 w-4" /></IconBtn>
+      )}
 
       <form
         className="mx-2 flex flex-1 items-center gap-2 rounded-full bg-omnibox px-4 py-1.5 ring-1 ring-transparent focus-within:ring-primary focus-within:bg-card transition"

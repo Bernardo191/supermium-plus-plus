@@ -25,6 +25,12 @@ const SettingsPage = () => {
           <Row label={t("show_bookmarks_bar")} description={t("show_bookmarks_bar_desc")}>
             <Toggle checked={settings.showBookmarksBar} onChange={(v) => update({ showBookmarksBar: v })} />
           </Row>
+          <Row label="Show home button" description="Display the home button in the toolbar, like Chrome's optional home button.">
+            <Toggle checked={settings.showHomeButton} onChange={(v) => update({ showHomeButton: v })} />
+          </Row>
+          <Row label="Automatic forward button" description="Hide the forward arrow until you navigate back, then show it automatically.">
+            <Toggle checked={settings.autoHideForward} onChange={(v) => update({ autoHideForward: v })} />
+          </Row>
           <Row label="Force dark mode" description="Apply a dark theme to the browser UI. Supported on Modern and the 2021 theme (dark mode landed in Chrome 73 on macOS and Chrome 74 on Windows/Linux).">
             <Toggle
               checked={settings.forceDark}

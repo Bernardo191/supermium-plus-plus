@@ -13,6 +13,8 @@ export type Settings = {
   windowControls: boolean; // show minimize/maximize buttons
   windowControlsStyle: WindowControlsStyle; // visual style for window controls
   forceDark: boolean; // force app-wide dark mode
+  showHomeButton: boolean; // show the home button in the toolbar
+  autoHideForward: boolean; // hide the forward button until a back navigation happens
 };
 
 export type Flags = Record<string, boolean>;
@@ -36,6 +38,8 @@ const defaultSettings: Settings = {
   windowControls: false,
   windowControlsStyle: "windows",
   forceDark: false,
+  showHomeButton: true,
+  autoHideForward: true,
 };
 
 const defaultFlags: Flags = Object.fromEntries(FLAG_DEFS.map((f) => [f.id, f.default]));
