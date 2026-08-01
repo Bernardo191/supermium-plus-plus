@@ -169,7 +169,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
                 flushTop ? "h-10" : "h-9"
               )}
             >
-              <div className="h-4 w-px bg-foreground/15" />
+              <div className="h-4 w-px bg-foreground/25" />
             </div>
           ) : null;
           return separator ? [tab, separator] : [tab];
