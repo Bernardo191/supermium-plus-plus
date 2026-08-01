@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export type TabSearchPosition = "left" | "right" | "disabled";
 export type ChromeTheme = "modern" | "legacy-2010" | "legacy-2016" | "legacy-2018" | "legacy-2021";
 export type WindowControlsStyle = "windows" | "macos";
+export type WorkspacesButtonMode = "hidden" | "icon" | "full";
 
 export type Settings = {
   tabSearchPosition: TabSearchPosition;
@@ -15,6 +16,7 @@ export type Settings = {
   forceDark: boolean; // force app-wide dark mode
   showHomeButton: boolean; // show the home button in the toolbar
   autoHideForward: boolean; // hide the forward button until a back navigation happens
+  workspacesButton: WorkspacesButtonMode; // workspaces button display in the tab strip
 };
 
 export type Flags = Record<string, boolean>;
@@ -40,6 +42,7 @@ const defaultSettings: Settings = {
   forceDark: false,
   showHomeButton: true,
   autoHideForward: true,
+  workspacesButton: "hidden",
 };
 
 const defaultFlags: Flags = Object.fromEntries(FLAG_DEFS.map((f) => [f.id, f.default]));
