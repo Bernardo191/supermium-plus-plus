@@ -31,6 +31,17 @@ const SettingsPage = () => {
           <Row label="Automatic forward button" description="Hide the forward arrow until you navigate back, then show it automatically.">
             <Toggle checked={settings.autoHideForward} onChange={(v) => update({ autoHideForward: v })} />
           </Row>
+          <Row label="Workspaces button" description="Show the workspaces button in the tab strip. Hidden by default; choose icon only for a compact dot.">
+            <select
+              value={settings.workspacesButton}
+              onChange={(e) => update({ workspacesButton: e.target.value as any })}
+              className="rounded-md border border-border bg-background px-3 py-1.5 text-sm"
+            >
+              <option value="hidden">Hidden</option>
+              <option value="icon">Icon only</option>
+              <option value="full">Icon and name</option>
+            </select>
+          </Row>
           <Row label="Force dark mode" description="Apply a dark theme to the browser UI. Supported on Modern and the 2021 theme (dark mode landed in Chrome 73 on macOS and Chrome 74 on Windows/Linux).">
             <Toggle
               checked={settings.forceDark}

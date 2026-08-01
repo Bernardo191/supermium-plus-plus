@@ -75,7 +75,8 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
 
 
 
-  const workspacesBtn = (
+  const wsMode = settings.workspacesButton;
+  const workspacesBtn = wsMode === "hidden" ? null : (
     <div className="mr-1 mb-1 flex items-center">
       <WorkspacesMenu
         workspaces={workspaces}
@@ -83,7 +84,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
         onSwitch={onSwitchWorkspace}
         onCreate={onCreateWorkspace}
         onDelete={onDeleteWorkspace}
-        compact={legacy}
+        compact={legacy || wsMode === "icon"}
       />
     </div>
   );
