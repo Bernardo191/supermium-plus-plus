@@ -161,7 +161,9 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
               </div>
             </div>
           );
-          const separator = i < tabs.length - 1 ? (
+          const next = tabs[i + 1];
+          const nextActive = next?.id === activeId;
+          const separator = (i < tabs.length - 1 && tabs.length >= 3 && !active && !nextActive) ? (
             <div
               key={`sep-${t.id}`}
               className={cn(
@@ -173,6 +175,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
             </div>
           ) : null;
           return separator ? [tab, separator] : [tab];
+
         })}
         <button
           onClick={onNew}
