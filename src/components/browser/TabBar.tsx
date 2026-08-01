@@ -126,11 +126,11 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
       {pos === "left" && <div className="mr-0.5 mb-1 flex items-center">{searchBtn}</div>}
 
       <div className="flex flex-1 items-end gap-0.5 min-w-0">
-        {tabs.map((t) => {
+        {tabs.flatMap((t, i) => {
           const active = t.id === activeId;
-          return (
+          const tab = (
             <div
-              key={t.id}
+              key={`tab-${t.id}`}
               onClick={() => onSelect(t.id)}
               onAuxClick={(e) => { if (e.button === 1) onClose(t.id); }}
               title={t.title}
@@ -161,6 +161,18 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch 
               </div>
             </div>
           );
+          const separator = i < tabs.length - 1 ? (
+            <div
+              key={`sep-${t.id}`}
+              className={cn(
+                "flex items-center justify-center",
+                flushTop ? "h-10" : "h-9"
+              )}
+            >
+              <div className="h-4 w-px bg-foreground/15" />
+            </div>
+          ) : null;
+          return separator ? [tab, separator] : [tab];
         })}
         <button
           onClick={onNew}
