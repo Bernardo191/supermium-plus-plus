@@ -185,6 +185,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
           );
           const next = tabs[i + 1];
           const nextActive = next?.id === activeId;
+          const isLast = i === tabs.length - 1;
           const separator = (i < tabs.length - 1 && tabs.length >= 3 && !active && !nextActive) ? (
             <div
               key={`sep-${t.id}`}
@@ -196,7 +197,21 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
               <div className="h-4 w-px bg-foreground/25" />
             </div>
           ) : null;
-          return separator ? [tab, separator] : [tab];
+          const lastSeparator = (isLast && tabs.length >= 2 && !active) ? (
+            <div
+              key={`sep-end-${t.id}`}
+              className={cn(
+                "flex items-center justify-center",
+                flushTop ? "h-10" : "h-9"
+              )}
+            >
+              <div className="h-4 w-px bg-foreground/25" />
+            </div>
+          ) : null;
+          const result: React.ReactNode[] = [tab];
+          if (separator) result.push(separator);
+          if (lastSeparator) result.push(lastSeparator);
+          return result;
 
         })}
         <button
