@@ -1,5 +1,5 @@
 import { X, Plus, ChevronDown, Minus, Square, Copy } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tab, faviconFor } from "@/lib/browser-store";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/lib/settings-store";
@@ -34,6 +34,23 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
         : settings.tabSearchPosition;
 
   const [maximized, setMaximized] = useState<boolean>(typeof document !== "undefined" && !!document.fullscreenElement);
+  const stripRef = useRef<HTMLDivElement | null>(null);
+  const [stripWidth, setStripWidth] = useState(0);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const el = stripRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setStripWidth(el.clientWidth));
+    ro.observe(el);
+    setStripWidth(el.clientWidth);
+    return () => ro.disconnect();
+  }, []);
+
+  // approximate per-tab width (minus the + button and dividers)
+  const perTab = tabs.length ? Math.max(0, (stripWidth - 40 - tabs.length * 4) / tabs.length) : 240;
+  const compact = perTab < 80;
+  const iconOnly = perTab < 56;
 
   useEffect(() => {
     const onFs = () => setMaximized(!!document.fullscreenElement);
@@ -147,14 +164,18 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
       {pos === "left" && <div className="mr-0.5 mb-1 flex items-center">{searchBtn}</div>}
       {workspacesBtn}
 
-      <div className="flex flex-1 items-end gap-0.5 min-w-0">
+      <div ref={stripRef} className="flex flex-1 items-end gap-0.5 min-w-0">
         {tabs.flatMap((t, i) => {
           const active = t.id === activeId;
+          const hovered = hoveredId === t.id;
+          const showClose = active || hovered || !compact;
           const tab = (
             <div
               key={`tab-${t.id}`}
               onClick={() => onSelect(t.id)}
               onAuxClick={(e) => { if (e.button === 1) onClose(t.id); }}
+              onMouseEnter={() => setHoveredId(t.id)}
+              onMouseLeave={() => setHoveredId((c) => (c === t.id ? null : c))}
               title={t.title}
               className={cn(
                 "tab-shape group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center text-xs transition-colors",
@@ -168,21 +189,47 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
               {!active && (
                 <span className="tab-pill pointer-events-none absolute inset-x-1 top-1/2 h-7 -translate-y-1/2 bg-foreground/0 transition-colors group-hover:bg-foreground/10 group-active:bg-foreground/[0.18]" />
               )}
-              <div className="relative z-[1] flex min-w-0 flex-1 items-center gap-2 px-3">
-                {t.url !== "aether://newtab" && (
-                  <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
+              <div className={cn(
+                "relative z-[1] flex min-w-0 flex-1 items-center",
+                iconOnly ? "justify-center px-1" : compact ? "gap-1 px-1.5" : "gap-2 px-3"
+              )}>
+                {iconOnly ? (
+                  showClose ? (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onClose(t.id); }}
+                      className="rounded-full p-0.5 opacity-70 hover:bg-foreground/10 hover:opacity-100 shrink-0"
+                      aria-label="Close tab"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  ) : (
+                    t.url !== "aether://newtab" ? (
+                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
+                    ) : (
+                      <span className="h-4 w-4 shrink-0 rounded-sm bg-foreground/20" />
+                    )
+                  )
+                ) : (
+                  <>
+                    {t.url !== "aether://newtab" && (
+                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
+                    )}
+                    <span className="flex-1 truncate min-w-0">{t.title}</span>
+                    {showClose && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onClose(t.id); }}
+                        className="rounded-full p-0.5 opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0"
+                        aria-label="Close tab"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    )}
+                  </>
                 )}
-                <span className="flex-1 truncate min-w-0">{t.title}</span>
-                <button
-                  onClick={(e) => { e.stopPropagation(); onClose(t.id); }}
-                  className="rounded-full p-0.5 opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0"
-                  aria-label="Close tab"
-                >
-                  <X className="h-3.5 w-3.5" />
-                </button>
               </div>
             </div>
           );
+
           const next = tabs[i + 1];
           const nextActive = next?.id === activeId;
           const isLast = i === tabs.length - 1;
