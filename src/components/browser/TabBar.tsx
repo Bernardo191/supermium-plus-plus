@@ -1,5 +1,5 @@
 import { X, Plus, ChevronDown, Minus, Square, Copy } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tab, faviconFor } from "@/lib/browser-store";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/lib/settings-store";
@@ -34,6 +34,23 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
         : settings.tabSearchPosition;
 
   const [maximized, setMaximized] = useState<boolean>(typeof document !== "undefined" && !!document.fullscreenElement);
+  const stripRef = useRef<HTMLDivElement | null>(null);
+  const [stripWidth, setStripWidth] = useState(0);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const el = stripRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setStripWidth(el.clientWidth));
+    ro.observe(el);
+    setStripWidth(el.clientWidth);
+    return () => ro.disconnect();
+  }, []);
+
+  // approximate per-tab width (minus the + button and dividers)
+  const perTab = tabs.length ? Math.max(0, (stripWidth - 40 - tabs.length * 4) / tabs.length) : 240;
+  const compact = perTab < 80;
+  const iconOnly = perTab < 56;
 
   useEffect(() => {
     const onFs = () => setMaximized(!!document.fullscreenElement);
