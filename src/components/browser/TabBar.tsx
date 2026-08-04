@@ -33,6 +33,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
         ? "right"
         : settings.tabSearchPosition;
 
+  const [windowed, setWindowed] = useState(false);
   const [maximized, setMaximized] = useState<boolean>(typeof document !== "undefined" && !!document.fullscreenElement);
   const stripRef = useRef<HTMLDivElement | null>(null);
   const [stripWidth, setStripWidth] = useState(0);
@@ -59,8 +60,13 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   }, []);
 
   const onMinimize = async () => {
-    // Leave fullscreen so the browser returns to a normal window
+    // Toggle windowed mode (not true fullscreen)
     try { if (document.fullscreenElement) await document.exitFullscreen(); } catch {}
+    setWindowed((w) => {
+      const next = !w;
+      document.documentElement.classList.toggle("window-mode", next);
+      return next;
+    });
     try { (document.activeElement as HTMLElement | null)?.blur?.(); } catch {}
     try { window.blur(); } catch {}
   };
@@ -109,7 +115,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   );
 
   const macControls = settings.windowControls && settings.windowControlsStyle === "macos" ? (
-    <div className={cn("flex items-center gap-2 px-3 shrink-0", flushTop ? "h-[34px]" : "h-9")}>
+    <div className={cn("flex items-center gap-2 px-3 shrink-0", flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9")}>
       <button
         onClick={() => { try { window.close(); } catch {} }}
         title="Close"
@@ -161,7 +167,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   ) : null;
 
   return (
-    <div className={cn("flex items-end gap-1 px-2 bg-chrome-bar select-none", flushTop ? "h-[46px] pt-0" : "pt-2")}>
+    <div className={cn("flex items-end gap-1 px-2 bg-chrome-bar select-none", flushTop ? (windowed ? "h-[46px] pt-0" : "pt-0") : "pt-2")}>
       {macControls}
       {pos === "left" && <div className="mr-0.5 mb-1 flex items-center">{searchBtn}</div>}
       {workspacesBtn}
@@ -181,7 +187,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
               title={t.title}
               className={cn(
                 "tab-shape group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center text-xs transition-colors",
-                flushTop ? "h-[34px]" : "h-9",
+                flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9",
                 "max-w-[240px]",
                 active
                   ? "bg-tab-active text-foreground z-10"
@@ -240,7 +246,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
               key={`sep-${t.id}`}
               className={cn(
                 "flex items-center justify-center",
-                flushTop ? "h-[34px]" : "h-9"
+                flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9"
               )}
             >
               <div className="h-4 w-px bg-foreground/25" />
@@ -251,7 +257,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
               key={`sep-end-${t.id}`}
               className={cn(
                 "flex items-center justify-center",
-                flushTop ? "h-[34px]" : "h-9"
+                flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9"
               )}
             >
               <div className="h-4 w-px bg-foreground/25" />
