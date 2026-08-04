@@ -262,7 +262,7 @@ const Index = () => {
   if (!active) return null;
 
   const shell = (
-    <main className="relative flex h-full w-full flex-col overflow-hidden bg-background text-foreground">
+    <main className={`relative flex ${windowed ? "h-full w-full" : "h-screen w-screen"} flex-col overflow-hidden bg-background text-foreground`}>
       <TabBar
         tabs={tabs}
         activeId={activeId}
