@@ -316,14 +316,6 @@ All colors MUST be HSL.
 
 /* Windowed mode: browser rendered as a floating window instead of fullscreen */
 html.window-mode body {
-  padding: 16px;
   background: hsl(var(--muted));
 }
-html.window-mode #root > main {
-  height: calc(100vh - 32px);
-  width: calc(100vw - 32px);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 12px 40px hsl(0 0% 0% / 0.35);
-  border: 1px solid hsl(var(--border));
-}
+html.window-mode body { padding: 0; }

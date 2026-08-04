@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useSettings } from "@/lib/settings-store";
 import { WorkspacesMenu } from "./WorkspacesMenu";
 import type { Workspace } from "@/lib/workspaces-store";
+import { useWindowed, toggleWindowed } from "@/lib/window-mode";
 
 type Props = {
   tabs: Tab[];
@@ -33,7 +34,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
         ? "right"
         : settings.tabSearchPosition;
 
-  const [windowed, setWindowed] = useState(false);
+  const windowed = useWindowed();
   const [maximized, setMaximized] = useState<boolean>(typeof document !== "undefined" && !!document.fullscreenElement);
   const stripRef = useRef<HTMLDivElement | null>(null);
   const [stripWidth, setStripWidth] = useState(0);
@@ -62,11 +63,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   const onMinimize = async () => {
     // Toggle windowed mode (not true fullscreen)
     try { if (document.fullscreenElement) await document.exitFullscreen(); } catch {}
-    setWindowed((w) => {
-      const next = !w;
-      document.documentElement.classList.toggle("window-mode", next);
-      return next;
-    });
+    toggleWindowed();
     try { (document.activeElement as HTMLElement | null)?.blur?.(); } catch {}
     try { window.blur(); } catch {}
   };
@@ -167,7 +164,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   ) : null;
 
   return (
-    <div className={cn("flex items-end gap-1 px-2 bg-chrome-bar select-none", flushTop ? (windowed ? "h-[46px] pt-0" : "pt-0") : "pt-2")}>
+    <div data-window-drag className={cn("flex items-end gap-1 px-2 bg-chrome-bar select-none", flushTop ? (windowed ? "h-[46px] pt-0" : "pt-0") : "pt-2")}>
       {macControls}
       {pos === "left" && <div className="mr-0.5 mb-1 flex items-center">{searchBtn}</div>}
       {workspacesBtn}

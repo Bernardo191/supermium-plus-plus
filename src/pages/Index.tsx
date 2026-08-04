@@ -21,6 +21,8 @@ import {
   loadBookmarks, loadHistory, newTab, normalizeUrl, saveBookmarks, saveHistory,
 } from "@/lib/browser-store";
 import { useSettings, type ChromeTheme } from "@/lib/settings-store";
+import { useWindowed } from "@/lib/window-mode";
+import { WindowFrame } from "@/components/browser/WindowFrame";
 import {
   loadWorkspaces, saveWorkspaces, loadActiveWorkspaceId, saveActiveWorkspaceId,
   loadWorkspaceTabs, saveWorkspaceTabs, clearWorkspaceTabs, WORKSPACE_COLORS, type Workspace,
@@ -30,6 +32,7 @@ import {
 const Index = () => {
   const routerNav = useNavigate();
   const [settings] = useSettings();
+  const windowed = useWindowed();
   const [tabs, setTabs] = useState<Tab[]>([newTab()]);
   const [activeId, setActiveId] = useState<string>(() => "");
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
@@ -258,8 +261,8 @@ const Index = () => {
 
   if (!active) return null;
 
-  return (
-    <main className="relative flex h-screen w-screen flex-col overflow-hidden bg-background text-foreground">
+  const shell = (
+    <main className="relative flex h-full w-full flex-col overflow-hidden bg-background text-foreground">
       <TabBar
         tabs={tabs}
         activeId={activeId}
@@ -392,6 +395,8 @@ const Index = () => {
       </div>
     </main>
   );
+
+  return windowed ? <WindowFrame>{shell}</WindowFrame> : shell;
 };
 
 export default Index;
