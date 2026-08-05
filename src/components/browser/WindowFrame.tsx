@@ -72,7 +72,7 @@ export const WindowFrame = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       ref={ref}
-      className="fixed overflow-hidden rounded-[32px] ring-2 ring-foreground/15 shadow-[0_25px_80px_-20px_rgba(0,0,0,0.25)] bg-background"
+      className="fixed overflow-hidden rounded-2xl ring-2 ring-foreground/15 shadow-[0_25px_80px_-20px_rgba(0,0,0,0.25)] bg-background"
       style={{ left: rect.x, top: rect.y, width: rect.w, height: rect.h }}
     >
       <div className="h-full w-full overflow-hidden">{children}</div>
