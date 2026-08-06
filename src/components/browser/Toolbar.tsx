@@ -31,7 +31,7 @@ export const Toolbar = (p: Props) => {
   const isSecure = p.url.startsWith("https://");
 
   return (
-    <div className="toolbar-shape flex items-center gap-1 bg-chrome-toolbar px-3 py-2 border-b border-border">
+    <div className="toolbar-shape flex min-w-0 items-center gap-1 bg-chrome-toolbar px-3 py-2 border-b border-border">
       <IconBtn onClick={p.onBack} disabled={!p.canBack} label="Back"><ArrowLeft className="h-4 w-4" /></IconBtn>
       {(!settings.autoHideForward || p.canForward) && (
         <IconBtn onClick={p.onForward} disabled={!p.canForward} label="Forward"><ArrowRight className="h-4 w-4" /></IconBtn>
@@ -42,19 +42,19 @@ export const Toolbar = (p: Props) => {
       )}
 
       <form
-        className="mx-2 flex flex-1 items-center gap-2 rounded-full bg-omnibox px-4 py-1.5 ring-1 ring-transparent focus-within:ring-primary focus-within:bg-card transition"
+        className="mx-2 flex min-w-0 flex-1 shrink items-center gap-2 rounded-full bg-omnibox px-4 py-1.5 ring-1 ring-transparent focus-within:ring-primary focus-within:bg-card transition"
         onSubmit={(e) => { e.preventDefault(); p.onNavigate(value); inputRef.current?.blur(); }}
       >
-        <Shield className={cn("h-4 w-4", isSecure ? "text-primary" : "text-muted-foreground")} />
+        <Shield className={cn("h-4 w-4 shrink-0", isSecure ? "text-primary" : "text-muted-foreground")} />
         <input
           ref={inputRef}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={(e) => e.target.select()}
           placeholder={t("search_placeholder")}
-          className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+          className="w-full min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
-        <button type="button" onClick={p.onToggleBookmark} aria-label="Bookmark" className="text-muted-foreground hover:text-primary">
+        <button type="button" onClick={p.onToggleBookmark} aria-label="Bookmark" className="shrink-0 text-muted-foreground hover:text-primary">
           {p.isBookmarked ? <Star className="h-4 w-4 fill-primary text-primary" /> : <StarOff className="h-4 w-4" />}
         </button>
       </form>
@@ -70,7 +70,7 @@ const IconBtn = ({ children, onClick, disabled, label }: { children: React.React
     onClick={onClick}
     disabled={disabled}
     aria-label={label}
-    className="rounded-full p-2 text-foreground/80 hover:bg-muted disabled:opacity-30 disabled:hover:bg-transparent transition"
+    className="shrink-0 rounded-full p-2 text-foreground/80 hover:bg-muted disabled:opacity-30 disabled:hover:bg-transparent transition"
   >
     {children}
   </button>
