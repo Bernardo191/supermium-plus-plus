@@ -130,6 +130,13 @@ All colors MUST be HSL.
   .tab-pill {
     border-radius: var(--tab-radius);
   }
+  .tab-hover-shape {
+    border-top-left-radius: var(--tab-radius);
+    border-top-right-radius: var(--tab-radius);
+  }
+  .theme-legacy-2016 .tab-hover-shape {
+    clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+  }
   .tab-shape::before,
   .tab-shape::after {
     content: "";
