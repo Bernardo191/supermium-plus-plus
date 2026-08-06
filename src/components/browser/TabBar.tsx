@@ -76,6 +76,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
 
   const isModern = settings.theme === "modern";
   const is2021 = settings.theme === "legacy-2021";
+  const alwaysShape = settings.theme === "legacy-2010" || settings.theme === "legacy-2016";
   const searchBtn = pos !== "disabled" ? (
     <button
       onClick={onOpenSearch}
@@ -192,7 +193,16 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
               )}
             >
               {!active && (
-                <span className="tab-pill pointer-events-none absolute inset-x-1 top-1/2 h-7 -translate-y-1/2 bg-foreground/0 transition-colors group-hover:bg-foreground/10 group-active:bg-foreground/[0.18]" />
+                legacy ? (
+                  <span
+                    className={cn(
+                      "tab-hover-shape pointer-events-none absolute inset-0 transition-colors group-active:bg-foreground/[0.18]",
+                      alwaysShape ? "bg-foreground/[0.08] group-hover:bg-foreground/[0.14]" : "bg-foreground/0 group-hover:bg-foreground/10"
+                    )}
+                  />
+                ) : (
+                  <span className="tab-pill pointer-events-none absolute inset-x-1 top-1/2 h-7 -translate-y-1/2 bg-foreground/0 transition-colors group-hover:bg-foreground/10 group-active:bg-foreground/[0.18]" />
+                )
               )}
               <div className={cn(
                 "relative z-[1] flex min-w-0 flex-1 items-center",
