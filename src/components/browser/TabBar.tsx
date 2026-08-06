@@ -167,7 +167,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   return (
     <div data-window-drag className={cn("flex items-end gap-1 px-2 bg-chrome-bar select-none", flushTop ? (windowed ? "h-[46px] pt-0" : "pt-0") : "pt-2")}>
       {macControls}
-      {pos === "left" && <div className="mr-0.5 mb-1 flex items-center">{searchBtn}</div>}
+      {pos === "left" && <div className={cn("mr-0.5 flex items-center", is2021 && windowed ? "mb-2.5" : "mb-1")}>{searchBtn}</div>}
       {workspacesBtn}
 
       <div ref={stripRef} className="flex flex-1 items-end gap-0.5 min-w-0">
@@ -286,7 +286,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
         </button>
       </div>
 
-      {pos === "right" && <div className="ml-1 mb-1 flex items-center">{searchBtn}</div>}
+      {pos === "right" && <div className={cn("ml-1 flex items-center", is2021 && windowed ? "mb-2.5" : "mb-1")}>{searchBtn}</div>}
       {winControls}
     </div>
   );
