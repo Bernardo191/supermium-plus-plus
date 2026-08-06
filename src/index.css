@@ -137,6 +137,31 @@ All colors MUST be HSL.
   .theme-legacy-2016 .tab-hover-shape {
     clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
   }
+  /* Curved feet for the hover highlight in the 2018 / 2021 themes */
+  .theme-legacy-2018 .tab-hover-shape::before,
+  .theme-legacy-2018 .tab-hover-shape::after,
+  .theme-legacy-2021 .tab-hover-shape::before,
+  .theme-legacy-2021 .tab-hover-shape::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 6px;
+    height: 6px;
+    background: inherit;
+    pointer-events: none;
+  }
+  .theme-legacy-2018 .tab-hover-shape::before,
+  .theme-legacy-2021 .tab-hover-shape::before {
+    left: -6px;
+    -webkit-mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+            mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+  }
+  .theme-legacy-2018 .tab-hover-shape::after,
+  .theme-legacy-2021 .tab-hover-shape::after {
+    right: -6px;
+    -webkit-mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+            mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+  }
   .tab-shape::before,
   .tab-shape::after {
     content: "";
