@@ -64,7 +64,25 @@ const SettingsPage = () => {
               <option value="legacy-2021">{t("theme_legacy_2021")}</option>
             </select>
           </Row>
+          <Row label="Toolbar color" description="Pick any color for the toolbar and active tab, or use the animated rainbow. Works on every theme.">
+            <ColorPicker value={settings.toolbarColor} onChange={(v) => update({ toolbarColor: v })} />
+          </Row>
+          <Row
+            label="Tab strip color"
+            description={
+              settings.theme === "legacy-2010"
+                ? "The 2010 theme keeps its original blue glossy tab strip — pick another theme to customize it."
+                : "Pick any color for the tab strip and inactive tabs, or use the animated rainbow."
+            }
+          >
+            <ColorPicker
+              value={settings.tabstripColor}
+              onChange={(v) => update({ tabstripColor: v })}
+              disabled={settings.theme === "legacy-2010"}
+            />
+          </Row>
           <Row label={t("wallpaper")} description={t("wallpaper_desc")}>
+
             <div className="flex items-center gap-2">
               <input
                 value={settings.wallpaper}
