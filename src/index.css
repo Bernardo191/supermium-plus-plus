@@ -388,3 +388,31 @@ html.chrome-rainbow-toolbar [class*="bg-tab-active"] {
 html.chrome-custom-bar.theme-legacy-2010 [class*="bg-chrome-bar"] {
   background-image: linear-gradient(180deg, hsl(212 70% 55%) 0%, hsl(212 60% 38%) 100%);
 }
+
+/* Dark custom chrome color → white text and icons */
+html.chrome-dark-toolbar .toolbar-shape,
+html.chrome-dark-toolbar .toolbar-shape *,
+html.chrome-dark-toolbar [class*="bg-chrome-toolbar"],
+html.chrome-dark-toolbar [class*="bg-chrome-toolbar"] * {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+html.chrome-dark-toolbar .toolbar-shape input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+html.chrome-dark-bar [class*="bg-chrome-bar"],
+html.chrome-dark-bar [class*="bg-chrome-bar"] * {
+  color: #fff;
+}
+
+/* Menus / popovers follow the rainbow toolbar too */
+html.chrome-rainbow-toolbar [role="menu"],
+html.chrome-rainbow-toolbar [data-radix-popper-content-wrapper] > *,
+html.chrome-rainbow-toolbar [class*="bg-popover"],
+html.chrome-rainbow-toolbar [class*="bg-card"] {
+  background-image: linear-gradient(90deg, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d);
+  background-size: 200% 100%;
+  background-repeat: repeat;
+  animation: chrome-rainbow-shift 12s linear infinite;
+  color: #fff;
+}
