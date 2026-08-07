@@ -124,6 +124,38 @@ const Index = () => {
     if (settings.theme !== "modern") root.classList.add(`theme-${settings.theme}`);
   }, [settings.theme]);
 
+  // Apply custom toolbar / tab strip colors
+  useEffect(() => {
+    const root = document.documentElement;
+    const s = root.style;
+    const barAllowed = settings.theme !== "legacy-2010";
+    const bar = barAllowed ? settings.tabstripColor : "";
+    const toolbar = settings.toolbarColor;
+
+    root.classList.toggle("chrome-rainbow-bar", bar === RAINBOW);
+    root.classList.toggle("chrome-rainbow-toolbar", toolbar === RAINBOW);
+    root.classList.toggle("chrome-custom-bar", !!bar && bar !== RAINBOW);
+
+    const barHsl = bar && bar !== RAINBOW ? hexToHslVar(bar) : null;
+    if (barHsl) {
+      s.setProperty("--chrome-bar", barHsl);
+      s.setProperty("--tab-inactive", barHsl);
+    } else {
+      s.removeProperty("--chrome-bar");
+      s.removeProperty("--tab-inactive");
+    }
+
+    const tbHsl = toolbar && toolbar !== RAINBOW ? hexToHslVar(toolbar) : null;
+    if (tbHsl) {
+      s.setProperty("--chrome-toolbar", tbHsl);
+      s.setProperty("--tab-active", tbHsl);
+    } else {
+      s.removeProperty("--chrome-toolbar");
+      s.removeProperty("--tab-active");
+    }
+  }, [settings.theme, settings.toolbarColor, settings.tabstripColor]);
+
+
   // Sync bookmarks-bar visibility with settings
   useEffect(() => { setShowBookmarks(settings.showBookmarksBar); }, [settings.showBookmarksBar]);
 
