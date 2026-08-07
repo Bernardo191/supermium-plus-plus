@@ -137,6 +137,7 @@ const Index = () => {
     root.classList.toggle("chrome-rainbow-bar", bar === RAINBOW);
     root.classList.toggle("chrome-rainbow-toolbar", toolbar === RAINBOW);
     root.classList.toggle("chrome-custom-bar", !!bar && bar !== RAINBOW);
+    root.classList.toggle("chrome-custom-toolbar", !!toolbar && toolbar !== RAINBOW);
 
     const barHsl = bar && bar !== RAINBOW ? hexToHslVar(bar) : null;
     if (barHsl) {
@@ -151,11 +152,30 @@ const Index = () => {
     if (tbHsl) {
       s.setProperty("--chrome-toolbar", tbHsl);
       s.setProperty("--tab-active", tbHsl);
+      // menus / popovers follow the toolbar color
+      s.setProperty("--popover", tbHsl);
+      s.setProperty("--card", tbHsl);
     } else {
       s.removeProperty("--chrome-toolbar");
       s.removeProperty("--tab-active");
+      s.removeProperty("--popover");
+      s.removeProperty("--card");
+    }
+
+    // Dark colors flip the chrome text/icons to white
+    const barDark = !!barHsl && hexLuminance(bar) < 0.5;
+    const tbDark = !!tbHsl && hexLuminance(toolbar) < 0.5;
+    root.classList.toggle("chrome-dark-bar", barDark || bar === RAINBOW);
+    root.classList.toggle("chrome-dark-toolbar", tbDark || toolbar === RAINBOW);
+    if (tbDark || toolbar === RAINBOW) {
+      s.setProperty("--popover-foreground", "0 0% 100%");
+      s.setProperty("--card-foreground", "0 0% 100%");
+    } else {
+      s.removeProperty("--popover-foreground");
+      s.removeProperty("--card-foreground");
     }
   }, [settings.theme, settings.toolbarColor, settings.tabstripColor]);
+
 
 
   // Sync bookmarks-bar visibility with settings
