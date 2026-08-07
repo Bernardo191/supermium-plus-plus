@@ -17,7 +17,10 @@ export type Settings = {
   showHomeButton: boolean; // show the home button in the toolbar
   autoHideForward: boolean; // hide the forward button until a back navigation happens
   workspacesButton: WorkspacesButtonMode; // workspaces button display in the tab strip
+  toolbarColor: string; // "" = theme default, "rainbow", or #rrggbb
+  tabstripColor: string; // "" = theme default, "rainbow", or #rrggbb (ignored on the 2010 theme)
 };
+
 
 export type Flags = Record<string, boolean>;
 
@@ -43,7 +46,10 @@ const defaultSettings: Settings = {
   showHomeButton: true,
   autoHideForward: true,
   workspacesButton: "hidden",
+  toolbarColor: "",
+  tabstripColor: "",
 };
+
 
 const defaultFlags: Flags = Object.fromEntries(FLAG_DEFS.map((f) => [f.id, f.default]));
 
