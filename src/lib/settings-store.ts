@@ -46,7 +46,10 @@ const defaultSettings: Settings = {
   showHomeButton: true,
   autoHideForward: true,
   workspacesButton: "hidden",
+  toolbarColor: "",
+  tabstripColor: "",
 };
+
 
 const defaultFlags: Flags = Object.fromEntries(FLAG_DEFS.map((f) => [f.id, f.default]));
 
