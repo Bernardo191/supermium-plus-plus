@@ -351,3 +351,37 @@ html.window-mode body {
   background: hsl(220 14% 78%);
   padding: 0;
 }
+
+/* =========================================================
+   Custom toolbar / tab strip colors (Settings → Appearance)
+   ========================================================= */
+@keyframes chrome-rainbow-shift {
+  from { background-position: 0% 50%; }
+  to { background-position: 400% 50%; }
+}
+
+html.chrome-rainbow-bar [class*="bg-chrome-bar"],
+html.chrome-rainbow-bar [class*="bg-tab-inactive"] {
+  background-image: linear-gradient(90deg, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d);
+  background-size: 400% 100%;
+  animation: chrome-rainbow-shift 12s linear infinite;
+}
+html.chrome-rainbow-bar .toolbar-shape::before,
+html.chrome-rainbow-bar .toolbar-shape::after {
+  background-image: linear-gradient(90deg, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d);
+  background-size: 400% 100%;
+  animation: chrome-rainbow-shift 12s linear infinite;
+}
+
+html.chrome-rainbow-toolbar [class*="bg-chrome-toolbar"],
+html.chrome-rainbow-toolbar [class*="bg-tab-active"] {
+  background-image: linear-gradient(90deg, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d);
+  background-size: 400% 100%;
+  animation: chrome-rainbow-shift 12s linear infinite;
+}
+
+/* A custom bar color must win over the 2010 glossy gradient is NOT wanted:
+   the 2010 tab strip keeps its original blue gradient. */
+html.chrome-custom-bar.theme-legacy-2010 [class*="bg-chrome-bar"] {
+  background-image: linear-gradient(180deg, hsl(212 70% 55%) 0%, hsl(212 60% 38%) 100%);
+}
