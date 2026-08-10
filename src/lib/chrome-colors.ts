@@ -32,3 +32,11 @@ export const hexLuminance = (hex: string): number => {
   if (!hsl) return 1;
   return parseInt(hsl.split(" ")[2]) / 100;
 };
+
+/** Shade an "H S% L%" string: darker for light colors, lighter for dark ones (Chrome-like omnibox). */
+export const shadeHslVar = (hsl: string, amount = 6): string => {
+  const [h, s, l] = hsl.split(" ");
+  const light = parseInt(l);
+  const next = light > 50 ? Math.max(0, light - amount) : Math.min(100, light + amount);
+  return `${h} ${s} ${next}%`;
+};

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { RAINBOW, hexToHslVar, hexLuminance } from "@/lib/chrome-colors";
+import { RAINBOW, hexToHslVar, hexLuminance, shadeHslVar } from "@/lib/chrome-colors";
 
 import { TabBar } from "@/components/browser/TabBar";
 import { Toolbar } from "@/components/browser/Toolbar";
@@ -152,7 +152,7 @@ const Index = () => {
     if (tbHsl) {
       s.setProperty("--chrome-toolbar", tbHsl);
       s.setProperty("--tab-active", tbHsl);
-      s.setProperty("--omnibox", tbHsl);
+      s.setProperty("--omnibox", shadeHslVar(tbHsl, 7));
       // menus / popovers follow the toolbar color
       s.setProperty("--popover", tbHsl);
       s.setProperty("--card", tbHsl);
