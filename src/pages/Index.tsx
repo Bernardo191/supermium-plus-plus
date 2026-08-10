@@ -152,12 +152,14 @@ const Index = () => {
     if (tbHsl) {
       s.setProperty("--chrome-toolbar", tbHsl);
       s.setProperty("--tab-active", tbHsl);
+      s.setProperty("--omnibox", tbHsl);
       // menus / popovers follow the toolbar color
       s.setProperty("--popover", tbHsl);
       s.setProperty("--card", tbHsl);
     } else {
       s.removeProperty("--chrome-toolbar");
       s.removeProperty("--tab-active");
+      s.removeProperty("--omnibox");
       s.removeProperty("--popover");
       s.removeProperty("--card");
     }

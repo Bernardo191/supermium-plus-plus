@@ -355,31 +355,34 @@ html.window-mode body {
 /* =========================================================
    Custom toolbar / tab strip colors (Settings → Appearance)
    ========================================================= */
+@property --chrome-rainbow-hue {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
 @keyframes chrome-rainbow-shift {
-  from { background-position: 0% 50%; }
-  to { background-position: 100% 50%; }
+  from { --chrome-rainbow-hue: 0; }
+  to { --chrome-rainbow-hue: 360; }
 }
 
 html.chrome-rainbow-bar [class*="bg-chrome-bar"],
 html.chrome-rainbow-bar [class*="bg-tab-inactive"] {
-  background-image: linear-gradient(90deg, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d);
-  background-size: 200% 100%;
-  background-repeat: repeat;
+  background-color: hsl(var(--chrome-rainbow-hue) 72% 44%);
+  background-image: none;
   animation: chrome-rainbow-shift 12s linear infinite;
 }
 html.chrome-rainbow-bar .toolbar-shape::before,
 html.chrome-rainbow-bar .toolbar-shape::after {
-  background-image: linear-gradient(90deg, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d);
-  background-size: 200% 100%;
-  background-repeat: repeat;
+  background-color: hsl(var(--chrome-rainbow-hue) 72% 44%);
+  background-image: none;
   animation: chrome-rainbow-shift 12s linear infinite;
 }
 
 html.chrome-rainbow-toolbar [class*="bg-chrome-toolbar"],
-html.chrome-rainbow-toolbar [class*="bg-tab-active"] {
-  background-image: linear-gradient(90deg, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d);
-  background-size: 200% 100%;
-  background-repeat: repeat;
+html.chrome-rainbow-toolbar [class*="bg-tab-active"],
+html.chrome-rainbow-toolbar [class*="bg-omnibox"] {
+  background-color: hsl(var(--chrome-rainbow-hue) 72% 44%);
+  background-image: none;
   animation: chrome-rainbow-shift 12s linear infinite;
 }
 
@@ -410,9 +413,8 @@ html.chrome-rainbow-toolbar [role="menu"],
 html.chrome-rainbow-toolbar [data-radix-popper-content-wrapper] > *,
 html.chrome-rainbow-toolbar [class*="bg-popover"],
 html.chrome-rainbow-toolbar [class*="bg-card"] {
-  background-image: linear-gradient(90deg, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d, #ff8a00, #ffe600, #26d07c, #00b4ff, #7a5cff, #ff004d);
-  background-size: 200% 100%;
-  background-repeat: repeat;
+  background-color: hsl(var(--chrome-rainbow-hue) 72% 44%);
+  background-image: none;
   animation: chrome-rainbow-shift 12s linear infinite;
   color: #fff;
 }
