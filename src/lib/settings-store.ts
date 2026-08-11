@@ -47,7 +47,7 @@ const defaultSettings: Settings = {
   autoHideForward: true,
   workspacesButton: "hidden",
   toolbarColor: "",
-  tabstripColor: "",
+  tabstripColor: "auto",
 };
 
 
