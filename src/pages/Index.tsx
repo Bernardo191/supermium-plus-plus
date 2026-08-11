@@ -131,15 +131,26 @@ const Index = () => {
     const root = document.documentElement;
     const s = root.style;
     const barAllowed = settings.theme !== "legacy-2010";
-    const bar = barAllowed ? settings.tabstripColor : "";
     const toolbar = settings.toolbarColor;
+    // "auto" derives the tab strip from the toolbar color (slightly darker / lighter), like Chrome
+    const rawBar = settings.tabstripColor;
+    const autoBar =
+      rawBar === AUTO
+        ? toolbar === RAINBOW
+          ? RAINBOW
+          : toolbar
+            ? shadeHex(toolbar, 8) && toolbar
+            : ""
+        : rawBar;
+    const bar = barAllowed ? (autoBar || "") : "";
+    const barIsAuto = rawBar === AUTO && !!bar && bar !== RAINBOW;
 
     root.classList.toggle("chrome-rainbow-bar", bar === RAINBOW);
     root.classList.toggle("chrome-rainbow-toolbar", toolbar === RAINBOW);
     root.classList.toggle("chrome-custom-bar", !!bar && bar !== RAINBOW);
     root.classList.toggle("chrome-custom-toolbar", !!toolbar && toolbar !== RAINBOW);
 
-    const barHsl = bar && bar !== RAINBOW ? hexToHslVar(bar) : null;
+    const barHsl = bar && bar !== RAINBOW ? (barIsAuto ? shadeHex(bar, 8) : hexToHslVar(bar)) : null;
     if (barHsl) {
       s.setProperty("--chrome-bar", barHsl);
       s.setProperty("--tab-inactive", barHsl);
