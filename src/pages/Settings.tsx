@@ -72,13 +72,14 @@ const SettingsPage = () => {
             description={
               settings.theme === "legacy-2010"
                 ? "The 2010 theme keeps its original blue glossy tab strip — pick another theme to customize it."
-                : "Pick any color for the tab strip and inactive tabs, or use the animated rainbow."
+                : "Automatic (default) shades it slightly from the toolbar color, like Chrome. Or pick any color or the animated rainbow."
             }
           >
             <ColorPicker
               value={settings.tabstripColor}
               onChange={(v) => update({ tabstripColor: v })}
               disabled={settings.theme === "legacy-2010"}
+              allowAuto
             />
           </Row>
           <Row label={t("wallpaper")} description={t("wallpaper_desc")}>
