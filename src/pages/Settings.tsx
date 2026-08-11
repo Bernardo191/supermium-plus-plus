@@ -197,17 +197,26 @@ const Toggle = ({ checked, onChange }: { checked: boolean; onChange: (v: boolean
   </button>
 );
 
-const ColorPicker = ({ value, onChange, disabled }: { value: string; onChange: (v: string) => void; disabled?: boolean }) => {
+const ColorPicker = ({ value, onChange, disabled, allowAuto }: { value: string; onChange: (v: string) => void; disabled?: boolean; allowAuto?: boolean }) => {
   const isRainbow = value === "rainbow";
+  const isAuto = value === "auto";
   return (
     <div className={`flex items-center gap-2 ${disabled ? "opacity-50 pointer-events-none" : ""}`}>
       <input
         type="color"
-        value={isRainbow || !value ? "#ffffff" : value}
+        value={isRainbow || isAuto || !value ? "#ffffff" : value}
         onChange={(e) => onChange(e.target.value)}
         className="h-8 w-10 cursor-pointer rounded-md border border-border bg-background"
         aria-label="Pick color"
       />
+      {allowAuto && (
+        <button
+          onClick={() => onChange("auto")}
+          className={`rounded-md border px-2 py-1.5 text-xs ${isAuto ? "border-primary text-primary" : "border-border hover:bg-muted"}`}
+        >
+          Automatic
+        </button>
+      )}
       <button
         onClick={() => onChange(isRainbow ? "" : "rainbow")}
         className={`rounded-md border px-2 py-1.5 text-xs ${isRainbow ? "border-primary text-primary" : "border-border hover:bg-muted"}`}
