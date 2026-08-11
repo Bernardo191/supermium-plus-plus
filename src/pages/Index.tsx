@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { RAINBOW, hexToHslVar, hexLuminance, shadeHslVar } from "@/lib/chrome-colors";
+import { RAINBOW, AUTO, hexToHslVar, hexLuminance, shadeHslVar, shadeHex } from "@/lib/chrome-colors";
 
 import { TabBar } from "@/components/browser/TabBar";
 import { Toolbar } from "@/components/browser/Toolbar";
