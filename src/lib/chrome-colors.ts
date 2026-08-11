@@ -40,3 +40,12 @@ export const shadeHslVar = (hsl: string, amount = 6): string => {
   const next = light > 50 ? Math.max(0, light - amount) : Math.min(100, light + amount);
   return `${h} ${s} ${next}%`;
 };
+
+/** Sentinel: derive the tab strip color automatically from the toolbar color. */
+export const AUTO = "auto";
+
+/** Shade a #rrggbb color: darker when light, lighter when dark (Chrome-like tab strip). */
+export const shadeHex = (hex: string, amount = 8): string | null => {
+  const hsl = hexToHslVar(hex);
+  return hsl ? shadeHslVar(hsl, amount) : null;
+};
