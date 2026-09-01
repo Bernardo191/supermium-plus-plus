@@ -164,14 +164,14 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
     </div>
   ) : null;
 
-  const leftSpacer = (
+  const rightSpacer = (
     <div
       data-window-drag
       className={cn(
         "shrink-0",
         flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9"
       )}
-      style={{ width: macControls ? 8 : 24 }}
+      style={{ width: macControls ? 32 : 48 }}
     />
   );
 
@@ -180,7 +180,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
       {macControls}
       {pos === "left" && <div className={cn("mr-0.5 flex items-center", is2021 && windowed ? "mb-2.5" : "mb-1")}>{searchBtn}</div>}
       {workspacesBtn}
-      {leftSpacer}
+
 
       <div ref={stripRef} className="flex flex-1 items-end gap-0.5 min-w-0">
         {tabs.flatMap((t, i) => {
