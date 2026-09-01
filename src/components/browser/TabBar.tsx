@@ -298,6 +298,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
         </button>
       </div>
 
+      {rightSpacer}
       {pos === "right" && <div className={cn("ml-1 flex items-center", is2021 && windowed ? "mb-2.5" : "mb-1")}>{searchBtn}</div>}
       {winControls}
     </div>
