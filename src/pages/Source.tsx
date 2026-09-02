@@ -68,7 +68,7 @@ ${body}
   const downloadAllHtml = () => {
     const html = buildHtml();
     saveFile("aether-source.html", html, "text/html");
-    return html;
+
   };
 
   const downloadZip = async () => {
