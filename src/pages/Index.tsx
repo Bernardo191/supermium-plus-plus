@@ -12,6 +12,7 @@ import AboutPage from "@/pages/About";
 import DownloadsPage from "@/pages/Downloads";
 import PasswordsPage from "@/pages/Passwords";
 import ExtensionsPage from "@/pages/Extensions";
+import SourcePage from "@/pages/Source";
 import { HistoryPanel } from "@/components/browser/HistoryPanel";
 import { TabSearch } from "@/components/browser/TabSearch";
 import type { ClosedTab } from "@/components/browser/TabSearch";
@@ -213,6 +214,7 @@ const Index = () => {
       case "aether://downloads": return "Downloads";
       case "aether://passwords": return "Passwords";
       case "aether://extensions": return "Extensions";
+      case "aether://source": return "Source code";
       default: return null;
     }
   };
@@ -414,6 +416,7 @@ const Index = () => {
           }
         }}
         onViewSource={() => { setShowMenu(false); setShowSource(true); }}
+        onOpenSourceCode={() => { setShowMenu(false); openNewTab("aether://source"); }}
         onShareUrl={() => {
           setShowMenu(false);
           if (active && active.url !== NEW_TAB && (navigator as any).share) {
@@ -452,6 +455,8 @@ const Index = () => {
           <div className="h-full w-full overflow-auto"><PasswordsPage /></div>
         ) : active.url === "aether://extensions" ? (
           <div className="h-full w-full overflow-auto"><ExtensionsPage /></div>
+        ) : active.url === "aether://source" ? (
+          <div className="h-full w-full overflow-auto"><SourcePage /></div>
         ) : (
           <WebView
             key={active.id + active.url}

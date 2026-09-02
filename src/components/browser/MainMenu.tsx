@@ -1,4 +1,4 @@
-import { Clock, Plus, Star, Trash2, Download, Printer, Info, ZoomIn, ZoomOut, Bookmark as BookmarkIcon, Settings as SettingsIcon, FlaskConical, RotateCcw, Search, Keyboard, Share2, Copy, KeyRound, EyeOff, Puzzle, Code2 } from "lucide-react";
+import { Clock, Plus, Star, Trash2, Download, Printer, Info, ZoomIn, ZoomOut, Bookmark as BookmarkIcon, Settings as SettingsIcon, FlaskConical, RotateCcw, Search, Keyboard, Share2, Copy, KeyRound, EyeOff, Puzzle, Code2, FileCode2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useI18n } from "@/lib/i18n";
 
@@ -29,6 +29,7 @@ type Props = {
   onShareUrl: () => void;
   onOpenDownloads: () => void;
   onViewSource: () => void;
+  onOpenSourceCode: () => void;
 };
 
 
@@ -64,6 +65,7 @@ export const MainMenu = (p: Props) => {
       <Item icon={<Copy className="h-4 w-4" />} label={t("copy_current_url")} onClick={p.onCopyUrl} />
       <Item icon={<Share2 className="h-4 w-4" />} label={t("share")} onClick={p.onShareUrl} />
       <Item icon={<Code2 className="h-4 w-4" />} label="View page source" shortcut="Ctrl+U" onClick={p.onViewSource} />
+      <Item icon={<FileCode2 className="h-4 w-4" />} label="Aether source code" onClick={p.onOpenSourceCode} />
       <Sep />
 
       <div className="flex items-center justify-between px-3 py-2">

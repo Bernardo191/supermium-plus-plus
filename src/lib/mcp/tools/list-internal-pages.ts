@@ -8,6 +8,7 @@ const PAGES = [
   { url: "aether://downloads", title: "Downloads" },
   { url: "aether://passwords", title: "Password Manager" },
   { url: "aether://extensions", title: "Extensions" },
+  { url: "aether://source", title: "Aether source code" },
 ];
 
 export default defineTool({
