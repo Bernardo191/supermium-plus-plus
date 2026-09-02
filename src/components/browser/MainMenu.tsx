@@ -28,6 +28,7 @@ type Props = {
   onCopyUrl: () => void;
   onShareUrl: () => void;
   onOpenDownloads: () => void;
+  onViewSource: () => void;
 };
 
 
