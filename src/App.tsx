@@ -13,6 +13,7 @@ import Downloads from "./pages/Downloads.tsx";
 import Passwords from "./pages/Passwords.tsx";
 import Incognito from "./pages/Incognito.tsx";
 import Extensions from "./pages/Extensions.tsx";
+import Source from "./pages/Source.tsx";
 import { useSettings } from "@/lib/settings-store";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="/passwords" element={<Passwords />} />
             <Route path="/incognito" element={<Incognito />} />
             <Route path="/extensions" element={<Extensions />} />
+            <Route path="/source" element={<Source />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
 
             <Route path="*" element={<NotFound />} />

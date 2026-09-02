@@ -81,7 +81,8 @@ var PAGES = [
   { url: "aether://about", title: "About Aether" },
   { url: "aether://downloads", title: "Downloads" },
   { url: "aether://passwords", title: "Password Manager" },
-  { url: "aether://extensions", title: "Extensions" }
+  { url: "aether://extensions", title: "Extensions" },
+  { url: "aether://source", title: "Aether source code" }
 ];
 var list_internal_pages_default = defineTool4({
   name: "list_internal_pages",
