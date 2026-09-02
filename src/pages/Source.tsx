@@ -1,10 +1,14 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Code2, Copy, Download, FileCode2, Search } from "lucide-react";
+import { ArrowLeft, Code2, Copy, Download, FileArchive, FileCode2, Search } from "lucide-react";
+import JSZip from "jszip";
 import { toast } from "sonner";
 
 // Aether's own source code, inlined at build time.
-const modules = import.meta.glob("/src/**/*.{ts,tsx,css}", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
+const modules = {
+  ...(import.meta.glob("/src/**/*.{ts,tsx,css}", { query: "?raw", import: "default", eager: true }) as Record<string, string>),
+  ...(import.meta.glob("/*.{html,json,ts,js,md}", { query: "?raw", import: "default", eager: true }) as Record<string, string>),
+};
 
 const FILES = Object.entries(modules)
   .map(([path, code]) => ({ path: path.replace(/^\//, ""), code }))
@@ -26,6 +30,7 @@ const saveFile = (name: string, content: string, type: string) => {
 const SourcePage = () => {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(FILES[0]?.path ?? "");
+  const [zipping, setZipping] = useState(false);
 
   const filtered = useMemo(
     () => FILES.filter((f) => f.path.toLowerCase().includes(query.trim().toLowerCase())),
@@ -46,7 +51,7 @@ const SourcePage = () => {
     saveFile(current.path.split("/").pop() || "source.txt", current.code, "text/plain");
   };
 
-  const downloadAllHtml = () => {
+  const buildHtml = () => {
     const body = FILES.map(
       (f) =>
         `<section><h2 id="${encodeURIComponent(f.path)}">${escapeHtml(f.path)}</h2><pre>${escapeHtml(f.code)}</pre></section>`,
@@ -57,7 +62,34 @@ const SourcePage = () => {
 </head><body><h1>Aether browser — source code (${FILES.length} files)</h1>
 ${body}
 </body></html>`;
+    return html;
+  };
+
+  const downloadAllHtml = () => {
+    const html = buildHtml();
     saveFile("aether-source.html", html, "text/html");
+
+  };
+
+  const downloadZip = async () => {
+    setZipping(true);
+    try {
+      const zip = new JSZip();
+      for (const f of FILES) zip.file(f.path, f.code);
+      zip.file("aether-source.html", buildHtml());
+      const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+      const href = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = href;
+      a.download = "aether-browser-source.zip";
+      a.click();
+      URL.revokeObjectURL(href);
+      toast.success("Downloaded aether-browser-source.zip");
+    } catch {
+      toast.error("Could not build ZIP");
+    } finally {
+      setZipping(false);
+    }
   };
 
   return (
@@ -107,6 +139,13 @@ ${body}
               className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
             >
               <Download className="h-3.5 w-3.5" /> Download all as HTML
+            </button>
+            <button
+              onClick={downloadZip}
+              disabled={zipping}
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-medium hover:bg-muted disabled:opacity-50"
+            >
+              <FileArchive className="h-3.5 w-3.5" /> {zipping ? "Building ZIP…" : "Download ZIP (all files)"}
             </button>
           </div>
         </aside>
