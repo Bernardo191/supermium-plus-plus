@@ -16,6 +16,7 @@ import { HistoryPanel } from "@/components/browser/HistoryPanel";
 import { TabSearch } from "@/components/browser/TabSearch";
 import type { ClosedTab } from "@/components/browser/TabSearch";
 import { MainMenu } from "@/components/browser/MainMenu";
+import { ViewSource } from "@/components/browser/ViewSource";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import {
@@ -43,6 +44,7 @@ const Index = () => {
   const [dark, setDark] = useState(false);
   const [showTabSearch, setShowTabSearch] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showSource, setShowSource] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [showBookmarks, setShowBookmarks] = useState(true);
   const [closedTabs, setClosedTabs] = useState<ClosedTab[]>([]);
@@ -316,9 +318,13 @@ const Index = () => {
         e.preventDefault();
         window.open("/incognito", "_blank", "width=1200,height=800,noopener");
 
+      } else if (mod && !e.shiftKey && e.key.toLowerCase() === "u") {
+        e.preventDefault();
+        setShowSource(true);
       } else if (e.key === "Escape") {
         setShowTabSearch(false);
         setShowMenu(false);
+        setShowSource(false);
       }
     };
     window.addEventListener("keydown", onKey);
@@ -407,6 +413,7 @@ const Index = () => {
             toast.error("No URL to copy");
           }
         }}
+        onViewSource={() => { setShowMenu(false); setShowSource(true); }}
         onShareUrl={() => {
           setShowMenu(false);
           if (active && active.url !== NEW_TAB && (navigator as any).share) {
@@ -418,6 +425,7 @@ const Index = () => {
           }
         }}
       />
+      <ViewSource open={showSource} url={active.url} onClose={() => setShowSource(false)} />
       {showBookmarks && (
         <BookmarksBar
           bookmarks={bookmarks}

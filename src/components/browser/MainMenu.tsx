@@ -1,4 +1,4 @@
-import { Clock, Plus, Star, Trash2, Download, Printer, Info, ZoomIn, ZoomOut, Bookmark as BookmarkIcon, Settings as SettingsIcon, FlaskConical, RotateCcw, Search, Keyboard, Share2, Copy, KeyRound, EyeOff, Puzzle } from "lucide-react";
+import { Clock, Plus, Star, Trash2, Download, Printer, Info, ZoomIn, ZoomOut, Bookmark as BookmarkIcon, Settings as SettingsIcon, FlaskConical, RotateCcw, Search, Keyboard, Share2, Copy, KeyRound, EyeOff, Puzzle, Code2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useI18n } from "@/lib/i18n";
 
@@ -28,6 +28,7 @@ type Props = {
   onCopyUrl: () => void;
   onShareUrl: () => void;
   onOpenDownloads: () => void;
+  onViewSource: () => void;
 };
 
 
@@ -62,6 +63,7 @@ export const MainMenu = (p: Props) => {
       <Item icon={<Search className="h-4 w-4" />} label={t("find_in_page")} shortcut="Ctrl+F" onClick={p.onFindInPage} />
       <Item icon={<Copy className="h-4 w-4" />} label={t("copy_current_url")} onClick={p.onCopyUrl} />
       <Item icon={<Share2 className="h-4 w-4" />} label={t("share")} onClick={p.onShareUrl} />
+      <Item icon={<Code2 className="h-4 w-4" />} label="View page source" shortcut="Ctrl+U" onClick={p.onViewSource} />
       <Sep />
 
       <div className="flex items-center justify-between px-3 py-2">
