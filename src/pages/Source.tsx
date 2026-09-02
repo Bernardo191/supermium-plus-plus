@@ -65,11 +65,61 @@ ${body}
     return html;
   };
 
-  const downloadAllHtml = () => {
-    const html = buildHtml();
-    saveFile("aether-source.html", html, "text/html");
+  // Builds a single, runnable HTML file that *is* Aether (app assets inlined).
+  const APP_BASE = import.meta.env.DEV ? "https://supermium-plus-plus.lovable.app" : window.location.origin;
 
+  const buildAppHtml = async () => {
+    const res = await fetch(`${APP_BASE}/index.html`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Could not fetch the app shell");
+    const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+
+    // Keep a base so lazily-imported chunks still resolve.
+    const base = doc.createElement("base");
+    base.setAttribute("href", `${APP_BASE}/`);
+    doc.head.prepend(base);
+
+    const inline = async (url: string) => {
+      const r = await fetch(new URL(url, `${APP_BASE}/`).href, { cache: "no-store" });
+      return r.ok ? await r.text() : null;
+    };
+
+    for (const link of Array.from(doc.querySelectorAll('link[rel="stylesheet"][href]'))) {
+      const css = await inline(link.getAttribute("href")!);
+      if (css == null) continue;
+      const style = doc.createElement("style");
+      style.textContent = css;
+      link.replaceWith(style);
+    }
+
+    for (const script of Array.from(doc.querySelectorAll("script[src]"))) {
+      const src = script.getAttribute("src")!;
+      if (/^https?:/i.test(src) && !src.startsWith(APP_BASE)) continue;
+      const js = await inline(src);
+      if (js == null) continue;
+      const el = doc.createElement("script");
+      if (script.getAttribute("type")) el.setAttribute("type", script.getAttribute("type")!);
+      el.textContent = js;
+      script.replaceWith(el);
+    }
+
+    return "<!DOCTYPE html>\n" + doc.documentElement.outerHTML;
   };
+
+  const downloadAppHtml = async () => {
+    setBuildingApp(true);
+    try {
+      saveFile("aether.html", await buildAppHtml(), "text/html");
+    } catch {
+      toast.error("Could not build the Aether HTML app");
+    } finally {
+      setBuildingApp(false);
+    }
+  };
+
+  const downloadAllHtml = () => {
+    saveFile("aether-source.html", buildHtml(), "text/html");
+  };
+
 
   const downloadZip = async () => {
     setZipping(true);
