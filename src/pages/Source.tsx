@@ -68,21 +68,26 @@ ${body}
 
   // Builds a single, runnable HTML file that *is* Aether (app assets inlined).
   const APP_BASE = import.meta.env.DEV ? "https://supermium-plus-plus.lovable.app" : window.location.origin;
+  const PROXY = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/app-asset`;
 
   const fetchText = async (url: string): Promise<string | null> => {
+    // Same-origin assets can be fetched directly; anything cross-origin
+    // goes through our app-asset function (public CORS is blocked).
+    const u = new URL(url, APP_BASE);
     try {
-      const r = await fetch(url, { cache: "no-store", mode: "cors" });
+      const r = await fetch(u.href, { cache: "no-store", mode: "cors" });
       if (r.ok) return await r.text();
     } catch {
-      // blocked by CORS — fall through to the public reader
+      // blocked by CORS — fall through to the proxy
     }
     try {
-      const r = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`);
+      const r = await fetch(`${PROXY}?path=${encodeURIComponent(u.pathname)}`);
       return r.ok ? await r.text() : null;
     } catch {
       return null;
     }
   };
+
 
   const buildAppHtml = async () => {
     const shell = await fetchText(`${APP_BASE}/index.html`);
