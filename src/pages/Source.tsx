@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Code2, Copy, Download, FileArchive, FileCode2, Search } from "lucide-react";
+import { ArrowLeft, AppWindow, Code2, Copy, Download, FileArchive, FileCode2, Search } from "lucide-react";
 import JSZip from "jszip";
 import { toast } from "sonner";
 
@@ -31,6 +31,7 @@ const SourcePage = () => {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(FILES[0]?.path ?? "");
   const [zipping, setZipping] = useState(false);
+  const [buildingApp, setBuildingApp] = useState(false);
 
   const filtered = useMemo(
     () => FILES.filter((f) => f.path.toLowerCase().includes(query.trim().toLowerCase())),
@@ -127,6 +128,11 @@ ${body}
       const zip = new JSZip();
       for (const f of FILES) zip.file(f.path, f.code);
       zip.file("aether-source.html", buildHtml());
+      try {
+        zip.file("aether.html", await buildAppHtml()); // runnable single-file app
+      } catch {
+        // offline / unpublished build: source files are still included
+      }
       const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
       const href = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -185,10 +191,17 @@ ${body}
           </div>
           <div className="border-t border-border p-3">
             <button
-              onClick={downloadAllHtml}
-              className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
+              onClick={downloadAppHtml}
+              disabled={buildingApp}
+              className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
             >
-              <Download className="h-3.5 w-3.5" /> Download all as HTML
+              <AppWindow className="h-3.5 w-3.5" /> {buildingApp ? "Building app…" : "Download Aether as app (HTML)"}
+            </button>
+            <button
+              onClick={downloadAllHtml}
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-medium hover:bg-muted"
+            >
+              <Download className="h-3.5 w-3.5" /> Download source listing (HTML)
             </button>
             <button
               onClick={downloadZip}
