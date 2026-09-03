@@ -18,6 +18,12 @@ import { useSettings } from "@/lib/settings-store";
 
 const queryClient = new QueryClient();
 
+// Standalone downloads (aether.html) open from disk with a file path the
+// router doesn't know — normalize any *.html URL back to the app root.
+if (window.location.pathname !== "/" && window.location.pathname.endsWith(".html")) {
+  window.history.replaceState(null, "", "/");
+}
+
 const App = () => {
   const [settings] = useSettings();
 
@@ -34,6 +40,9 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            {/* Standalone downloads of the app (aether.html / index.html) open here */}
+            <Route path="/aether.html" element={<Index />} />
+            <Route path="/index.html" element={<Index />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/flags" element={<Flags />} />
             <Route path="/about" element={<About />} />

@@ -68,21 +68,38 @@ ${body}
 
   // Builds a single, runnable HTML file that *is* Aether (app assets inlined).
   const APP_BASE = import.meta.env.DEV ? "https://supermium-plus-plus.lovable.app" : window.location.origin;
+  const PROXY = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/app-asset`;
+
+  const fetchText = async (url: string): Promise<string | null> => {
+    // Same-origin assets can be fetched directly; anything cross-origin
+    // goes through our app-asset function (public CORS is blocked).
+    const u = new URL(url, APP_BASE);
+    try {
+      const r = await fetch(u.href, { cache: "no-store", mode: "cors" });
+      if (r.ok) return await r.text();
+    } catch {
+      // blocked by CORS — fall through to the proxy
+    }
+    try {
+      const r = await fetch(`${PROXY}?path=${encodeURIComponent(u.pathname)}`);
+      return r.ok ? await r.text() : null;
+    } catch {
+      return null;
+    }
+  };
+
 
   const buildAppHtml = async () => {
-    const res = await fetch(`${APP_BASE}/index.html`, { cache: "no-store" });
-    if (!res.ok) throw new Error("Could not fetch the app shell");
-    const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+    const shell = await fetchText(`${APP_BASE}/index.html`);
+    if (!shell) throw new Error("Could not fetch the app shell");
+    const doc = new DOMParser().parseFromString(shell, "text/html");
 
     // Keep a base so lazily-imported chunks still resolve.
     const base = doc.createElement("base");
     base.setAttribute("href", `${APP_BASE}/`);
     doc.head.prepend(base);
 
-    const inline = async (url: string) => {
-      const r = await fetch(new URL(url, `${APP_BASE}/`).href, { cache: "no-store" });
-      return r.ok ? await r.text() : null;
-    };
+    const inline = (url: string) => fetchText(new URL(url, `${APP_BASE}/`).href);
 
     for (const link of Array.from(doc.querySelectorAll('link[rel="stylesheet"][href]'))) {
       const css = await inline(link.getAttribute("href")!);
@@ -105,6 +122,7 @@ ${body}
 
     return "<!DOCTYPE html>\n" + doc.documentElement.outerHTML;
   };
+
 
   const downloadAppHtml = async () => {
     setBuildingApp(true);
