@@ -128,6 +128,11 @@ ${body}
       const zip = new JSZip();
       for (const f of FILES) zip.file(f.path, f.code);
       zip.file("aether-source.html", buildHtml());
+      try {
+        zip.file("aether.html", await buildAppHtml()); // runnable single-file app
+      } catch {
+        // offline / unpublished build: source files are still included
+      }
       const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
       const href = URL.createObjectURL(blob);
       const a = document.createElement("a");
