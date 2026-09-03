@@ -31,6 +31,7 @@ const SourcePage = () => {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(FILES[0]?.path ?? "");
   const [zipping, setZipping] = useState(false);
+  const [buildingApp, setBuildingApp] = useState(false);
 
   const filtered = useMemo(
     () => FILES.filter((f) => f.path.toLowerCase().includes(query.trim().toLowerCase())),
