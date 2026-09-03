@@ -18,6 +18,12 @@ import { useSettings } from "@/lib/settings-store";
 
 const queryClient = new QueryClient();
 
+// Standalone downloads (aether.html) open from disk with a file path the
+// router doesn't know — normalize any *.html URL back to the app root.
+if (window.location.pathname !== "/" && window.location.pathname.endsWith(".html")) {
+  window.history.replaceState(null, "", "/");
+}
+
 const App = () => {
   const [settings] = useSettings();
 
