@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,9 +20,14 @@ const queryClient = new QueryClient();
 
 // Standalone downloads (aether.html) open from disk with a file path the
 // router doesn't know — normalize any *.html URL back to the app root.
-if (window.location.pathname !== "/" && window.location.pathname.endsWith(".html")) {
+const isFile = window.location.protocol === "file:";
+if (!isFile && window.location.pathname !== "/" && window.location.pathname.endsWith(".html")) {
   window.history.replaceState(null, "", "/");
 }
+
+// file:// pages can't use the History API at all — run in memory instead.
+const Router = isFile ? MemoryRouter : BrowserRouter;
+
 
 const App = () => {
   const [settings] = useSettings();
@@ -37,7 +42,7 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <Router>
           <Routes>
             <Route path="/" element={<Index />} />
             {/* Standalone downloads of the app (aether.html / index.html) open here */}
@@ -55,7 +60,7 @@ const App = () => {
 
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
+        </Router>
       </TooltipProvider>
     </QueryClientProvider>
   );
