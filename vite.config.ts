@@ -38,7 +38,17 @@ const standaloneHtml = (): Plugin => ({
       .replace(/<link rel="modulepreload"[^>]*>/g, "")
       .replace(/<link rel="icon"[^>]*>/g, "");
 
+    // Inline the Aether logo so the new tab page renders offline.
+    try {
+      const png = fs.readFileSync(path.resolve(__dirname, "public/favicon.png")).toString("base64");
+      const dataUri = `data:image/png;base64,${png}`;
+      out = out.replace(/"[^"]*\/(?:aether-logo|favicon)\.png"/g, () => JSON.stringify(dataUri));
+    } catch {
+      // logo missing — the standalone file still works
+    }
+
     this.emitFile({ type: "asset", fileName: "aether.html", source: out });
+
   },
 });
 
