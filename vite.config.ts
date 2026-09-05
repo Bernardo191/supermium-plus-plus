@@ -20,13 +20,13 @@ const standaloneHtml = (): Plugin => ({
       if (file.type === "asset" && name.endsWith(".css")) {
         out = out.replace(
           new RegExp(`<link[^>]+href="/?${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*>`),
-          `<style>${String(file.source)}</style>`,
+          `<style>${String(file.source).replace(/<\/style/gi, "<\\/style")}</style>`,
         );
       }
       if (file.type === "chunk" && file.isEntry) {
         out = out.replace(
           new RegExp(`<script[^>]+src="/?${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*></script>`),
-          `<script type="module">${file.code}</script>`,
+          `<script type="module">${file.code.replace(/<\/script/gi, "<\\/script")}</script>`,
         );
       }
     }
