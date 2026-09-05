@@ -20,9 +20,14 @@ const queryClient = new QueryClient();
 
 // Standalone downloads (aether.html) open from disk with a file path the
 // router doesn't know — normalize any *.html URL back to the app root.
-if (window.location.pathname !== "/" && window.location.pathname.endsWith(".html")) {
+const isFile = window.location.protocol === "file:";
+if (!isFile && window.location.pathname !== "/" && window.location.pathname.endsWith(".html")) {
   window.history.replaceState(null, "", "/");
 }
+
+// file:// pages can't use the History API at all — run in memory instead.
+const Router = isFile ? MemoryRouter : BrowserRouter;
+
 
 const App = () => {
   const [settings] = useSettings();
