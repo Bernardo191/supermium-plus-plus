@@ -18,17 +18,20 @@ const standaloneHtml = (): Plugin => ({
     for (const file of Object.values(bundle)) {
       const name = file.fileName;
       if (file.type === "asset" && name.endsWith(".css")) {
+        const css = `<style>${String(file.source).replace(/<\/style/gi, "<\\/style")}</style>`;
         out = out.replace(
           new RegExp(`<link[^>]+href="/?${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*>`),
-          `<style>${String(file.source).replace(/<\/style/gi, "<\\/style")}</style>`,
+          () => css,
         );
       }
       if (file.type === "chunk" && file.isEntry) {
+        const js = `<script type="module">${file.code.replace(/<\/script/gi, "<\\/script")}</script>`;
         out = out.replace(
           new RegExp(`<script[^>]+src="/?${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*></script>`),
-          `<script type="module">${file.code.replace(/<\/script/gi, "<\\/script")}</script>`,
+          () => js,
         );
       }
+
     }
     // Drop preload hints and the favicon link — nothing external must be fetched.
     out = out
