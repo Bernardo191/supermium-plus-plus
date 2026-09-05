@@ -90,9 +90,14 @@ ${body}
 
 
   const buildAppHtml = async () => {
+    // The build emits a ready-made standalone file — prefer it.
+    const prebuilt = await fetchText(`${APP_BASE}/aether.html`);
+    if (prebuilt && /<script/i.test(prebuilt)) return prebuilt;
+
     const shell = await fetchText(`${APP_BASE}/index.html`);
     if (!shell) throw new Error("Could not fetch the app shell");
     const doc = new DOMParser().parseFromString(shell, "text/html");
+
 
     // Keep a base so lazily-imported chunks still resolve.
     const base = doc.createElement("base");
