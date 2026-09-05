@@ -164,21 +164,21 @@ All colors MUST be HSL.
     -webkit-mask: radial-gradient(circle 8px at 100% 0, transparent 8px, #000 8.5px);
             mask: radial-gradient(circle 8px at 100% 0, transparent 8px, #000 8.5px);
   }
-  /* 2021 keeps the smaller 6px feet */
+  /* 2021 also uses 8px curved feet to match its 8px top radius */
   .theme-legacy-2021 .tab-hover-shape::before,
   .theme-legacy-2021 .tab-hover-shape::after {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   .theme-legacy-2021 .tab-hover-shape::before {
-    left: -6px;
-    -webkit-mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
-            mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+    left: -8px;
+    -webkit-mask: radial-gradient(circle 8px at 0 0, transparent 8px, #000 8.5px);
+            mask: radial-gradient(circle 8px at 0 0, transparent 8px, #000 8.5px);
   }
   .theme-legacy-2021 .tab-hover-shape::after {
-    right: -6px;
-    -webkit-mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
-            mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+    right: -8px;
+    -webkit-mask: radial-gradient(circle 8px at 100% 0, transparent 8px, #000 8.5px);
+            mask: radial-gradient(circle 8px at 100% 0, transparent 8px, #000 8.5px);
   }
   .tab-shape::before,
   .tab-shape::after {
