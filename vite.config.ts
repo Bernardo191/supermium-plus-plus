@@ -42,7 +42,7 @@ const standaloneHtml = (): Plugin => ({
 
     // Inline the Aether logo so the new tab page renders offline.
     try {
-      const png = fs.readFileSync(path.resolve(__dirname, "public/favicon.png")).toString("base64");
+      const png = fs.readFileSync(path.resolve(__dirname, "public/aether-logo-256.png")).toString("base64");
       const dataUri = `data:image/png;base64,${png}`;
       out = out.replace(/"[^"]*\/(?:aether-logo|favicon)\.png"/g, () => JSON.stringify(dataUri));
     } catch {
