@@ -217,7 +217,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                 "max-w-[240px]",
                 active
                   ? "bg-tab-active text-foreground z-10"
-                  : "bg-transparent text-muted-foreground"
+                  : "bg-transparent text-muted-foreground border-b border-foreground/10"
               )}
             >
               {!active && (
