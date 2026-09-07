@@ -233,7 +233,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                 )
               )}
               <div className={cn(
-                "relative z-[1] flex min-w-0 flex-1 items-center",
+                "relative z-[1] flex min-w-0 flex-1 items-start pt-[2px]",
                 iconOnly ? "justify-center px-1" : compact ? "gap-1 px-1.5" : "gap-2 px-3"
               )}>
                 {iconOnly ? (
@@ -257,7 +257,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                     {t.url !== "aether://newtab" && (
                       <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
                     )}
-                    <span className="flex-1 truncate min-w-0">{t.title}</span>
+                    <span className="flex-1 truncate min-w-0 pl-0.5">{t.title}</span>
                     {showClose && (
                       <button
                         onClick={(e) => { e.stopPropagation(); closeTab(t.id); }}
