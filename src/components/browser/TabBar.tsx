@@ -39,6 +39,20 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   const stripRef = useRef<HTMLDivElement | null>(null);
   const [stripWidth, setStripWidth] = useState(0);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [closingIds, setClosingIds] = useState<Set<string>>(() => new Set());
+
+  const closeTab = (id: string) => {
+    if (closingIds.has(id)) return;
+    setClosingIds((current) => new Set(current).add(id));
+    window.setTimeout(() => {
+      onClose(id);
+      setClosingIds((current) => {
+        const next = new Set(current);
+        next.delete(id);
+        return next;
+      });
+    }, 150);
+  };
 
   useEffect(() => {
     const el = stripRef.current;
@@ -191,12 +205,14 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
             <div
               key={`tab-${t.id}`}
               onClick={() => onSelect(t.id)}
-              onAuxClick={(e) => { if (e.button === 1) onClose(t.id); }}
+              onAuxClick={(e) => { if (e.button === 1) closeTab(t.id); }}
               onMouseEnter={() => setHoveredId(t.id)}
               onMouseLeave={() => setHoveredId((c) => (c === t.id ? null : c))}
               title={t.title}
               className={cn(
-                "tab-shape group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center text-xs transition-colors",
+                "tab-shape tab-enter group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center text-xs transition-colors",
+                closingIds.has(t.id) && "tab-exit pointer-events-none",
+                active && !closingIds.has(t.id) && "tab-active-pop",
                 flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9",
                 "max-w-[240px]",
                 active
@@ -223,7 +239,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                 {iconOnly ? (
                   showClose ? (
                     <button
-                      onClick={(e) => { e.stopPropagation(); onClose(t.id); }}
+                      onClick={(e) => { e.stopPropagation(); closeTab(t.id); }}
                       className="rounded-full p-0.5 opacity-70 hover:bg-foreground/10 hover:opacity-100 shrink-0"
                       aria-label="Close tab"
                     >
@@ -244,7 +260,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                     <span className="flex-1 truncate min-w-0">{t.title}</span>
                     {showClose && (
                       <button
-                        onClick={(e) => { e.stopPropagation(); onClose(t.id); }}
+                        onClick={(e) => { e.stopPropagation(); closeTab(t.id); }}
                         className="rounded-full p-0.5 opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0"
                         aria-label="Close tab"
                       >
