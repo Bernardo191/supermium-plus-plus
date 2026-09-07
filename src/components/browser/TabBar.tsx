@@ -261,7 +261,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                     {showClose && (
                       <button
                         onClick={(e) => { e.stopPropagation(); closeTab(t.id); }}
-                        className="rounded-full p-0.5 opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0"
+                        className="rounded-full p-0.5 opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0 -mt-0.5"
                         aria-label="Close tab"
                       >
                         <X className="h-3.5 w-3.5" />
