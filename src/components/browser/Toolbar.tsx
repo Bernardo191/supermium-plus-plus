@@ -31,7 +31,7 @@ export const Toolbar = (p: Props) => {
   const isSecure = p.url.startsWith("https://");
 
   return (
-    <div className="toolbar-shape flex min-w-0 items-center gap-1 bg-chrome-toolbar px-3 py-2 border-b border-border">
+    <div className="toolbar-shape flex min-w-0 items-center gap-1 bg-chrome-toolbar px-3 py-2">
       <IconBtn onClick={p.onBack} disabled={!p.canBack} label="Back"><ArrowLeft className="h-4 w-4" /></IconBtn>
       {(!settings.autoHideForward || p.canForward) && (
         <IconBtn onClick={p.onForward} disabled={!p.canForward} label="Forward"><ArrowRight className="h-4 w-4" /></IconBtn>
