@@ -233,7 +233,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                 )
               )}
               <div className={cn(
-                "relative z-[1] flex min-w-0 flex-1 items-start pt-[2px]",
+                "relative z-[1] flex min-w-0 flex-1 items-center",
                 iconOnly ? "justify-center px-1" : compact ? "gap-1 px-1.5" : "gap-2 px-3"
               )}>
                 {iconOnly ? (
@@ -247,17 +247,17 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                     </button>
                   ) : (
                     t.url !== "aether://newtab" ? (
-                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
+                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm -mt-1" />
                     ) : (
-                      <span className="h-4 w-4 shrink-0 rounded-sm bg-foreground/20" />
+                      <span className="h-4 w-4 shrink-0 rounded-sm bg-foreground/20 -mt-1" />
                     )
                   )
                 ) : (
                   <>
                     {t.url !== "aether://newtab" && (
-                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
+                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm -mt-1" />
                     )}
-                    <span className="flex-1 truncate min-w-0 pl-0.5">{t.title}</span>
+                    <span className="flex-1 truncate min-w-0 pl-0.5 -mt-1">{t.title}</span>
                     {showClose && (
                       <button
                         onClick={(e) => { e.stopPropagation(); closeTab(t.id); }}
@@ -273,34 +273,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
             </div>
           );
 
-          const next = tabs[i + 1];
-          const nextActive = next?.id === activeId;
-          const isLast = i === tabs.length - 1;
-          const separator = (i < tabs.length - 1 && tabs.length >= 3 && !active && !nextActive) ? (
-            <div
-              key={`sep-${t.id}`}
-              className={cn(
-                "flex items-center justify-center",
-                flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9"
-              )}
-            >
-              <div className="h-4 w-px bg-foreground/25" />
-            </div>
-          ) : null;
-          const lastSeparator = (isLast && tabs.length >= 2 && !active) ? (
-            <div
-              key={`sep-end-${t.id}`}
-              className={cn(
-                "flex items-center justify-center",
-                flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9"
-              )}
-            >
-              <div className="h-4 w-px bg-foreground/25" />
-            </div>
-          ) : null;
           const result: React.ReactNode[] = [tab];
-          if (separator) result.push(separator);
-          if (lastSeparator) result.push(lastSeparator);
           return result;
 
         })}
