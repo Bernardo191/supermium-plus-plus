@@ -280,7 +280,12 @@ All colors MUST be HSL.
   --border: 212 40% 30%;
   --radius: 0.25rem;
 }
-.theme-legacy-2010 .tab-shape { border-top-left-radius: var(--tab-radius); border-top-right-radius: var(--tab-radius); }
+.theme-legacy-2010 .tab-shape,
+.theme-legacy-2010 .tab-hover-shape {
+  border-top-left-radius: var(--tab-radius);
+  border-top-right-radius: var(--tab-radius);
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+}
 .theme-legacy-2010 .tab-shape::before,
 .theme-legacy-2010 .tab-shape::after { display: none; }
 .theme-legacy-2010 [class*="bg-chrome-bar"] {
@@ -303,7 +308,10 @@ All colors MUST be HSL.
 .theme-legacy-2016 .tab-shape {
   border-top-left-radius: var(--tab-radius);
   border-top-right-radius: var(--tab-radius);
-  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, calc(100% - 6px) 1px, 100% calc(100% - 2px), 100% 100%, 0 100%, 0 calc(100% - 2px), 6px 1px);
+}
+.theme-legacy-2016 .tab-hover-shape {
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, calc(100% - 6px) 1px, 100% calc(100% - 2px), 100% 100%, 0 100%, 0 calc(100% - 2px), 6px 1px);
 }
 .theme-legacy-2016 .tab-shape::before,
 .theme-legacy-2016 .tab-shape::after { display: none; }
@@ -440,10 +448,25 @@ html.chrome-rainbow-toolbar [class*="bg-tab-active"] {
   animation: chrome-rainbow-shift 12s linear infinite;
 }
 
-html.chrome-rainbow-toolbar [class*="bg-omnibox"] {
+html.chrome-rainbow-toolbar:not(.chrome-custom-omnibox):not(.chrome-rainbow-omnibox) [class*="bg-omnibox"] {
   background-color: hsl(var(--chrome-rainbow-hue) 72% 36%);
   background-image: none;
   animation: chrome-rainbow-shift 12s linear infinite;
+}
+
+html.chrome-rainbow-omnibox [class*="bg-omnibox"] {
+  background-color: hsl(var(--chrome-rainbow-hue) 72% 36%);
+  background-image: none;
+  animation: chrome-rainbow-shift 12s linear infinite;
+}
+
+html.chrome-dark-omnibox [class*="bg-omnibox"],
+html.chrome-dark-omnibox [class*="bg-omnibox"] * {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+html.chrome-dark-omnibox [class*="bg-omnibox"] input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 

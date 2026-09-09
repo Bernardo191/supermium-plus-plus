@@ -199,6 +199,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
       <div ref={stripRef} className="flex flex-1 items-end gap-0.5 min-w-0">
         {tabs.flatMap((t, i) => {
           const active = t.id === activeId;
+          const nextIsActive = tabs[i + 1]?.id === activeId;
           const hovered = hoveredId === t.id;
           const showClose = active || hovered || !compact;
           const tab = (
@@ -231,6 +232,9 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                 ) : (
                   <span className="tab-pill pointer-events-none absolute inset-x-1 top-1/2 h-7 -translate-y-1/2 bg-foreground/0 transition-colors group-hover:bg-foreground/10 group-active:bg-foreground/[0.18]" />
                 )
+              )}
+              {!active && !nextIsActive && (
+                <span className="tab-separator pointer-events-none absolute right-0 top-1/2 z-[2] h-4 -translate-y-1/2 border-r border-foreground/20" />
               )}
               <div className={cn(
                 "relative z-[1] flex min-w-0 flex-1 items-center",
