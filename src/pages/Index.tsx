@@ -135,6 +135,7 @@ const Index = () => {
     const s = root.style;
     const barAllowed = settings.theme !== "legacy-2010";
     const toolbar = settings.toolbarColor;
+    const omnibox = settings.omniboxColor;
     // "auto" derives the tab strip from the toolbar color (slightly darker / lighter), like Chrome
     const rawBar = settings.tabstripColor;
     const autoBar =
@@ -150,6 +151,7 @@ const Index = () => {
 
     root.classList.toggle("chrome-rainbow-bar", bar === RAINBOW);
     root.classList.toggle("chrome-rainbow-toolbar", toolbar === RAINBOW);
+    root.classList.toggle("chrome-rainbow-omnibox", omnibox === RAINBOW);
     root.classList.toggle("chrome-custom-bar", !!bar && bar !== RAINBOW);
     root.classList.toggle("chrome-custom-toolbar", !!toolbar && toolbar !== RAINBOW);
 
@@ -166,16 +168,23 @@ const Index = () => {
     if (tbHsl) {
       s.setProperty("--chrome-toolbar", tbHsl);
       s.setProperty("--tab-active", tbHsl);
-      s.setProperty("--omnibox", shadeHslVar(tbHsl, 7));
       // menus / popovers follow the toolbar color
       s.setProperty("--popover", tbHsl);
       s.setProperty("--card", tbHsl);
     } else {
       s.removeProperty("--chrome-toolbar");
       s.removeProperty("--tab-active");
-      s.removeProperty("--omnibox");
       s.removeProperty("--popover");
       s.removeProperty("--card");
+    }
+
+    const omniboxHsl = omnibox && omnibox !== RAINBOW ? hexToHslVar(omnibox) : null;
+    if (omniboxHsl) {
+      s.setProperty("--omnibox", omniboxHsl);
+    } else if (tbHsl) {
+      s.setProperty("--omnibox", shadeHslVar(tbHsl, 7));
+    } else {
+      s.removeProperty("--omnibox");
     }
 
     // Dark colors flip the chrome text/icons to white
@@ -190,7 +199,7 @@ const Index = () => {
       s.removeProperty("--popover-foreground");
       s.removeProperty("--card-foreground");
     }
-  }, [settings.theme, settings.toolbarColor, settings.tabstripColor]);
+  }, [settings.theme, settings.toolbarColor, settings.omniboxColor, settings.tabstripColor]);
 
 
 

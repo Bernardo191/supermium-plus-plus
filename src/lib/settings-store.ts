@@ -18,6 +18,7 @@ export type Settings = {
   autoHideForward: boolean; // hide the forward button until a back navigation happens
   workspacesButton: WorkspacesButtonMode; // workspaces button display in the tab strip
   toolbarColor: string; // "" = theme default, "rainbow", or #rrggbb
+  omniboxColor: string; // "" = derived from toolbar, "rainbow", or #rrggbb
   tabstripColor: string; // "" = theme default, "rainbow", or #rrggbb (ignored on the 2010 theme)
 };
 
@@ -47,6 +48,7 @@ const defaultSettings: Settings = {
   autoHideForward: true,
   workspacesButton: "hidden",
   toolbarColor: "",
+  omniboxColor: "",
   tabstripColor: "auto",
 };
 
