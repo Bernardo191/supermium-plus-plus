@@ -448,7 +448,7 @@ html.chrome-rainbow-toolbar [class*="bg-tab-active"] {
   animation: chrome-rainbow-shift 12s linear infinite;
 }
 
-html.chrome-rainbow-toolbar [class*="bg-omnibox"] {
+html.chrome-rainbow-toolbar:not(.chrome-custom-omnibox):not(.chrome-rainbow-omnibox) [class*="bg-omnibox"] {
   background-color: hsl(var(--chrome-rainbow-hue) 72% 36%);
   background-image: none;
   animation: chrome-rainbow-shift 12s linear infinite;
@@ -458,6 +458,15 @@ html.chrome-rainbow-omnibox [class*="bg-omnibox"] {
   background-color: hsl(var(--chrome-rainbow-hue) 72% 36%);
   background-image: none;
   animation: chrome-rainbow-shift 12s linear infinite;
+}
+
+html.chrome-dark-omnibox [class*="bg-omnibox"],
+html.chrome-dark-omnibox [class*="bg-omnibox"] * {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+html.chrome-dark-omnibox [class*="bg-omnibox"] input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 

@@ -234,7 +234,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                 )
               )}
               {!active && !nextIsActive && (
-                <span className="tab-separator pointer-events-none absolute right-[-2px] top-1/2 z-[2] h-4 -translate-y-1/2 border-r border-foreground/20" />
+                <span className="tab-separator pointer-events-none absolute right-0 top-1/2 z-[2] h-4 -translate-y-1/2 border-r border-foreground/20" />
               )}
               <div className={cn(
                 "relative z-[1] flex min-w-0 flex-1 items-center",

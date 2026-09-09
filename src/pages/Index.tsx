@@ -154,6 +154,7 @@ const Index = () => {
     root.classList.toggle("chrome-rainbow-omnibox", omnibox === RAINBOW);
     root.classList.toggle("chrome-custom-bar", !!bar && bar !== RAINBOW);
     root.classList.toggle("chrome-custom-toolbar", !!toolbar && toolbar !== RAINBOW);
+    root.classList.toggle("chrome-custom-omnibox", !!omnibox && omnibox !== RAINBOW);
 
     const barHsl = bar && bar !== RAINBOW ? (barIsAuto ? shadeHex(bar, 8) : hexToHslVar(bar)) : null;
     if (barHsl) {
@@ -190,8 +191,10 @@ const Index = () => {
     // Dark colors flip the chrome text/icons to white
     const barDark = !!barHsl && hexLuminance(bar) < 0.5;
     const tbDark = !!tbHsl && hexLuminance(toolbar) < 0.5;
+    const omniboxDark = !!omniboxHsl && hexLuminance(omnibox) < 0.5;
     root.classList.toggle("chrome-dark-bar", barDark || bar === RAINBOW);
     root.classList.toggle("chrome-dark-toolbar", tbDark || toolbar === RAINBOW);
+    root.classList.toggle("chrome-dark-omnibox", omniboxDark || omnibox === RAINBOW);
     if (tbDark || toolbar === RAINBOW) {
       s.setProperty("--popover-foreground", "0 0% 100%");
       s.setProperty("--card-foreground", "0 0% 100%");
