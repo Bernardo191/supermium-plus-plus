@@ -212,7 +212,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
               className={cn(
                 "tab-shape tab-enter group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center text-xs transition-colors",
                 closingIds.has(t.id) && "tab-exit pointer-events-none",
-                active && !closingIds.has(t.id) && "tab-active-pop",
+                active && !closingIds.has(t.id) && "tab-active tab-active-pop",
                 flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9",
                 "max-w-[240px]",
                 active
