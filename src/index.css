@@ -127,6 +127,11 @@ All colors MUST be HSL.
     border-top-right-radius: var(--tab-radius);
     position: relative;
   }
+  .tab-active {
+    /* Cover fractional-pixel seams between the active tab and toolbar at any zoom. */
+    margin-bottom: -1px;
+    padding-bottom: 1px;
+  }
   .tab-pill {
     border-radius: var(--tab-radius);
   }
