@@ -171,9 +171,6 @@ All colors MUST be HSL.
       animation-duration: 1ms;
     }
   }
-  .theme-legacy-2016 .tab-hover-shape {
-    clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
-  }
   /* Curved feet for the hover highlight in the 2018 / 2021 themes */
   .theme-legacy-2018 .tab-hover-shape::before,
   .theme-legacy-2018 .tab-hover-shape::after,
@@ -284,10 +281,38 @@ All colors MUST be HSL.
 .theme-legacy-2010 .tab-hover-shape {
   border-top-left-radius: var(--tab-radius);
   border-top-right-radius: var(--tab-radius);
-  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+  clip-path: none;
 }
 .theme-legacy-2010 .tab-shape::before,
-.theme-legacy-2010 .tab-shape::after { display: none; }
+.theme-legacy-2010 .tab-shape::after,
+.theme-legacy-2010 .tab-hover-shape::before,
+.theme-legacy-2010 .tab-hover-shape::after {
+  display: block;
+  width: 6px;
+  height: 6px;
+}
+.theme-legacy-2010 .tab-shape::before,
+.theme-legacy-2010 .tab-hover-shape::before {
+  left: -6px;
+  -webkit-mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+          mask: radial-gradient(circle 6px at 0 0, transparent 6px, #000 6.5px);
+}
+.theme-legacy-2010 .tab-shape::after,
+.theme-legacy-2010 .tab-hover-shape::after {
+  right: -6px;
+  -webkit-mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+          mask: radial-gradient(circle 6px at 100% 0, transparent 6px, #000 6.5px);
+}
+.theme-legacy-2010 .tab-hover-shape::before,
+.theme-legacy-2010 .tab-hover-shape::after,
+.theme-legacy-2016 .tab-hover-shape::before,
+.theme-legacy-2016 .tab-hover-shape::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  background: inherit;
+  pointer-events: none;
+}
 .theme-legacy-2010 [class*="bg-chrome-bar"] {
   background-image: linear-gradient(180deg, hsl(212 70% 55%) 0%, hsl(212 60% 38%) 100%);
 }
@@ -308,13 +333,33 @@ All colors MUST be HSL.
 .theme-legacy-2016 .tab-shape {
   border-top-left-radius: var(--tab-radius);
   border-top-right-radius: var(--tab-radius);
-  clip-path: polygon(8px 0, calc(100% - 8px) 0, calc(100% - 6px) 1px, 100% calc(100% - 2px), 100% 100%, 0 100%, 0 calc(100% - 2px), 6px 1px);
+  clip-path: none;
 }
 .theme-legacy-2016 .tab-hover-shape {
-  clip-path: polygon(8px 0, calc(100% - 8px) 0, calc(100% - 6px) 1px, 100% calc(100% - 2px), 100% 100%, 0 100%, 0 calc(100% - 2px), 6px 1px);
+  border-top-left-radius: var(--tab-radius);
+  border-top-right-radius: var(--tab-radius);
+  clip-path: none;
 }
 .theme-legacy-2016 .tab-shape::before,
-.theme-legacy-2016 .tab-shape::after { display: none; }
+.theme-legacy-2016 .tab-shape::after,
+.theme-legacy-2016 .tab-hover-shape::before,
+.theme-legacy-2016 .tab-hover-shape::after {
+  display: block;
+  width: 5px;
+  height: 5px;
+}
+.theme-legacy-2016 .tab-shape::before,
+.theme-legacy-2016 .tab-hover-shape::before {
+  left: -5px;
+  -webkit-mask: radial-gradient(circle 5px at 0 0, transparent 5px, #000 5.5px);
+          mask: radial-gradient(circle 5px at 0 0, transparent 5px, #000 5.5px);
+}
+.theme-legacy-2016 .tab-shape::after,
+.theme-legacy-2016 .tab-hover-shape::after {
+  right: -5px;
+  -webkit-mask: radial-gradient(circle 5px at 100% 0, transparent 5px, #000 5.5px);
+          mask: radial-gradient(circle 5px at 100% 0, transparent 5px, #000 5.5px);
+}
 .theme-legacy-2016 .toolbar-shape::before,
 .theme-legacy-2016 .toolbar-shape::after { display: none; }
 

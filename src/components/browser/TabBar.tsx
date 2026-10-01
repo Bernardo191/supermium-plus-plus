@@ -91,6 +91,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   const isModern = settings.theme === "modern";
   const is2021 = settings.theme === "legacy-2021";
   const alwaysShape = settings.theme === "legacy-2010" || settings.theme === "legacy-2016";
+  const closeLegacyTabs = settings.theme === "legacy-2010" || settings.theme === "legacy-2016";
   const searchBtn = pos !== "disabled" ? (
     <button
       onClick={onOpenSearch}
@@ -196,7 +197,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
       {workspacesBtn}
 
 
-      <div ref={stripRef} className="flex flex-1 items-end gap-0.5 min-w-0">
+      <div ref={stripRef} className={cn("flex flex-1 items-end min-w-0", closeLegacyTabs ? "gap-0" : "gap-0.5")}>
         {tabs.flatMap((t, i) => {
           const active = t.id === activeId;
           const nextIsActive = tabs[i + 1]?.id === activeId;
