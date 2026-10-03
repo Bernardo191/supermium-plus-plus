@@ -489,7 +489,12 @@ const Index = () => {
     </main>
   );
 
-  return windowed ? <WindowFrame>{shell}</WindowFrame> : shell;
+  return windowed ? (
+    <>
+      <LovableBackdrop />
+      <WindowFrame>{shell}</WindowFrame>
+    </>
+  ) : shell;
 };
 
 export default Index;
