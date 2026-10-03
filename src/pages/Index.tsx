@@ -27,6 +27,7 @@ import {
 import { useSettings, type ChromeTheme } from "@/lib/settings-store";
 import { useWindowed } from "@/lib/window-mode";
 import { WindowFrame } from "@/components/browser/WindowFrame";
+import { LovableBackdrop } from "@/components/browser/LovableBackdrop";
 import {
   loadWorkspaces, saveWorkspaces, loadActiveWorkspaceId, saveActiveWorkspaceId,
   loadWorkspaceTabs, saveWorkspaceTabs, clearWorkspaceTabs, WORKSPACE_COLORS, type Workspace,
@@ -488,7 +489,12 @@ const Index = () => {
     </main>
   );
 
-  return windowed ? <WindowFrame>{shell}</WindowFrame> : shell;
+  return windowed ? (
+    <>
+      <LovableBackdrop />
+      <WindowFrame>{shell}</WindowFrame>
+    </>
+  ) : shell;
 };
 
 export default Index;
