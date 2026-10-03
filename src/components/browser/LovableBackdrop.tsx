@@ -55,9 +55,9 @@ export const LovableBackdrop = () => (
     <div
       className="pointer-events-none select-none"
       style={{
-        width: "min(46vh, 46vw)",
-        filter: "drop-shadow(0 30px 80px rgba(255,1,5,0.18)) drop-shadow(0 20px 60px rgba(75,115,255,0.18))",
-        opacity: 0.92,
+        width: "min(88vh, 88vw)",
+        filter: "drop-shadow(0 30px 80px rgba(255,1,5,0.22)) drop-shadow(0 20px 60px rgba(75,115,255,0.22))",
+        opacity: 0.9,
       }}
     >
       {LOVABLE_LOGO}
