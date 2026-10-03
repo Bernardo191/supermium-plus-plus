@@ -43,7 +43,7 @@ const LOVABLE_LOGO = (
 export const LovableBackdrop = () => (
   <div
     aria-hidden="true"
-    data-window-drag
+    data-window-drag={undefined}
     className="fixed inset-0 z-0 flex items-center justify-center overflow-hidden bg-background"
     style={{
       backgroundImage:
