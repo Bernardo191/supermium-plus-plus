@@ -44,6 +44,7 @@ All colors MUST be HSL.
     --chrome-toolbar: 0 0% 100%;
     --tab-active: 0 0% 100%;
     --tab-inactive: 220 18% 92%;
+    --tab-separator: 220 13% 13%;
     --tab-radius: 12px;
     --omnibox: 220 14% 94%;
 
@@ -97,6 +98,7 @@ All colors MUST be HSL.
     --chrome-toolbar: 220 13% 17%;
     --tab-active: 220 13% 17%;
     --tab-inactive: 220 13% 14%;
+    --tab-separator: 0 0% 100%;
     --tab-radius: 12px;
     --omnibox: 220 13% 22%;
     --sidebar-background: 240 5.9% 10%;
@@ -134,6 +136,9 @@ All colors MUST be HSL.
   }
   .tab-pill {
     border-radius: var(--tab-radius);
+  }
+  .tab-separator {
+    border-color: hsl(var(--tab-separator) / 0.24);
   }
   .tab-hover-shape {
     border-top-left-radius: var(--tab-radius);
@@ -272,6 +277,7 @@ All colors MUST be HSL.
   --chrome-toolbar: 210 30% 92%;
   --tab-active: 210 30% 95%;
   --tab-inactive: 212 60% 38%;
+  --tab-separator: 0 0% 100%;
   --tab-radius: 6px;
   --omnibox: 0 0% 100%;
   --border: 212 40% 30%;
@@ -325,6 +331,7 @@ All colors MUST be HSL.
   --chrome-toolbar: 0 0% 96%;
   --tab-active: 0 0% 96%;
   --tab-inactive: 0 0% 85%;
+  --tab-separator: 0 0% 0%;
   --tab-radius: 2px;
   --omnibox: 0 0% 100%;
   --border: 0 0% 70%;
@@ -369,6 +376,7 @@ All colors MUST be HSL.
   --chrome-toolbar: 0 0% 100%;
   --tab-active: 0 0% 100%;
   --tab-inactive: 0 0% 87%;
+  --tab-separator: 0 0% 0%;
   --tab-radius: 8px;
   --omnibox: 0 0% 94%;
   --border: 0 0% 80%;
@@ -404,6 +412,7 @@ All colors MUST be HSL.
   --chrome-toolbar: 0 0% 100%;
   --tab-active: 0 0% 100%;
   --tab-inactive: 220 13% 93%;
+  --tab-separator: 0 0% 0%;
   --tab-radius: 8px;
   --omnibox: 220 14% 96%;
   --border: 220 13% 84%;
@@ -440,6 +449,7 @@ All colors MUST be HSL.
   --chrome-toolbar: 220 8% 20%;
   --tab-active: 220 8% 20%;
   --tab-inactive: 220 8% 16%;
+  --tab-separator: 0 0% 100%;
   --tab-radius: 8px;
   --omnibox: 220 8% 26%;
   --muted: 220 8% 24%;
@@ -478,6 +488,9 @@ html.chrome-rainbow-bar [class*="bg-tab-inactive"] {
   background-color: hsl(var(--chrome-rainbow-hue) 72% 44%);
   background-image: none;
   animation: chrome-rainbow-shift 12s linear infinite;
+}
+html.chrome-rainbow-bar {
+  --tab-separator: 0 0% 100%;
 }
 html.chrome-rainbow-bar .toolbar-shape::before,
 html.chrome-rainbow-bar .toolbar-shape::after {

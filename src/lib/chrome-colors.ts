@@ -49,3 +49,7 @@ export const shadeHex = (hex: string, amount = 8): string | null => {
   const hsl = hexToHslVar(hex);
   return hsl ? shadeHslVar(hsl, amount) : null;
 };
+
+/** Pick a separator tone that stays visible against a user-selected tab strip. */
+export const autoSeparatorHsl = (hex: string): string =>
+  hexLuminance(hex) < 0.5 ? "0 0% 100%" : "0 0% 0%";
