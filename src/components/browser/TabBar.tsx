@@ -21,6 +21,9 @@ type Props = {
   onDeleteWorkspace: (id: string) => void;
 };
 
+export const shouldHideLeadingTabFoot = (theme: string, position: string) =>
+  theme === "modern" && position !== "left";
+
 export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch, workspaces, activeWorkspaceId, onSwitchWorkspace, onCreateWorkspace, onDeleteWorkspace }: Props) => {
   const [settings] = useSettings();
   const legacy = settings.theme !== "modern";
@@ -90,6 +93,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
 
   const isModern = settings.theme === "modern";
   const is2021 = settings.theme === "legacy-2021";
+  const hideLeadingTabFoot = shouldHideLeadingTabFoot(settings.theme, pos);
   const alwaysShape = settings.theme === "legacy-2010" || settings.theme === "legacy-2016";
   const closeLegacyTabs = settings.theme === "legacy-2010" || settings.theme === "legacy-2016";
   const searchBtn = pos !== "disabled" ? (
@@ -213,6 +217,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
               title={t.title}
               className={cn(
                 "tab-shape tab-enter group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center text-xs transition-colors",
+                i === 0 && hideLeadingTabFoot && "tab-no-left-foot",
                 closingIds.has(t.id) && "tab-exit pointer-events-none",
                 active && !closingIds.has(t.id) && "tab-active tab-active-pop",
                 flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9",

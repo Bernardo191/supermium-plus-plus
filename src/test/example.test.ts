@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { autoSeparatorHsl } from "@/lib/chrome-colors";
+import { shouldHideLeadingTabFoot } from "@/components/browser/TabBar";
 
 describe("example", () => {
   it("should pass", () => {
@@ -14,5 +15,19 @@ describe("automatic tab separator color", () => {
 
   it("uses a dark separator on a light tab strip", () => {
     expect(autoSeparatorHsl("#e4e7ec")).toBe("0 0% 0%");
+  });
+});
+
+describe("Modern leading tab foot", () => {
+  it("hides the left foot when tab search is on the right", () => {
+    expect(shouldHideLeadingTabFoot("modern", "right")).toBe(true);
+  });
+
+  it("hides the left foot when tab search is disabled", () => {
+    expect(shouldHideLeadingTabFoot("modern", "disabled")).toBe(true);
+  });
+
+  it("keeps the left foot when tab search is on the left", () => {
+    expect(shouldHideLeadingTabFoot("modern", "left")).toBe(false);
   });
 });
