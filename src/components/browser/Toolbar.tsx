@@ -22,16 +22,23 @@ type Props = {
   onOpenExtensions: () => void;
 };
 
+export const shouldHideToolbarLeftFoot = (theme: string, position: string) =>
+  theme === "modern" && position !== "left";
+
 export const Toolbar = (p: Props) => {
   const { t } = useI18n();
   const [settings] = useSettings();
   const [value, setValue] = useState(p.url === "aether://newtab" ? "" : p.url);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const macOn = settings.windowControls && settings.windowControlsStyle === "macos";
+  const tabSearchPos = macOn ? "right" : settings.tabSearchPosition;
+  const hideLeftFoot = shouldHideToolbarLeftFoot(settings.theme, tabSearchPos);
+
   const isSecure = p.url.startsWith("https://");
 
   return (
-    <div className="toolbar-shape flex min-w-0 items-center gap-1 bg-chrome-toolbar px-3 py-2">
+    <div className={cn("toolbar-shape flex min-w-0 items-center gap-1 bg-chrome-toolbar px-3 py-2", hideLeftFoot && "toolbar-no-left-foot")}>
       <IconBtn onClick={p.onBack} disabled={!p.canBack} label="Back"><ArrowLeft className="h-4 w-4" /></IconBtn>
       {(!settings.autoHideForward || p.canForward) && (
         <IconBtn onClick={p.onForward} disabled={!p.canForward} label="Forward"><ArrowRight className="h-4 w-4" /></IconBtn>

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { autoSeparatorHsl } from "@/lib/chrome-colors";
-import { shouldHideLeadingTabFoot } from "@/components/browser/TabBar";
+import { shouldHideToolbarLeftFoot } from "@/components/browser/Toolbar";
 
 describe("example", () => {
   it("should pass", () => {
@@ -18,16 +18,16 @@ describe("automatic tab separator color", () => {
   });
 });
 
-describe("Modern leading tab foot", () => {
+describe("Modern toolbar left foot", () => {
   it("hides the left foot when tab search is on the right", () => {
-    expect(shouldHideLeadingTabFoot("modern", "right")).toBe(true);
+    expect(shouldHideToolbarLeftFoot("modern", "right")).toBe(true);
   });
 
   it("hides the left foot when tab search is disabled", () => {
-    expect(shouldHideLeadingTabFoot("modern", "disabled")).toBe(true);
+    expect(shouldHideToolbarLeftFoot("modern", "disabled")).toBe(true);
   });
 
   it("keeps the left foot when tab search is on the left", () => {
-    expect(shouldHideLeadingTabFoot("modern", "left")).toBe(false);
+    expect(shouldHideToolbarLeftFoot("modern", "left")).toBe(false);
   });
 });
