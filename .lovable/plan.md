@@ -1,7 +1,8 @@
-# Align tab separators vertically
+# Adjust Modern tab left foot
 
 ## Change
-- Move inactive-tab separators slightly upward while keeping their current proportional height and visibility rules.
+- In the Modern theme, remove the first tab's left curved foot when tab search is on the right or disabled.
+- Keep the curved foot when tab search is on the left, and leave legacy themes unchanged.
 
 ## Verification
-- Check the tab strip in the live preview at normal and changed zoom levels.
+- Check all three tab-search positions in the live preview.
