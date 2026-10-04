@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { RAINBOW, AUTO, hexToHslVar, hexLuminance, shadeHslVar, shadeHex } from "@/lib/chrome-colors";
+import { RAINBOW, AUTO, autoSeparatorHsl, hexToHslVar, hexLuminance, shadeHslVar, shadeHex } from "@/lib/chrome-colors";
 
 import { TabBar } from "@/components/browser/TabBar";
 import { Toolbar } from "@/components/browser/Toolbar";
@@ -161,9 +161,11 @@ const Index = () => {
     if (barHsl) {
       s.setProperty("--chrome-bar", barHsl);
       s.setProperty("--tab-inactive", barHsl);
+      s.setProperty("--tab-separator", autoSeparatorHsl(bar));
     } else {
       s.removeProperty("--chrome-bar");
       s.removeProperty("--tab-inactive");
+      s.removeProperty("--tab-separator");
     }
 
     const tbHsl = toolbar && toolbar !== RAINBOW ? hexToHslVar(toolbar) : null;
