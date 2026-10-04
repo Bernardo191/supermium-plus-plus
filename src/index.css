@@ -234,6 +234,9 @@ All colors MUST be HSL.
     -webkit-mask: radial-gradient(circle 12px at 0 0, transparent 12px, #000 12.5px);
             mask: radial-gradient(circle 12px at 0 0, transparent 12px, #000 12.5px);
   }
+  .tab-shape.tab-no-left-foot::before {
+    display: none;
+  }
   .tab-shape::after {
     right: -12px;
     -webkit-mask: radial-gradient(circle 12px at 100% 0, transparent 12px, #000 12.5px);
