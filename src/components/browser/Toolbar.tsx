@@ -23,8 +23,8 @@ type Props = {
   onOpenExtensions: () => void;
 };
 
-export const shouldHideToolbarLeftFoot = (theme: string, position: string) =>
-  theme === "modern" && position !== "left";
+export const shouldHideToolbarLeftFoot = (theme: string, position: string, hasLeadingControls = false) =>
+  theme === "modern" && position !== "left" && !hasLeadingControls;
 
 export const Toolbar = (p: Props) => {
   const { t } = useI18n();
@@ -34,7 +34,8 @@ export const Toolbar = (p: Props) => {
 
   const macOn = settings.windowControls && settings.windowControlsStyle === "macos";
   const tabSearchPos = macOn ? "right" : settings.tabSearchPosition;
-  const hideLeftFoot = (p.firstTabActive ?? true) && shouldHideToolbarLeftFoot(settings.theme, tabSearchPos);
+  const hasLeadingControls = macOn || settings.workspacesButton !== "hidden";
+  const hideLeftFoot = (p.firstTabActive ?? true) && shouldHideToolbarLeftFoot(settings.theme, tabSearchPos, hasLeadingControls);
 
   const isSecure = p.url.startsWith("https://");
 

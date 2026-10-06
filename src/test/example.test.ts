@@ -38,6 +38,15 @@ describe("automatic tab separator color", () => {
 });
 
 describe("Modern toolbar left foot", () => {
+  it("keeps the left foot when a workspace button precedes the first tab", () => {
+    expect(shouldHideToolbarLeftFoot("modern", "right", true)).toBe(false);
+    expect(shouldHideToolbarLeftFoot("modern", "disabled", true)).toBe(false);
+  });
+
+  it("keeps the left foot when macOS window controls precede the first tab", () => {
+    expect(shouldHideToolbarLeftFoot("modern", "right", true)).toBe(false);
+  });
+
   it("hides the left foot when tab search is on the right", () => {
     expect(shouldHideToolbarLeftFoot("modern", "right")).toBe(true);
   });
