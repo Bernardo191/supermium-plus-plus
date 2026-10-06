@@ -1,6 +1,8 @@
 import { useSettings } from "@/lib/settings-store";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { useI18n, type Locale } from "@/lib/i18n";
 
 const SettingsPage = () => {
@@ -84,6 +86,22 @@ const SettingsPage = () => {
               disabled={settings.theme === "legacy-2010"}
               allowAuto
             />
+          </Row>
+          <Row label="Separator color">
+            <div className="flex items-center gap-2">
+              <input
+                type="color"
+                value={settings.separatorColor || "#808080"}
+                onChange={(e) => update({ separatorColor: e.target.value })}
+                disabled={settings.separatorAutoColor}
+                aria-label="Separator color"
+                className="h-8 w-10 cursor-pointer rounded-md border border-border bg-background disabled:cursor-not-allowed disabled:opacity-50"
+              />
+              <Button variant="outline" size="sm" disabled={settings.separatorAutoColor} onClick={() => update({ separatorColor: "" })}>Default</Button>
+            </div>
+          </Row>
+          <Row label="Automatic separator color">
+            <Switch aria-label="Automatic separator color" checked={settings.separatorAutoColor} onCheckedChange={(v) => update({ separatorAutoColor: v })} />
           </Row>
           <Row label={t("wallpaper")} description={t("wallpaper_desc")}>
 

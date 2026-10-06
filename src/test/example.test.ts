@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { autoSeparatorHsl } from "@/lib/chrome-colors";
+import { autoSeparatorHsl, resolveSeparatorHsl } from "@/lib/chrome-colors";
+import { loadSettings } from "@/lib/settings-store";
 import { shouldHideToolbarLeftFoot } from "@/components/browser/Toolbar";
 
 describe("example", () => {
@@ -9,6 +10,24 @@ describe("example", () => {
 });
 
 describe("automatic tab separator color", () => {
+  it("disables automatic coloring by default", () => {
+    localStorage.removeItem("ae_settings");
+    localStorage.removeItem("nb_settings");
+    expect(loadSettings().separatorAutoColor).toBe(false);
+  });
+
+  it("uses the chosen color when automatic coloring is off", () => {
+    expect(resolveSeparatorHsl("#ff0000", false, "0 0% 10%")).toBe("0 100% 50%");
+  });
+
+  it("uses automatic contrast instead of the custom color when enabled", () => {
+    expect(resolveSeparatorHsl("#ff0000", true, "0 0% 10%")).toBe("0 0% 100%");
+    expect(resolveSeparatorHsl("#ff0000", true, "0 0% 90%")).toBe("0 0% 0%");
+  });
+
+  it("preserves the theme default when no custom color or automatic mode is selected", () => {
+    expect(resolveSeparatorHsl("", false, "0 0% 10%")).toBeNull();
+  });
   it("uses a light separator on a dark tab strip", () => {
     expect(autoSeparatorHsl("#182033")).toBe("0 0% 100%");
   });

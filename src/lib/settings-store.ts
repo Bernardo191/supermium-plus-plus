@@ -20,6 +20,8 @@ export type Settings = {
   toolbarColor: string; // "" = theme default, "rainbow", or #rrggbb
   omniboxColor: string; // "" = derived from toolbar, "rainbow", or #rrggbb
   tabstripColor: string; // "" = theme default, "rainbow", or #rrggbb (ignored on the 2010 theme)
+  separatorColor: string; // "" = theme default or #rrggbb
+  separatorAutoColor: boolean;
 };
 
 
@@ -50,6 +52,8 @@ const defaultSettings: Settings = {
   toolbarColor: "",
   omniboxColor: "",
   tabstripColor: "auto",
+  separatorColor: "",
+  separatorAutoColor: false,
 };
 
 
