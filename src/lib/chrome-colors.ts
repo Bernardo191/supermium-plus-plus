@@ -53,3 +53,13 @@ export const shadeHex = (hex: string, amount = 8): string | null => {
 /** Pick a separator tone that stays visible against a user-selected tab strip. */
 export const autoSeparatorHsl = (hex: string): string =>
   hexLuminance(hex) < 0.5 ? "0 0% 100%" : "0 0% 0%";
+
+/** Null preserves the theme's default separator token. */
+export const resolveSeparatorHsl = (color: string, automatic: boolean, stripHsl: string | null): string | null => {
+  if (automatic) {
+    if (!stripHsl) return null;
+    const lightness = parseFloat(stripHsl.split(" ")[2]);
+    return lightness < 50 ? "0 0% 100%" : "0 0% 0%";
+  }
+  return hexToHslVar(color);
+};
