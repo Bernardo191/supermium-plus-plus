@@ -6,6 +6,7 @@ import { ExtensionsMenu } from "./ExtensionsMenu";
 import { useSettings } from "@/lib/settings-store";
 
 type Props = {
+  firstTabActive?: boolean;
   url: string;
   canBack: boolean;
   canForward: boolean;
@@ -33,7 +34,7 @@ export const Toolbar = (p: Props) => {
 
   const macOn = settings.windowControls && settings.windowControlsStyle === "macos";
   const tabSearchPos = macOn ? "right" : settings.tabSearchPosition;
-  const hideLeftFoot = shouldHideToolbarLeftFoot(settings.theme, tabSearchPos);
+  const hideLeftFoot = (p.firstTabActive ?? true) && shouldHideToolbarLeftFoot(settings.theme, tabSearchPos);
 
   const isSecure = p.url.startsWith("https://");
 
