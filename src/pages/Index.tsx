@@ -377,6 +377,7 @@ const Index = () => {
         onClearClosed={() => setClosedTabs([])}
       />
       <Toolbar
+        firstTabActive={tabs[0]?.id === activeId}
         url={active.url}
         canBack={active.historyIndex > 0}
         canForward={active.historyIndex < active.history.length - 1}
