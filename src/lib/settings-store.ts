@@ -53,7 +53,7 @@ const defaultSettings: Settings = {
   omniboxColor: "",
   tabstripColor: "auto",
   separatorColor: "",
-  separatorAutoColor: false,
+  separatorAutoColor: true,
 };
 
 
