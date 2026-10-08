@@ -26,10 +26,15 @@ describe("example", () => {
 });
 
 describe("automatic tab separator color", () => {
-  it("disables automatic coloring by default", () => {
+  it("enables automatic coloring by default", () => {
     localStorage.removeItem("ae_settings");
     localStorage.removeItem("nb_settings");
+    expect(loadSettings().separatorAutoColor).toBe(true);
+  });
+  it("preserves an explicit choice to disable automatic coloring", () => {
+    localStorage.setItem("ae_settings", JSON.stringify({ separatorAutoColor: false }));
     expect(loadSettings().separatorAutoColor).toBe(false);
+    localStorage.removeItem("ae_settings");
   });
 
   it("uses the chosen color when automatic coloring is off", () => {

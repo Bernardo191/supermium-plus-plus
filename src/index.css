@@ -302,9 +302,11 @@ All colors MUST be HSL.
 .theme-legacy-2016 {
   --legacy-tab-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 36' preserveAspectRatio='none'%3E%3Cpath d='M0 36 C8 36 11 34 14 28 L24 7 Q27 0 34 0 H206 Q213 0 216 7 L226 28 C229 34 232 36 240 36 Z'/%3E%3C/svg%3E");
 }
-.theme-legacy-2010 .tab-shape + .tab-shape,
-.theme-legacy-2016 .tab-shape + .tab-shape {
+.theme-legacy-2010 .tab-shape + .tab-shape {
   margin-left: -16px;
+}
+.theme-legacy-2016 .tab-shape + .tab-shape {
+  margin-left: -24px;
 }
 .theme-legacy-2010 .toolbar-shape form,
 .theme-legacy-2016 .toolbar-shape form {
