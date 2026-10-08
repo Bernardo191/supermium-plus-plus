@@ -2,6 +2,22 @@ import { describe, it, expect } from "vitest";
 import { autoSeparatorHsl, resolveSeparatorHsl } from "@/lib/chrome-colors";
 import { loadSettings } from "@/lib/settings-store";
 import { shouldHideToolbarLeftFoot } from "@/components/browser/Toolbar";
+import { logoForTheme } from "@/lib/theme-logo";
+import glossyLogo from "@/assets/aether-logo-2010.png.asset.json";
+import flatLogo from "@/assets/aether-logo-2016.png.asset.json";
+import modernLogo from "@/assets/aether-logo.png.asset.json";
+
+describe("theme logo selection", () => {
+  it("uses the glossy upload for 2010", () => {
+    expect(logoForTheme("legacy-2010")).toBe(glossyLogo.url);
+  });
+  it.each(["legacy-2016", "legacy-2018", "legacy-2021"] as const)("uses the second upload for %s", (theme) => {
+    expect(logoForTheme(theme)).toBe(flatLogo.url);
+  });
+  it("preserves Modern's logo", () => {
+    expect(logoForTheme("modern")).toBe(modernLogo.url);
+  });
+});
 
 describe("example", () => {
   it("should pass", () => {

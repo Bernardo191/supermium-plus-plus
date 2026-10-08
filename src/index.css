@@ -287,16 +287,21 @@ All colors MUST be HSL.
   --radius: 0.25rem;
 }
 .theme-legacy-2010 .tab-shape,
-.theme-legacy-2010 .tab-hover-shape {
-  border-top-left-radius: var(--tab-radius);
-  border-top-right-radius: var(--tab-radius);
+.theme-legacy-2010 .tab-hover-shape,
+.theme-legacy-2016 .tab-shape,
+.theme-legacy-2016 .tab-hover-shape {
+  /* Sloped sides, small rounded shoulders, and curved feet in one silhouette. */
+  --legacy-tab-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 36' preserveAspectRatio='none'%3E%3Cpath d='M0 36 Q5 36 7 31 L17 4 Q18.5 0 22 0 H218 Q221.5 0 223 4 L233 31 Q235 36 240 36 Z'/%3E%3C/svg%3E");
+  border-radius: 0;
   clip-path: none;
+  -webkit-mask: var(--legacy-tab-mask) center / 100% 100% no-repeat;
+  mask: var(--legacy-tab-mask) center / 100% 100% no-repeat;
 }
 .theme-legacy-2010 .tab-shape::before,
 .theme-legacy-2010 .tab-shape::after,
 .theme-legacy-2010 .tab-hover-shape::before,
 .theme-legacy-2010 .tab-hover-shape::after {
-  display: block;
+  display: none;
   width: 6px;
   height: 6px;
 }
@@ -341,20 +346,18 @@ All colors MUST be HSL.
   --radius: 0.125rem;
 }
 .theme-legacy-2016 .tab-shape {
-  border-top-left-radius: var(--tab-radius);
-  border-top-right-radius: var(--tab-radius);
+  border-radius: 0;
   clip-path: none;
 }
 .theme-legacy-2016 .tab-hover-shape {
-  border-top-left-radius: var(--tab-radius);
-  border-top-right-radius: var(--tab-radius);
+  border-radius: 0;
   clip-path: none;
 }
 .theme-legacy-2016 .tab-shape::before,
 .theme-legacy-2016 .tab-shape::after,
 .theme-legacy-2016 .tab-hover-shape::before,
 .theme-legacy-2016 .tab-hover-shape::after {
-  display: block;
+  display: none;
   width: 5px;
   height: 5px;
 }
