@@ -2,7 +2,8 @@ import { Search, X, GitFork } from "lucide-react";
 import { Bookmark, HistoryItem, faviconFor, hostnameOf } from "@/lib/browser-store";
 import { useI18n } from "@/lib/i18n";
 import { useState } from "react";
-import aetherLogo from "@/assets/aether-logo.png.asset.json";
+import { logoForTheme } from "@/lib/theme-logo";
+import { useSettings } from "@/lib/settings-store";
 
 const REMIX_URL = "https://lovable.dev/projects/0853b2c8-cb51-4581-a994-e14b3451d385/remix";
 
@@ -16,6 +17,7 @@ type Props = {
 
 export const NewTabPage = ({ bookmarks, history, onNavigate, wallpaper }: Props) => {
   const { t } = useI18n();
+  const [settings] = useSettings();
   const [q, setQ] = useState("");
   const recent = Array.from(new Map(history.map(h => [h.url, h])).values()).slice(0, 8);
 
@@ -35,7 +37,7 @@ export const NewTabPage = ({ bookmarks, history, onNavigate, wallpaper }: Props)
         <div className="mb-8 flex flex-col items-center gap-3">
           <div className="relative">
             <img
-              src={aetherLogo.url}
+              src={logoForTheme(settings.theme)}
               alt="Aether logo"
               className="h-20 w-20 drop-shadow-lg"
             />
