@@ -234,12 +234,12 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                   <span className="tab-pill pointer-events-none absolute inset-x-1 top-1/2 h-7 -translate-y-1/2 bg-foreground/0 transition-colors group-hover:bg-foreground/10 group-active:bg-foreground/[0.18]" />
                 )
               )}
-              {!active && !nextIsActive && (
+              {!closeLegacyTabs && !active && !nextIsActive && (
                 <span className="tab-separator pointer-events-none absolute right-0 top-1/2 z-[2] h-[47%] -translate-y-1/2 border-r" />
               )}
               <div className={cn(
                 "relative z-[1] flex min-w-0 flex-1 items-center",
-                iconOnly ? "justify-center px-1" : compact ? "gap-1 px-1.5" : "gap-2 px-3"
+                iconOnly ? "justify-center px-1" : closeLegacyTabs ? (compact ? "gap-1 px-3" : "gap-2 px-6") : compact ? "gap-1 px-1.5" : "gap-2 px-3"
               )}>
                 {iconOnly ? (
                   showClose ? (
