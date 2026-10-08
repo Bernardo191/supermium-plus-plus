@@ -47,6 +47,9 @@ All colors MUST be HSL.
     --tab-separator: 220 13% 13%;
     --tab-radius: 12px;
     --omnibox: 220 14% 94%;
+    --aero-highlight: 0 0% 100%;
+    --aero-shade: 210 35% 22%;
+    --aero-reflection: linear-gradient(115deg, transparent 0%, hsl(var(--aero-highlight) / 0.32) 18%, transparent 34%, hsl(var(--aero-highlight) / 0.2) 64%, transparent 82%), linear-gradient(180deg, hsl(var(--aero-highlight) / 0.42), hsl(var(--aero-highlight) / 0.08) 48%, hsl(var(--aero-shade) / 0.12));
 
     --sidebar-background: 0 0% 98%;
 
@@ -287,8 +290,15 @@ All colors MUST be HSL.
   --radius: 0.25rem;
 }
 .theme-legacy-2010 .tab-shape,
+.theme-legacy-2016 .tab-shape {
+  border-radius: 0;
+  clip-path: none;
+  -webkit-mask: none;
+  mask: none;
+}
+.theme-legacy-2010 .tab-legacy-surface,
 .theme-legacy-2010 .tab-hover-shape,
-.theme-legacy-2016 .tab-shape,
+.theme-legacy-2016 .tab-legacy-surface,
 .theme-legacy-2016 .tab-hover-shape {
   /* Each year supplies its own shoulders and feet; both retain sloping sides. */
   border-radius: 0;
@@ -300,13 +310,24 @@ All colors MUST be HSL.
   --legacy-tab-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 36' preserveAspectRatio='none'%3E%3Cpath d='M0 36 L18 0 H222 L240 36 Z'/%3E%3C/svg%3E");
 }
 .theme-legacy-2016 {
-  --legacy-tab-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 36' preserveAspectRatio='none'%3E%3Cpath d='M0 36 C8 36 11 34 14 28 L24 7 Q27 0 34 0 H206 Q213 0 216 7 L226 28 C229 34 232 36 240 36 Z'/%3E%3C/svg%3E");
+  --legacy-tab-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 36' preserveAspectRatio='none'%3E%3Cpath d='M0 36 C7 36 10 34 13 28 L22 6 Q25 0 31 0 H209 Q215 0 218 6 L227 28 C230 34 233 36 240 36 Z'/%3E%3C/svg%3E");
 }
 .theme-legacy-2010 .tab-shape + .tab-shape {
   margin-left: -16px;
 }
 .theme-legacy-2016 .tab-shape + .tab-shape {
-  margin-left: -24px;
+  margin-left: -18px;
+}
+.tab-strip-aero {
+  background-color: hsl(var(--chrome-bar) / 0.72);
+  background-image: var(--aero-reflection);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+}
+.theme-legacy-2010 .tab-strip-aero,
+html.chrome-custom-bar.theme-legacy-2010 .tab-strip-aero {
+  background-color: hsl(var(--chrome-bar) / 0.72);
+  background-image: var(--aero-reflection);
 }
 .theme-legacy-2010 .toolbar-shape form,
 .theme-legacy-2016 .toolbar-shape form {

@@ -1,9 +1,10 @@
-import { ArrowLeft, ArrowRight, RotateCw, Home, Star, StarOff, Shield, MoreVertical } from "lucide-react";
+import { ArrowLeft, ArrowRight, RotateCw, Home, Star, StarOff, Shield, MoreVertical, Menu } from "lucide-react";
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
 import { ExtensionsMenu } from "./ExtensionsMenu";
 import { useSettings } from "@/lib/settings-store";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   firstTabActive?: boolean;
@@ -69,7 +70,9 @@ export const Toolbar = (p: Props) => {
       </form>
 
       <ExtensionsMenu onManage={p.onOpenExtensions} />
-      <IconBtn onClick={p.onToggleMenu} label="Customize and control"><MoreVertical className="h-4 w-4" /></IconBtn>
+      <Button variant="ghost" size="icon" onClick={p.onToggleMenu} aria-label="Customize and control" title="Customize and control" className="h-8 w-8 shrink-0 text-foreground/80">
+        {settings.theme === "legacy-2010" || settings.theme === "legacy-2016" ? <Menu /> : <MoreVertical />}
+      </Button>
     </div>
   );
 };
