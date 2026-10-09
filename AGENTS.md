@@ -4,3 +4,4 @@
 - Resolve theme-specific logos through a shared theme selector using CDN asset pointers so year-based branding stays consistent.
 - Use theme-supplied scalable silhouette masks for sloping legacy tabs so each year's corner geometry preserves the trapezoid shape.
 - Apply legacy silhouette masks only to tab background layers, never to tab contents, so overlapping shapes cannot clip labels or controls.
+- Resolve window-style selection and Aero eligibility through shared settings helpers so presets, tab-strip controls, and persisted preferences agree.

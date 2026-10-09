@@ -327,7 +327,7 @@ All colors MUST be HSL.
   margin-left: -18px;
 }
 .tab-strip-aero {
-  background-color: hsl(var(--chrome-bar) / 0.72);
+  background-color: hsl(var(--chrome-bar) / 0.48);
   background-image: var(--aero-reflection);
   -webkit-backdrop-filter: blur(18px) saturate(145%);
   backdrop-filter: blur(18px) saturate(145%);
@@ -345,10 +345,11 @@ All colors MUST be HSL.
   color: hsl(var(--vista-button-foreground));
   background: linear-gradient(180deg, hsl(var(--vista-button-top) / 0.88) 0%, hsl(var(--vista-button-bottom) / 0.65) 49%, hsl(var(--vista-button-bottom) / 0.95) 50%, hsl(var(--vista-button-top) / 0.6) 100%);
   box-shadow: inset 0 0 0 1px hsl(var(--aero-highlight) / 0.35);
+  transition: background 120ms ease, box-shadow 120ms ease;
 }
 .vista-caption-button:hover {
   color: hsl(var(--vista-button-foreground));
-  background-color: hsl(var(--vista-button-hover));
+  background-image: linear-gradient(180deg, hsl(var(--aero-highlight) / 0.8), hsl(var(--vista-button-hover) / 0.65) 49%, hsl(var(--vista-button-hover)) 50%, hsl(var(--vista-button-top)));
   box-shadow: inset 0 0 0 1px hsl(var(--aero-highlight) / 0.65), 0 0 9px hsl(var(--vista-button-hover) / 0.9);
 }
 .vista-caption-button svg {
@@ -366,17 +367,36 @@ All colors MUST be HSL.
   background: linear-gradient(180deg, hsl(var(--vista-close-top)) 0%, hsl(var(--vista-close-bottom)) 49%, hsl(var(--vista-close-bottom)) 50%, hsl(var(--vista-close-top) / 0.85) 100%);
 }
 .vista-close:hover {
-  background-color: hsl(var(--vista-close-hover));
+  background-image: linear-gradient(180deg, hsl(var(--vista-close-top)), hsl(var(--vista-close-hover)) 49%, hsl(var(--vista-close-bottom)) 50%, hsl(var(--vista-close-hover)));
   box-shadow: inset 0 0 0 1px hsl(var(--aero-highlight) / 0.65), 0 0 9px hsl(var(--vista-close-hover) / 0.9);
 }
 .theme-legacy-2010 .tab-strip-aero,
 html.chrome-custom-bar.theme-legacy-2010 .tab-strip-aero {
-  background-color: hsl(var(--chrome-bar) / 0.72);
+  background-color: hsl(var(--chrome-bar) / 0.48);
   background-image: var(--aero-reflection);
 }
 .theme-legacy-2010 .toolbar-shape form,
 .theme-legacy-2016 .toolbar-shape form {
   border-radius: 0;
+}
+.theme-legacy-2010 .tab-shape:hover .tab-hover-shape {
+  background: linear-gradient(180deg, hsl(var(--aero-highlight) / 0.65), hsl(var(--vista-button-hover) / 0.35) 48%, hsl(var(--vista-button-hover) / 0.55) 50%, hsl(var(--aero-highlight) / 0.32));
+}
+.theme-legacy-2010 .tab-shape:active .tab-hover-shape {
+  background: hsl(var(--vista-button-hover) / 0.6);
+}
+.tab-strip-aero .tab-search-aero {
+  border-radius: 50%;
+  border: 1px solid hsl(var(--foreground) / 0.45);
+  background: hsl(var(--aero-highlight) / 0.12);
+  box-shadow: inset 0 0 0 1px hsl(var(--aero-highlight) / 0.4);
+}
+.tab-strip-aero .tab-search-aero:hover {
+  background: hsl(var(--vista-button-hover) / 0.25);
+  box-shadow: inset 0 0 0 1px hsl(var(--aero-highlight) / 0.65), 0 0 7px hsl(var(--vista-button-hover) / 0.6);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vista-caption-button { transition: none; }
 }
 .theme-legacy-2010 .tab-shape::before,
 .theme-legacy-2010 .tab-shape::after,

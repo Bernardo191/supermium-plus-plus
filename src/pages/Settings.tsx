@@ -1,4 +1,4 @@
-import { useSettings } from "@/lib/settings-store";
+import { useSettings, windowStylePatch, type WindowControlsStyle } from "@/lib/settings-store";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -70,7 +70,7 @@ const SettingsPage = () => {
             <ColorPicker value={settings.toolbarColor} onChange={(v) => update({ toolbarColor: v })} />
           </Row>
           <Row label="Aero glass">
-            <Switch aria-label="Aero glass" checked={settings.aeroGlass} disabled={settings.theme !== "legacy-2010" && settings.theme !== "legacy-2016"} onCheckedChange={(v) => update({ aeroGlass: v })} />
+            <Switch aria-label="Aero glass" checked={settings.aeroGlass} disabled={settings.theme !== "legacy-2010" && settings.theme !== "legacy-2016" && settings.theme !== "legacy-2021" && settings.windowControlsStyle !== "vista"} onCheckedChange={(v) => update({ aeroGlass: v })} />
           </Row>
           <Row label="Omnibox color" description="Pick a separate color for the address bar, or leave it on Default to match the toolbar automatically.">
             <ColorPicker value={settings.omniboxColor} onChange={(v) => update({ omniboxColor: v })} />
@@ -126,14 +126,15 @@ const SettingsPage = () => {
           <Row label={t("window_controls")} description={t("window_controls_desc")}>
             <Toggle checked={settings.windowControls} onChange={(v) => update({ windowControls: v })} />
           </Row>
-          <Row label="Window controls style" description="Choose between Windows-style buttons or macOS-style traffic lights.">
+          <Row label="Window controls style">
             <select
               value={settings.windowControlsStyle}
-              onChange={(e) => update({ windowControlsStyle: e.target.value as any })}
-              disabled={!settings.windowControls}
+              aria-label="Window controls style"
+              onChange={(e) => update(windowStylePatch(e.target.value as WindowControlsStyle)))}
               className="rounded-md border border-border bg-background px-3 py-1.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <option value="windows">Windows</option>
+              <option value="vista">Windows Vista</option>
               <option value="macos">macOS</option>
             </select>
           </Row>
