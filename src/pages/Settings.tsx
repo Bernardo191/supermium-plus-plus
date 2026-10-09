@@ -130,7 +130,7 @@ const SettingsPage = () => {
             <select
               value={settings.windowControlsStyle}
               aria-label="Window controls style"
-              onChange={(e) => update(windowStylePatch(e.target.value as WindowControlsStyle)))}
+              onChange={(e) => update(windowStylePatch(e.target.value as WindowControlsStyle))}
               className="rounded-md border border-border bg-background px-3 py-1.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <option value="windows">Windows</option>
