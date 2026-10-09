@@ -12,4 +12,4 @@
 - [x] Verify theme logos and tab shapes.
 - [x] Fix legacy tab spacing and first-tab left edges.
 - [x] Use three-line menus and Aero glass on 2010/2016 tab strips.
-- [ ] Verify both legacy themes and Modern in the preview.
+- [x] Verify both legacy themes and Modern in the preview.
