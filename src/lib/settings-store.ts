@@ -22,6 +22,7 @@ export type Settings = {
   tabstripColor: string; // "" = theme default, "rainbow", or #rrggbb (ignored on the 2010 theme)
   separatorColor: string; // "" = theme default or #rrggbb
   separatorAutoColor: boolean;
+  aeroGlass: boolean;
 };
 
 
@@ -54,6 +55,7 @@ const defaultSettings: Settings = {
   tabstripColor: "auto",
   separatorColor: "",
   separatorAutoColor: true,
+  aeroGlass: true,
 };
 
 
@@ -116,3 +118,9 @@ export const useFlags = () => {
 };
 
 export const isLegacyTheme = (t: ChromeTheme) => t !== "modern";
+
+export const usesAeroGlass = (settings: Settings) =>
+  settings.aeroGlass && (settings.theme === "legacy-2010" || settings.theme === "legacy-2016");
+
+export const usesVistaControls = (settings: Settings) =>
+  settings.theme === "legacy-2010" && settings.windowControls && settings.windowControlsStyle === "windows";

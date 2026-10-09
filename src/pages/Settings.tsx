@@ -69,6 +69,9 @@ const SettingsPage = () => {
           <Row label="Toolbar color" description="Pick any color for the toolbar and active tab, or use the animated rainbow. Works on every theme.">
             <ColorPicker value={settings.toolbarColor} onChange={(v) => update({ toolbarColor: v })} />
           </Row>
+          <Row label="Aero glass">
+            <Switch aria-label="Aero glass" checked={settings.aeroGlass} disabled={settings.theme !== "legacy-2010" && settings.theme !== "legacy-2016"} onCheckedChange={(v) => update({ aeroGlass: v })} />
+          </Row>
           <Row label="Omnibox color" description="Pick a separate color for the address bar, or leave it on Default to match the toolbar automatically.">
             <ColorPicker value={settings.omniboxColor} onChange={(v) => update({ omniboxColor: v })} />
           </Row>
