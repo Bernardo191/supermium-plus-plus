@@ -363,7 +363,7 @@ html.chrome-custom-bar.theme-legacy-2010 .tab-strip-aero {
   background: inherit;
   pointer-events: none;
 }
-.theme-legacy-2010 [class*="bg-chrome-bar"] {
+.theme-legacy-2010 [class*="bg-chrome-bar"]:not(.tab-strip-aero) {
   background-image: linear-gradient(180deg, hsl(212 70% 55%) 0%, hsl(212 60% 38%) 100%);
 }
 .theme-legacy-2010 .toolbar-shape::before,
@@ -572,7 +572,7 @@ html.chrome-dark-omnibox [class*="bg-omnibox"] input::placeholder {
 
 /* A custom bar color must win over the 2010 glossy gradient is NOT wanted:
    the 2010 tab strip keeps its original blue gradient. */
-html.chrome-custom-bar.theme-legacy-2010 [class*="bg-chrome-bar"] {
+html.chrome-custom-bar.theme-legacy-2010 [class*="bg-chrome-bar"]:not(.tab-strip-aero) {
   background-image: linear-gradient(180deg, hsl(212 70% 55%) 0%, hsl(212 60% 38%) 100%);
 }
 

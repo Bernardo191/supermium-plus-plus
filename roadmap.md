@@ -10,6 +10,6 @@
 - [x] Apply uploaded logos by theme.
 - [x] Restore shared 2010/2016 sloping tabs with rounded corners and curved feet.
 - [x] Verify theme logos and tab shapes.
-- [ ] Fix legacy tab spacing and first-tab left edges.
-- [ ] Use three-line menus and Aero glass on 2010/2016 tab strips.
+- [x] Fix legacy tab spacing and first-tab left edges.
+- [x] Use three-line menus and Aero glass on 2010/2016 tab strips.
 - [ ] Verify both legacy themes and Modern in the preview.
