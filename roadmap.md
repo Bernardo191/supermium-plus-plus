@@ -13,3 +13,5 @@
 - [x] Fix legacy tab spacing and first-tab left edges.
 - [x] Use three-line menus and Aero glass on 2010/2016 tab strips.
 - [x] Verify both legacy themes and Modern in the preview.
+- [x] Add saved Aero glass switch in Appearance settings.
+- [x] Apply Vista-style Windows controls in 2010 and verify interactions.

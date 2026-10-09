@@ -2,7 +2,8 @@ import { X, Plus, ChevronDown, Minus, Square, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Tab, faviconFor } from "@/lib/browser-store";
 import { cn } from "@/lib/utils";
-import { useSettings } from "@/lib/settings-store";
+import { useSettings, usesAeroGlass, usesVistaControls } from "@/lib/settings-store";
+import { Button } from "@/components/ui/button";
 import { WorkspacesMenu } from "./WorkspacesMenu";
 import type { Workspace } from "@/lib/workspaces-store";
 import { useWindowed, toggleWindowed } from "@/lib/window-mode";
@@ -151,31 +152,31 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   ) : null;
 
   const winControls = settings.windowControls && settings.windowControlsStyle === "windows" ? (
-    <div className="flex items-center gap-0.5 ml-1 mb-1">
-      <button
+    <div className={cn("flex items-center ml-1", usesVistaControls(settings) ? "vista-window-controls self-start -mt-2 gap-0" : "gap-0.5 mb-1")}>
+      <Button variant="ghost" size="icon"
         onClick={onMinimize}
         title="Minimize"
         aria-label="Minimize"
-        className="flex h-7 w-10 items-center justify-center text-foreground/70 hover:bg-muted transition"
+        className={cn("h-7 w-10 text-foreground/70 hover:bg-muted", usesVistaControls(settings) && "vista-caption-button vista-minimize")}
       >
         <Minus className="h-4 w-4" />
-      </button>
-      <button
+      </Button>
+      <Button variant="ghost" size="icon"
         onClick={onMaximize}
         title={maximized ? "Restore" : "Maximize"}
         aria-label={maximized ? "Restore" : "Maximize"}
-        className="flex h-7 w-10 items-center justify-center text-foreground/70 hover:bg-muted transition"
+        className={cn("h-7 w-10 text-foreground/70 hover:bg-muted", usesVistaControls(settings) && "vista-caption-button vista-maximize")}
       >
         {maximized ? <Copy className="h-3.5 w-3.5" /> : <Square className="h-3.5 w-3.5" />}
-      </button>
-      <button
+      </Button>
+      <Button variant="ghost" size="icon"
         onClick={() => { try { window.close(); } catch {} }}
         title="Close browser"
         aria-label="Close browser"
-        className="flex h-7 w-10 items-center justify-center text-foreground/70 hover:bg-red-500 hover:text-white transition"
+        className={cn("h-7 w-10 text-foreground/70 hover:bg-destructive hover:text-destructive-foreground", usesVistaControls(settings) && "vista-caption-button vista-close")}
       >
         <X className="h-4 w-4" />
-      </button>
+      </Button>
     </div>
   ) : null;
 
@@ -191,7 +192,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   );
 
   return (
-    <div data-window-drag className={cn("tab-strip flex items-end gap-1 px-2 bg-chrome-bar select-none", closeLegacyTabs && "tab-strip-aero", flushTop ? (windowed ? "h-[46px] pt-0" : "pt-0") : "pt-2")}>
+    <div data-window-drag className={cn("tab-strip flex items-end gap-1 px-2 bg-chrome-bar select-none", usesAeroGlass(settings) && "tab-strip-aero", flushTop ? (windowed ? "h-[46px] pt-0" : "pt-0") : "pt-2")}>
       {macControls}
       {pos === "left" && <div className={cn("mr-0.5 flex items-center", is2021 && windowed ? "mb-2.5" : "mb-1")}>{searchBtn}</div>}
       {workspacesBtn}

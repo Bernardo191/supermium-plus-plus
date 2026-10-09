@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { autoSeparatorHsl, resolveSeparatorHsl } from "@/lib/chrome-colors";
-import { loadSettings } from "@/lib/settings-store";
+import { loadSettings, usesAeroGlass, usesVistaControls } from "@/lib/settings-store";
 import { shouldHideToolbarLeftFoot } from "@/components/browser/Toolbar";
 import { logoForTheme } from "@/lib/theme-logo";
 import glossyLogo from "@/assets/aether-logo-2010.png.asset.json";
@@ -22,6 +22,27 @@ describe("theme logo selection", () => {
 describe("example", () => {
   it("should pass", () => {
     expect(true).toBe(true);
+  });
+});
+
+describe("legacy Aero preferences", () => {
+  it("persists a disabled Aero glass preference", () => {
+    localStorage.setItem("ae_settings", JSON.stringify({ theme: "legacy-2010", aeroGlass: false }));
+    expect(usesAeroGlass(loadSettings())).toBe(false);
+    localStorage.removeItem("ae_settings");
+  });
+  it("applies enabled Aero only to 2010 and 2016", () => {
+    const settings = loadSettings();
+    expect(usesAeroGlass({ ...settings, theme: "legacy-2010", aeroGlass: true })).toBe(true);
+    expect(usesAeroGlass({ ...settings, theme: "legacy-2016", aeroGlass: true })).toBe(true);
+    expect(usesAeroGlass({ ...settings, theme: "modern", aeroGlass: true })).toBe(false);
+  });
+  it("uses Vista controls only for enabled Windows controls in 2010", () => {
+    const settings = { ...loadSettings(), windowControls: true, windowControlsStyle: "windows" as const };
+    expect(usesVistaControls({ ...settings, theme: "legacy-2010" })).toBe(true);
+    expect(usesVistaControls({ ...settings, theme: "legacy-2016" })).toBe(false);
+    expect(usesVistaControls({ ...settings, theme: "legacy-2010", windowControlsStyle: "macos" })).toBe(false);
+    expect(usesVistaControls({ ...settings, theme: "legacy-2010", windowControls: false })).toBe(false);
   });
 });
 
