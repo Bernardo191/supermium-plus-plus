@@ -94,13 +94,13 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   const alwaysShape = settings.theme === "legacy-2010" || settings.theme === "legacy-2016";
   const closeLegacyTabs = settings.theme === "legacy-2010" || settings.theme === "legacy-2016";
   const searchBtn = pos !== "disabled" ? (
-    <button
+    <Button variant="ghost" size="icon"
       onClick={onOpenSearch}
       title="Search tabs (Ctrl+Shift+A)"
       aria-label="Search tabs"
-      style={{ borderRadius: "8px" }}
       className={cn(
-        "relative z-30 flex h-[31px] w-[31px] shrink-0 items-center justify-center transition-colors",
+        "relative z-30 flex h-[31px] w-[31px] shrink-0 items-center justify-center rounded-lg transition-colors",
+        is2021 && usesAeroGlass(settings) && "tab-search-aero",
         isModern
           ? "bg-chrome-toolbar text-foreground/70 hover:bg-foreground/10"
           : is2021
@@ -109,7 +109,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
       )}
     >
       <ChevronDown className="h-4 w-4" />
-    </button>
+    </Button>
   ) : null;
 
 
@@ -151,8 +151,8 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
     </div>
   ) : null;
 
-  const winControls = settings.windowControls && settings.windowControlsStyle === "windows" ? (
-    <div className={cn("flex items-center ml-1", usesVistaControls(settings) ? "vista-window-controls self-start -mt-2 gap-0" : "gap-0.5 mb-1")}>
+  const winControls = settings.windowControls && settings.windowControlsStyle !== "macos" ? (
+    <div className={cn("flex items-center ml-1", usesVistaControls(settings) ? cn("vista-window-controls self-start gap-0", !flushTop && "-mt-2") : "gap-0.5 mb-1")}>
       <Button variant="ghost" size="icon"
         onClick={onMinimize}
         title="Minimize"

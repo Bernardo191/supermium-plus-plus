@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { autoSeparatorHsl, resolveSeparatorHsl } from "@/lib/chrome-colors";
-import { loadSettings, usesAeroGlass, usesVistaControls } from "@/lib/settings-store";
+import { loadSettings, saveSettings, usesAeroGlass, usesVistaControls, windowStylePatch } from "@/lib/settings-store";
 import { shouldHideToolbarLeftFoot } from "@/components/browser/Toolbar";
 import { logoForTheme } from "@/lib/theme-logo";
 import glossyLogo from "@/assets/aether-logo-2010.png.asset.json";
@@ -31,11 +31,28 @@ describe("legacy Aero preferences", () => {
     expect(usesAeroGlass(loadSettings())).toBe(false);
     localStorage.removeItem("ae_settings");
   });
-  it("applies enabled Aero only to 2010 and 2016", () => {
+  it("applies enabled Aero to 2010, 2016 and 2021", () => {
     const settings = loadSettings();
     expect(usesAeroGlass({ ...settings, theme: "legacy-2010", aeroGlass: true })).toBe(true);
     expect(usesAeroGlass({ ...settings, theme: "legacy-2016", aeroGlass: true })).toBe(true);
+    expect(usesAeroGlass({ ...settings, theme: "legacy-2021", aeroGlass: true })).toBe(true);
+    expect(usesAeroGlass({ ...settings, theme: "legacy-2021", aeroGlass: false })).toBe(false);
     expect(usesAeroGlass({ ...settings, theme: "modern", aeroGlass: true })).toBe(false);
+  });
+  it("selecting Windows Vista enables Aero and window buttons and persists the choice", () => {
+    const settings = { ...loadSettings(), windowControls: false, aeroGlass: false };
+    saveSettings({ ...settings, ...windowStylePatch("vista") });
+    expect(loadSettings().windowControlsStyle).toBe("vista");
+    expect(loadSettings().windowControls).toBe(true);
+    expect(loadSettings().aeroGlass).toBe(true);
+    expect(usesAeroGlass(loadSettings())).toBe(true);
+    localStorage.removeItem("ae_settings");
+  });
+  it("explicit Vista controls apply across themes without replacing macOS controls", () => {
+    const settings = { ...loadSettings(), windowControls: true };
+    expect(usesVistaControls({ ...settings, theme: "legacy-2021", windowControlsStyle: "vista" })).toBe(true);
+    expect(usesVistaControls({ ...settings, windowControlsStyle: "vista", windowControls: false })).toBe(false);
+    expect(usesVistaControls({ ...settings, windowControlsStyle: "macos" })).toBe(false);
   });
   it("uses Vista controls only for enabled Windows controls in 2010", () => {
     const settings = { ...loadSettings(), windowControls: true, windowControlsStyle: "windows" as const };

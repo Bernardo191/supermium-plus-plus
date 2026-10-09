@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export type TabSearchPosition = "left" | "right" | "disabled";
 export type ChromeTheme = "modern" | "legacy-2010" | "legacy-2016" | "legacy-2018" | "legacy-2021";
-export type WindowControlsStyle = "windows" | "macos";
+export type WindowControlsStyle = "windows" | "vista" | "macos";
 export type WorkspacesButtonMode = "hidden" | "icon" | "full";
 
 export type Settings = {
@@ -119,8 +119,13 @@ export const useFlags = () => {
 
 export const isLegacyTheme = (t: ChromeTheme) => t !== "modern";
 
+export const windowStylePatch = (style: WindowControlsStyle): Partial<Settings> =>
+  style === "vista"
+    ? { windowControlsStyle: style, windowControls: true, aeroGlass: true }
+    : { windowControlsStyle: style };
+
 export const usesAeroGlass = (settings: Settings) =>
-  settings.aeroGlass && (settings.theme === "legacy-2010" || settings.theme === "legacy-2016");
+  settings.aeroGlass && (settings.theme === "legacy-2010" || settings.theme === "legacy-2016" || settings.theme === "legacy-2021" || settings.windowControlsStyle === "vista");
 
 export const usesVistaControls = (settings: Settings) =>
-  settings.theme === "legacy-2010" && settings.windowControls && settings.windowControlsStyle === "windows";
+  settings.windowControls && (settings.windowControlsStyle === "vista" || (settings.theme === "legacy-2010" && settings.windowControlsStyle === "windows"));
