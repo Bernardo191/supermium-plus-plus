@@ -63,3 +63,7 @@ export const resolveSeparatorHsl = (color: string, automatic: boolean, stripHsl:
   }
   return hexToHslVar(color);
 };
+
+/** Automatic pills use a contrasting tint; null follows the theme foreground. */
+export const resolvePillHsl = (color: string, automatic: boolean, stripHsl: string | null): string | null =>
+  resolveSeparatorHsl(color, automatic, stripHsl);

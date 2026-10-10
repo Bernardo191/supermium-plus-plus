@@ -106,6 +106,17 @@ const SettingsPage = () => {
           <Row label="Automatic separator color">
             <Switch aria-label="Automatic separator color" checked={settings.separatorAutoColor} onCheckedChange={(v) => update({ separatorAutoColor: v })} />
           </Row>
+          <Row label="Pill color">
+            <div className="flex items-center gap-2">
+              <input type="color" value={settings.pillColor || "#808080"} aria-label="Pill color"
+                disabled={settings.pillAutoColor} onChange={(e) => update({ pillColor: e.target.value })}
+                className="h-8 w-10 cursor-pointer rounded-md border border-border bg-background disabled:cursor-not-allowed disabled:opacity-50" />
+              <Button variant="outline" size="sm" disabled={settings.pillAutoColor} onClick={() => update({ pillColor: "" })}>Default</Button>
+            </div>
+          </Row>
+          <Row label="Automatic pill color">
+            <Switch aria-label="Automatic pill color" checked={settings.pillAutoColor} onCheckedChange={(v) => update({ pillAutoColor: v })} />
+          </Row>
           <Row label={t("wallpaper")} description={t("wallpaper_desc")}>
 
             <div className="flex items-center gap-2">

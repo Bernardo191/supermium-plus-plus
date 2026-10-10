@@ -147,6 +147,13 @@ All colors MUST be HSL.
   }
   .tab-pill {
     border-radius: var(--tab-radius);
+    background-color: transparent;
+  }
+  .tab-shape:hover .tab-pill {
+    background-color: hsl(var(--tab-pill-color, var(--foreground)) / 0.18);
+  }
+  .tab-shape:active .tab-pill {
+    background-color: hsl(var(--tab-pill-color, var(--foreground)) / 0.28);
   }
   .tab-separator {
     border-color: hsl(var(--tab-separator) / 0.24);
