@@ -22,6 +22,8 @@ export type Settings = {
   tabstripColor: string; // "" = theme default, "rainbow", or #rrggbb (ignored on the 2010 theme)
   separatorColor: string; // "" = theme default or #rrggbb
   separatorAutoColor: boolean;
+  pillColor: string;
+  pillAutoColor: boolean;
   aeroGlass: boolean;
 };
 
@@ -55,6 +57,8 @@ const defaultSettings: Settings = {
   tabstripColor: "auto",
   separatorColor: "",
   separatorAutoColor: true,
+  pillColor: "",
+  pillAutoColor: true,
   aeroGlass: true,
 };
 

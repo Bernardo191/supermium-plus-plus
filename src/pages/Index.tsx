@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { RAINBOW, AUTO, resolveSeparatorHsl, hexToHslVar, hexLuminance, shadeHslVar, shadeHex } from "@/lib/chrome-colors";
+import { RAINBOW, AUTO, resolveSeparatorHsl, resolvePillHsl, hexToHslVar, hexLuminance, shadeHslVar, shadeHex } from "@/lib/chrome-colors";
 
 import { TabBar } from "@/components/browser/TabBar";
 import { Toolbar } from "@/components/browser/Toolbar";
@@ -170,6 +170,10 @@ const Index = () => {
     if (separatorHsl) s.setProperty("--tab-separator", separatorHsl);
     else s.removeProperty("--tab-separator");
 
+    const pillHsl = resolvePillHsl(settings.pillColor, settings.pillAutoColor, barHsl);
+    if (pillHsl) s.setProperty("--tab-pill-color", pillHsl);
+    else s.removeProperty("--tab-pill-color");
+
     const tbHsl = toolbar && toolbar !== RAINBOW ? hexToHslVar(toolbar) : null;
     if (tbHsl) {
       s.setProperty("--chrome-toolbar", tbHsl);
@@ -207,7 +211,7 @@ const Index = () => {
       s.removeProperty("--popover-foreground");
       s.removeProperty("--card-foreground");
     }
-  }, [settings.theme, settings.toolbarColor, settings.omniboxColor, settings.tabstripColor, settings.separatorColor, settings.separatorAutoColor]);
+  }, [settings.theme, settings.toolbarColor, settings.omniboxColor, settings.tabstripColor, settings.separatorColor, settings.separatorAutoColor, settings.pillColor, settings.pillAutoColor]);
 
 
 

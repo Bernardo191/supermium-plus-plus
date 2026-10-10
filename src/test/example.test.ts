@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { autoSeparatorHsl, resolveSeparatorHsl } from "@/lib/chrome-colors";
+import { autoSeparatorHsl, resolveSeparatorHsl, resolvePillHsl } from "@/lib/chrome-colors";
 import { loadSettings, saveSettings, usesAeroGlass, usesVistaControls, windowStylePatch } from "@/lib/settings-store";
 import { shouldHideToolbarLeftFoot } from "@/components/browser/Toolbar";
 import { logoForTheme } from "@/lib/theme-logo";
@@ -93,6 +93,22 @@ describe("automatic tab separator color", () => {
 
   it("uses a dark separator on a light tab strip", () => {
     expect(autoSeparatorHsl("#e4e7ec")).toBe("0 0% 0%");
+  });
+});
+
+describe("tab pill color preferences", () => {
+  it("uses the selected pill color when automatic is off", () => {
+    expect(resolvePillHsl("#ff0000", false, "0 0% 90%")).toBe("0 100% 50%");
+  });
+  it("automatically contrasts with light and dark strips", () => {
+    expect(resolvePillHsl("#ff0000", true, "0 0% 90%")).toBe("0 0% 0%");
+    expect(resolvePillHsl("#ff0000", true, "0 0% 10%")).toBe("0 0% 100%");
+  });
+  it("preserves manual pill preferences after saving", () => {
+    saveSettings({ ...loadSettings(), pillAutoColor: false, pillColor: "#ff0000" });
+    expect(loadSettings().pillAutoColor).toBe(false);
+    expect(loadSettings().pillColor).toBe("#ff0000");
+    localStorage.removeItem("ae_settings");
   });
 });
 
