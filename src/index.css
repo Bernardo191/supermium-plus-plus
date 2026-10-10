@@ -158,6 +158,10 @@ All colors MUST be HSL.
   .tab-separator {
     border-color: hsl(var(--tab-separator) / 0.24);
   }
+  .tab-shape:has(.tab-pill):is(:hover, :active) .tab-separator,
+  .tab-shape:has(+ .tab-shape:is(:hover, :active) .tab-pill) .tab-separator {
+    visibility: hidden;
+  }
   .tab-hover-shape {
     border-top-left-radius: var(--tab-radius);
     border-top-right-radius: var(--tab-radius);

@@ -194,7 +194,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   return (
     <div data-window-drag className={cn("tab-strip flex items-end gap-1 px-2 bg-chrome-bar select-none", usesAeroGlass(settings) && "tab-strip-aero", flushTop ? (windowed ? "h-[46px] pt-0" : "pt-0") : "pt-2")}>
       {macControls}
-      {pos === "left" && <div className={cn("mr-0.5 flex items-center justify-center", flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9")}>{searchBtn}</div>}
+      {pos === "left" && <div className={cn("mr-0.5 flex items-center", is2021 && windowed ? "mb-2.5" : "mb-1")}>{searchBtn}</div>}
       {workspacesBtn}
 
 
@@ -295,7 +295,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
       </div>
 
       {rightSpacer}
-      {pos === "right" && <div className={cn("ml-1 flex items-center justify-center", flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9")}>{searchBtn}</div>}
+      {pos === "right" && <div className={cn("ml-1 flex items-center", is2021 && windowed ? "mb-2.5" : "mb-1")}>{searchBtn}</div>}
       {winControls}
     </div>
   );
