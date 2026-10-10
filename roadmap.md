@@ -15,6 +15,6 @@
 - [x] Verify both legacy themes and Modern in the preview.
 - [x] Add saved Aero glass switch in Appearance settings.
 - [x] Apply Vista-style Windows controls in 2010 and verify interactions.
-- [ ] Add Windows Vista settings option enabling glass and Vista controls.
-- [ ] Add Vista hover effects and 2021 Aero circular tab search.
-- [ ] Verify settings persistence and tab-strip appearance.
+- [x] Add Windows Vista settings option enabling glass and Vista controls.
+- [x] Add Vista hover effects and 2021 Aero circular tab search.
+- [x] Verify settings persistence and tab-strip appearance.
