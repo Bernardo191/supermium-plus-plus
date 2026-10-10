@@ -18,5 +18,5 @@
 - [x] Add Windows Vista settings option enabling glass and Vista controls.
 - [x] Add Vista hover effects and 2021 Aero circular tab search.
 - [x] Verify settings persistence and tab-strip appearance.
-- [ ] Increase tab hover pill height and align tab search.
-- [ ] Add saved manual and automatic pill colors and verify them.
+- [x] Increase tab hover pill height and align tab search.
+- [x] Add saved manual and automatic pill colors and verify them.
