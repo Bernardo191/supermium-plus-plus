@@ -47,6 +47,16 @@ All colors MUST be HSL.
     --tab-separator: 220 13% 13%;
     --tab-radius: 12px;
     --omnibox: 220 14% 94%;
+    --toolbar-height: 48px;
+    --toolbar-button-size: 34px;
+    --toolbar-icon-size: 20px;
+    --toolbar-spacing: 4px;
+    --toolbar-padding: 8px;
+    --omnibox-height: 34px;
+    --omnibox-radius: 18px;
+    --omnibox-padding: 12px;
+    --omnibox-outline: transparent;
+    --tab-content-offset: -2px;
     --aero-highlight: 0 0% 100%;
     --aero-shade: 210 35% 22%;
     --vista-button-top: 210 28% 82%;
@@ -265,7 +275,41 @@ All colors MUST be HSL.
   /* Curved bottom flares on the toolbar, like Chrome */
   .toolbar-shape {
     position: relative;
+    height: var(--toolbar-height);
+    gap: var(--toolbar-spacing);
+    padding-inline: var(--toolbar-padding);
   }
+  .chrome-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: var(--toolbar-icon-size);
+    height: var(--toolbar-icon-size);
+    background-color: currentColor;
+    -webkit-mask: var(--chrome-icon-mask) center / contain no-repeat;
+    mask: var(--chrome-icon-mask) center / contain no-repeat;
+  }
+  .toolbar-shape .chrome-tool-button {
+    width: var(--toolbar-button-size);
+    height: var(--toolbar-button-size);
+    padding: 0;
+    border-radius: 50%;
+  }
+  .chrome-omnibox {
+    height: var(--omnibox-height);
+    padding-inline: var(--omnibox-padding);
+    margin-inline: 4px;
+    gap: 8px;
+    border: 1px solid var(--omnibox-outline);
+    border-radius: var(--omnibox-radius);
+  }
+  .chrome-site-icon { width: 16px; height: 16px; }
+  .toolbar-shape .chrome-bookmark { width: 24px; height: 24px; padding: 0; border-radius: 50%; }
+  .tab-content { transform: translateY(var(--tab-content-offset)); }
+  .tab-shape .tab-close { width: 20px; height: 20px; padding: 0; margin-right: -4px; border-radius: 50%; }
+  .tab-close .chrome-icon { width: 16px; height: 16px; }
+  .tab-strip-flush { height: 34px; }
+  .tab-flush { height: 34px; }
+  .tab-flush.tab-active { height: 35px; }
   .toolbar-shape::before,
   .toolbar-shape::after {
     content: "";
@@ -299,6 +343,15 @@ All colors MUST be HSL.
 /* ---- Chrome 1–20 (2008–2012): blue glossy gradient frame ---- */
 .theme-legacy-2010 {
   --chrome-bar: 212 60% 38%;
+  --toolbar-height: 38px;
+  --toolbar-button-size: 28px;
+  --toolbar-icon-size: 18px;
+  --toolbar-spacing: 3px;
+  --toolbar-padding: 4px;
+  --omnibox-height: 27px;
+  --omnibox-radius: 0px;
+  --omnibox-padding: 6px;
+  --omnibox-outline: hsl(var(--border) / 0.6);
   --chrome-toolbar: 210 30% 92%;
   --tab-active: 210 30% 95%;
   --tab-inactive: 212 60% 38%;
@@ -448,6 +501,14 @@ html.chrome-custom-bar.theme-legacy-2010 .tab-strip-aero {
 /* ---- Chrome ~40–60 (2015–2017): flat grey, sharp tabs ---- */
 .theme-legacy-2016 {
   --chrome-bar: 0 0% 85%;
+  --toolbar-height: 40px;
+  --toolbar-button-size: 28px;
+  --toolbar-icon-size: 16px;
+  --toolbar-padding: 4px;
+  --omnibox-height: 28px;
+  --omnibox-radius: 0px;
+  --omnibox-padding: 6px;
+  --omnibox-outline: hsl(var(--border) / 0.6);
   --chrome-toolbar: 0 0% 96%;
   --tab-active: 0 0% 96%;
   --tab-inactive: 0 0% 85%;
@@ -490,6 +551,12 @@ html.chrome-custom-bar.theme-legacy-2010 .tab-strip-aero {
 
 /* ---- Chrome ~70 (2018): rounded-tab debut, lighter UI ---- */
 .theme-legacy-2018 {
+  --toolbar-height: 42px;
+  --toolbar-button-size: 28px;
+  --toolbar-icon-size: 20px;
+  --omnibox-height: 28px;
+  --omnibox-radius: 16px;
+  --tab-content-offset: -1px;
   --chrome-bar: 0 0% 87%;
   --chrome-toolbar: 0 0% 100%;
   --tab-active: 0 0% 100%;
@@ -526,6 +593,12 @@ html.chrome-custom-bar.theme-legacy-2010 .tab-strip-aero {
 
 /* ---- Chrome 88 (2021): refreshed UI, slightly squarer tabs, lighter chrome ---- */
 .theme-legacy-2021 {
+  --toolbar-height: 42px;
+  --toolbar-button-size: 28px;
+  --toolbar-icon-size: 20px;
+  --omnibox-height: 28px;
+  --omnibox-radius: 16px;
+  --tab-content-offset: -1px;
   --chrome-bar: 220 13% 93%;
   --chrome-toolbar: 0 0% 100%;
   --tab-active: 0 0% 100%;

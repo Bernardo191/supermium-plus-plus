@@ -1,0 +1,10 @@
+.chrome-icon-back { --chrome-icon-mask: url("/__l5e/assets-v1/0ac9926e-b213-4eaf-a6bd-bc2b4371397c/chrome-back.svg"); }
+.chrome-icon-reload { --chrome-icon-mask: url("/__l5e/assets-v1/9c9d8e73-844d-4e6a-8506-a1d026e794a3/chrome-reload.svg"); }
+.chrome-icon-home { --chrome-icon-mask: url("/__l5e/assets-v1/b096c5f7-74a0-4e0c-9ff3-1235cfda79aa/chrome-home.svg"); }
+.chrome-icon-lock { --chrome-icon-mask: url("/__l5e/assets-v1/c8b99087-5954-462d-8d31-c53b6fd5e179/chrome-lock.svg"); }
+.chrome-icon-star { --chrome-icon-mask: url("/__l5e/assets-v1/19c35e58-c9c0-4c1a-9242-b6d7c76766ff/chrome-star.svg"); }
+.chrome-icon-menu { --chrome-icon-mask: url("/__l5e/assets-v1/d197fd43-12e3-440d-a34c-c719d2263580/chrome-menu.svg"); }
+.chrome-icon-more { --chrome-icon-mask: url("/__l5e/assets-v1/3d3a7e0d-f66d-43b4-a42d-31fd4410b34f/chrome-more.svg"); }
+.chrome-icon-close { --chrome-icon-mask: url("/__l5e/assets-v1/45af2fd6-5a95-4ac0-bb9d-fddc98bc6b08/chrome-tab-close.svg"); }
+.chrome-icon-info { --chrome-icon-mask: url("/__l5e/assets-v1/9ca4e2ef-3e99-4dee-aad2-c2085affcdcc/chrome-info.svg"); }
+.chrome-icon-star-filled { --chrome-icon-mask: url("/__l5e/assets-v1/71842d4f-c7cb-4801-9dc8-157f4988e3de/chrome-star-filled.svg"); }

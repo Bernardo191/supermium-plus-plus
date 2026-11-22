@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { WorkspacesMenu } from "./WorkspacesMenu";
 import type { Workspace } from "@/lib/workspaces-store";
 import { useWindowed, toggleWindowed } from "@/lib/window-mode";
+import { ChromeIcon } from "./ChromeIcon";
 
 type Props = {
   tabs: Tab[];
@@ -192,7 +193,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
   );
 
   return (
-    <div data-window-drag className={cn("tab-strip flex items-end gap-1 px-2 bg-chrome-bar select-none", usesAeroGlass(settings) && "tab-strip-aero", flushTop ? (windowed ? "h-[46px] pt-0" : "pt-0") : "pt-2")}>
+    <div data-window-drag className={cn("tab-strip flex shrink-0 items-end gap-1 px-2 bg-chrome-bar select-none", usesAeroGlass(settings) && "tab-strip-aero", flushTop ? "tab-strip-flush pt-0" : "pt-2")}>
       {macControls}
       {pos === "left" && <div className={cn("mr-0.5 flex items-center", is2021 && windowed ? "mb-2.5" : "mb-1")}>{searchBtn}</div>}
       {workspacesBtn}
@@ -216,7 +217,7 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                 "tab-shape tab-enter group relative flex min-w-0 flex-1 basis-0 cursor-pointer items-center text-xs transition-colors",
                 closingIds.has(t.id) && "tab-exit pointer-events-none",
                 active && !closingIds.has(t.id) && "tab-active tab-active-pop",
-                flushTop ? (windowed ? "h-[34px]" : "h-10") : "h-9",
+                flushTop ? "tab-flush" : "h-9",
                 "max-w-[240px]",
                   active
                     ? cn(!closeLegacyTabs && "bg-tab-active", "text-foreground z-10")
@@ -240,39 +241,41 @@ export const TabBar = ({ tabs, activeId, onSelect, onClose, onNew, onOpenSearch,
                 <span className="tab-separator pointer-events-none absolute right-0 top-1/2 z-[2] h-[47%] -translate-y-1/2 border-r" />
               )}
               <div className={cn(
-                "relative z-[1] flex min-w-0 flex-1 items-center",
+                "tab-content relative z-[1] flex min-w-0 flex-1 items-center",
                 iconOnly ? "justify-center px-1" : closeLegacyTabs ? (compact ? "gap-1 px-3" : "gap-2 px-6") : compact ? "gap-1 px-1.5" : "gap-2 px-3"
               )}>
                 {iconOnly ? (
                   showClose ? (
-                    <button
+                    <Button variant="ghost" size="icon"
                       onClick={(e) => { e.stopPropagation(); closeTab(t.id); }}
-                      className="rounded-full p-0.5 opacity-70 hover:bg-foreground/10 hover:opacity-100 shrink-0 -mt-1 -mr-0.5"
+                      className="tab-close opacity-70 hover:bg-foreground/10 hover:opacity-100 shrink-0"
                       aria-label="Close tab"
+                      title="Close tab"
                     >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
+                      <ChromeIcon name="close" />
+                    </Button>
                   ) : (
                     t.url !== "aether://newtab" ? (
-                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm -mt-1" />
+                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
                     ) : (
-                      <span className="h-4 w-4 shrink-0 rounded-sm bg-foreground/20 -mt-1" />
+                      <span className="h-4 w-4 shrink-0 rounded-sm bg-foreground/20" />
                     )
                   )
                 ) : (
                   <>
                     {t.url !== "aether://newtab" && (
-                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm -mt-1" />
+                      <img src={faviconFor(t.url)} alt="" className="h-4 w-4 shrink-0 rounded-sm" />
                     )}
-                    <span className="flex-1 truncate min-w-0 pl-0.5 -mt-1">{t.title}</span>
+                    <span className="flex-1 truncate min-w-0 pl-0.5">{t.title}</span>
                     {showClose && (
-                      <button
+                      <Button variant="ghost" size="icon"
                         onClick={(e) => { e.stopPropagation(); closeTab(t.id); }}
-                        className="rounded-full p-0.5 opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0 -mt-1 -mr-0.5"
+                        className="tab-close opacity-60 hover:bg-foreground/10 hover:opacity-100 shrink-0"
                         aria-label="Close tab"
+                        title="Close tab"
                       >
-                        <X className="h-3.5 w-3.5" />
-                      </button>
+                        <ChromeIcon name="close" />
+                      </Button>
                     )}
                   </>
                 )}

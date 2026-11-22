@@ -1,5 +1,9 @@
 # Roadmap
 
+- [x] Compare historical Chrome toolbar measurements and icon assets.
+- [x] Refine toolbars and close-button placement across themes.
+- [x] Remove the 2018/2021 tab top gap and verify navigation and tab controls.
+
 - [x] Restore inactive-tab vertical separators.
 - [x] Add independent omnibox color customization.
 - [x] Match the 2010 tab silhouette to 2016.
