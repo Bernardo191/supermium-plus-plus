@@ -124,11 +124,11 @@ export const Toolbar = (p: Props) => {
       </form>
 
       <ExtensionsMenu onManage={p.onOpenExtensions} />
-      <Button variant="ghost" size="icon" onClick={p.onToggleMenu} aria-label="Customize and control" title="Customize and control" className="chrome-tool-button shrink-0 text-foreground/80">
-        <ChromeIcon name={settings.theme === "legacy-2010" || settings.theme === "legacy-2016" ? "menu" : "more"} />
-      </Button>
       <Button variant="ghost" size="icon" aria-label="Accounts" title="Accounts" className="chrome-tool-button shrink-0 text-foreground/80">
         <CircleUserRound className="h-5 w-5" />
+      </Button>
+      <Button variant="ghost" size="icon" onClick={p.onToggleMenu} aria-label="Customize and control" title="Customize and control" className="chrome-tool-button shrink-0 text-foreground/80">
+        <ChromeIcon name={settings.theme === "legacy-2010" || settings.theme === "legacy-2016" ? "menu" : "more"} />
       </Button>
     </div>
   );
