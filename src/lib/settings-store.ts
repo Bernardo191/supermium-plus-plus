@@ -19,6 +19,7 @@ export type Settings = {
   workspacesButton: WorkspacesButtonMode; // workspaces button display in the tab strip
   toolbarColor: string; // "" = theme default, "rainbow", or #rrggbb
   omniboxColor: string; // "" = derived from toolbar, "rainbow", or #rrggbb
+  omniboxRingColor: string; // "" = theme accent or #rrggbb
   tabstripColor: string; // "" = theme default, "rainbow", or #rrggbb (ignored on the 2010 theme)
   separatorColor: string; // "" = theme default or #rrggbb
   separatorAutoColor: boolean;
@@ -54,6 +55,7 @@ const defaultSettings: Settings = {
   workspacesButton: "hidden",
   toolbarColor: "",
   omniboxColor: "",
+  omniboxRingColor: "",
   tabstripColor: "auto",
   separatorColor: "",
   separatorAutoColor: true,

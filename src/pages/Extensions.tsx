@@ -27,7 +27,7 @@ const Extensions = () => {
   const [desc, setDesc] = useState("");
 
   useEffect(() => { setExts(load()); document.title = "Extensions — Aether"; }, []);
-  useEffect(() => { localStorage.setItem(KEY, JSON.stringify(exts)); }, [exts]);
+  useEffect(() => { localStorage.setItem(KEY, JSON.stringify(exts)); window.dispatchEvent(new Event("aether-extensions")); }, [exts]);
 
   const toggle = (id: string) =>
     setExts((e) => e.map((x) => (x.id === id ? { ...x, enabled: !x.enabled } : x)));

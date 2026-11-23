@@ -301,7 +301,10 @@ All colors MUST be HSL.
     gap: 8px;
     border: 1px solid var(--omnibox-outline);
     border-radius: var(--omnibox-radius);
+    box-shadow: 0 0 0 1px hsl(var(--border));
   }
+  .chrome-omnibox:focus-within { box-shadow: 0 0 0 3px hsl(var(--omnibox-ring, var(--primary))); }
+  .chrome-omnibox .chrome-site-icon { margin-left: 3px; }
   .chrome-site-icon { width: 16px; height: 16px; }
   .toolbar-shape .chrome-bookmark { width: 24px; height: 24px; padding: 0; border-radius: 50%; }
   .tab-content { transform: translateY(var(--tab-content-offset)); }

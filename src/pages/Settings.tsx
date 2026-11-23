@@ -75,6 +75,9 @@ const SettingsPage = () => {
           <Row label="Omnibox color" description="Pick a separate color for the address bar, or leave it on Default to match the toolbar automatically.">
             <ColorPicker value={settings.omniboxColor} onChange={(v) => update({ omniboxColor: v })} />
           </Row>
+          <Row label="Omnibox ring color" description="Color of the ring around the address bar when you click it.">
+            <ColorPicker value={settings.omniboxRingColor} onChange={(v) => update({ omniboxRingColor: v })} />
+          </Row>
           <Row
             label="Tab strip color"
             description={

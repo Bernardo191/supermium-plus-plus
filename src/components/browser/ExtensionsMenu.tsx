@@ -28,7 +28,8 @@ export const ExtensionsMenu = ({ onManage }: Props) => {
     refresh();
     const onStorage = (e: StorageEvent) => { if (e.key === KEY) refresh(); };
     window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    window.addEventListener("aether-extensions", refresh);
+    return () => { window.removeEventListener("storage", onStorage); window.removeEventListener("aether-extensions", refresh); };
   }, []);
 
   useEffect(() => {
@@ -55,8 +56,10 @@ export const ExtensionsMenu = ({ onManage }: Props) => {
   const enabled = exts.filter((x) => x.enabled);
   const disabled = exts.filter((x) => !x.enabled);
 
+  if (exts.length === 0) return null;
+
   return (
-    <div ref={wrapRef} className="relative">
+    <div ref={wrapRef} className="relative flex items-center">
       <button
         onClick={() => setOpen((s) => !s)}
         aria-label="Extensions"
@@ -64,6 +67,7 @@ export const ExtensionsMenu = ({ onManage }: Props) => {
       >
         <Puzzle className="h-4 w-4" />
       </button>
+      <span aria-hidden="true" className="toolbar-divider mx-1 h-5 w-px bg-foreground/20" />
 
       {open && (
         <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-xl">
