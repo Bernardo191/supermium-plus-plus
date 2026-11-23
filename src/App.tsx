@@ -48,14 +48,14 @@ const App = () => {
             {/* Standalone downloads of the app (aether.html / index.html) open here */}
             <Route path="/aether.html" element={<Index />} />
             <Route path="/index.html" element={<Index />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/flags" element={<Flags />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/downloads" element={<Downloads />} />
-            <Route path="/passwords" element={<Passwords />} />
+            <Route path="/settings" element={<Index initialUrl="aether://settings" />} />
+            <Route path="/flags" element={<Index initialUrl="aether://flags" />} />
+            <Route path="/about" element={<Index initialUrl="aether://about" />} />
+            <Route path="/downloads" element={<Index initialUrl="aether://downloads" />} />
+            <Route path="/passwords" element={<Index initialUrl="aether://passwords" />} />
             <Route path="/incognito" element={<Incognito />} />
-            <Route path="/extensions" element={<Extensions />} />
-            <Route path="/source" element={<Source />} />
+            <Route path="/extensions" element={<Index initialUrl="aether://extensions" />} />
+            <Route path="/source" element={<Index initialUrl="aether://source" />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
 
             <Route path="*" element={<NotFound />} />

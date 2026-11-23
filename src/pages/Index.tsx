@@ -6,6 +6,7 @@ import { Toolbar } from "@/components/browser/Toolbar";
 import { BookmarksBar } from "@/components/browser/BookmarksBar";
 import { NewTabPage } from "@/components/browser/NewTabPage";
 import { WebView } from "@/components/browser/WebView";
+import { DevTools } from "@/components/browser/DevTools";
 import SettingsPage from "@/pages/Settings";
 import FlagsPage from "@/pages/Flags";
 import AboutPage from "@/pages/About";
@@ -34,7 +35,7 @@ import {
 } from "@/lib/workspaces-store";
 
 
-const Index = () => {
+const Index = ({ initialUrl }: { initialUrl?: string } = {}) => {
   const routerNav = useNavigate();
   const [settings] = useSettings();
   const windowed = useWindowed();
@@ -47,6 +48,7 @@ const Index = () => {
   const [showTabSearch, setShowTabSearch] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showSource, setShowSource] = useState(false);
+  const [showDevTools, setShowDevTools] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [showBookmarks, setShowBookmarks] = useState(true);
   const [closedTabs, setClosedTabs] = useState<ClosedTab[]>([]);
@@ -61,6 +63,12 @@ const Index = () => {
       setActiveId(stored.tabs.find((t) => t.id === stored.activeId) ? stored.activeId : stored.tabs[0].id);
     } else {
       setActiveId(tabs[0].id);
+    }
+    if (initialUrl) {
+      const t = newTab(initialUrl);
+      setTabs((ts) => [...(stored?.tabs ?? ts), t]);
+      setActiveId(t.id);
+      if (window.location.protocol !== "file:") window.history.replaceState(null, "", "/");
     }
     const bm = loadBookmarks();
     setBookmarks(bm.length ? bm : defaultBookmarks);
@@ -344,6 +352,9 @@ const Index = () => {
       } else if (mod && !e.shiftKey && e.key.toLowerCase() === "u") {
         e.preventDefault();
         setShowSource(true);
+      } else if (e.key === "F12" || (mod && e.shiftKey && e.key.toLowerCase() === "i")) {
+        e.preventDefault();
+        setShowDevTools((v) => !v);
       } else if (e.key === "Escape") {
         setShowTabSearch(false);
         setShowMenu(false);
@@ -438,6 +449,7 @@ const Index = () => {
           }
         }}
         onViewSource={() => { setShowMenu(false); setShowSource(true); }}
+        onToggleDevTools={() => { setShowMenu(false); setShowDevTools((v) => !v); }}
         onOpenSourceCode={() => { setShowMenu(false); openNewTab("aether://source"); }}
         onShareUrl={() => {
           setShowMenu(false);
@@ -462,7 +474,7 @@ const Index = () => {
         />
       )}
       <div className="relative flex-1 overflow-hidden">
-        <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", width: `${100 / zoom}%`, height: `${100 / zoom}%` }} className="h-full w-full">
+        <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", width: `${100 / zoom}%`, height: `${100 / zoom}%` }} className="h-full w-full" data-page-content>
         {active.url === NEW_TAB ? (
           <NewTabPage bookmarks={bookmarks} history={history} onNavigate={navigate} wallpaper={settings.wallpaper} />
         ) : active.url === "aether://settings" ? (
@@ -495,6 +507,7 @@ const Index = () => {
           onClear={() => setHistory([])}
         />
       </div>
+      <DevTools open={showDevTools} url={active.url} onClose={() => setShowDevTools(false)} />
     </main>
   );
 
